@@ -1,28 +1,32 @@
 <template>
-  <nav>
-    <div class="navbar">
-      <div class="navbar-brand">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <span v-if="loggedIn" class="navbar-item">Admin |</span>
-          <router-link
-            v-if="loggedIn"
-            to="/"
-            class="navbar-item"
-            @click="logout"
-            >Logout</router-link
-          >
-          <router-link v-else to="/login" class="navbar-item"
-            >Login</router-link
-          >
+  <div class="container">
+    <nav>
+      <div class="navbar">
+        <div class="navbar-brand">
+          <router-link to="/">Home</router-link>
+          <router-link to="/assessment">Assessment</router-link>
+          <router-link to="/forecast">Forecast</router-link>
+          <router-link to="/feedback">Feedback</router-link>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <span v-if="loggedIn" class="navbar-item">Admin |</span>
+            <router-link
+              v-if="loggedIn"
+              to="/"
+              class="navbar-item"
+              @click="logout"
+              >Logout</router-link
+            >
+            <router-link v-else to="/login" class="navbar-item"
+              >Login</router-link
+            >
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
-  <router-view />
+    </nav>
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -85,5 +89,11 @@ export default {
 
 .router-link-exact-active {
   color: #42b983;
+}
+
+.container {
+  position: relative;
+
+  background: #71ffe5;
 }
 </style>
