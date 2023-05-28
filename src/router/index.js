@@ -9,10 +9,22 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/assessment",
-    name: "assessment",
+    path: "/calendar_as",
+    name: "calendar_as",
 
-    component: () => import("../views/AssessmentView.vue"),
+    component: () => import("../views/CalendarAssessmentView.vue"),
+  },
+  {
+    path: "/compact_as",
+    name: "compact_as",
+
+    component: () => import("../views/CompactAssessmentView.vue"),
+  },
+  {
+    path: "/complete_as",
+    name: "complete_as",
+
+    component: () => import("../views/CompleteAssessmentView.vue"),
   },
   {
     path: "/feedback",

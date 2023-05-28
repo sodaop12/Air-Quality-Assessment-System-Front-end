@@ -4,7 +4,10 @@
       <div class="navbar">
         <div class="navbar-brand">
           <router-link to="/">Home</router-link>
-          <router-link to="/assessment">Assessment</router-link>
+          <!-- Modify the router-link to have a click event -->
+          <router-link @click="toggleAssessmentTopics" to="#"
+            >Assessment</router-link
+          >
           <router-link to="/forecast">Forecast</router-link>
           <router-link to="/feedback">Feedback</router-link>
         </div>
@@ -25,18 +28,40 @@
         </div>
       </div>
     </nav>
+    <!-- Render the subtopics if showAssessmentTopics is true -->
+    <div v-if="showAssessmentTopics">
+      <ul>
+        <li>
+          <router-link to="/compact_as">Compact Assessment</router-link>
+        </li>
+        <li>
+          <router-link to="/complete_as">Complete Assessment</router-link>
+        </li>
+        <li>
+          <router-link to="/calendar_as">Calendar Assessment</router-link>
+        </li>
+      </ul>
+    </div>
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      showAssessmentTopics: false,
+    };
+  },
   computed: {
     loggedIn() {
       return this.$store.state.loggedIn;
     },
   },
   methods: {
+    toggleAssessmentTopics() {
+      this.showAssessmentTopics = !this.showAssessmentTopics;
+    },
     logout() {
       this.$store.dispatch("setLoggedIn", false); // Update loggedIn state to false
       // Perform any additional logout logic if needed
