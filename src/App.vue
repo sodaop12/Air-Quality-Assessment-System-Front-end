@@ -1,49 +1,48 @@
 <template>
-  <div class="container">
-    <nav>
-      <div class="navbar">
-        <div class="navbar-brand">
-          <router-link to="/">Home</router-link>
-          <!-- Modify the router-link to have a click event -->
-          <router-link @click="toggleAssessmentTopics" to="#"
-            >Assessment</router-link
+  <nav>
+    <div class="navbar">
+      <div class="navbar-brand">
+        <router-link to="/">Home</router-link>
+        <!-- Modify the router-link to have a click event -->
+        <router-link @click="toggleAssessmentTopics" to="#"
+          >Assessment ></router-link
+        >
+        <router-link to="/forecast">Forecast</router-link>
+        <router-link to="/feedback">Feedback</router-link>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <span v-if="loggedIn" class="navbar-item">Admin |</span>
+          <router-link
+            v-if="loggedIn"
+            to="/"
+            class="navbar-item"
+            @click="logout"
+            >Logout</router-link
           >
-          <router-link to="/forecast">Forecast</router-link>
-          <router-link to="/feedback">Feedback</router-link>
-        </div>
-        <div class="navbar-menu">
-          <div class="navbar-end">
-            <span v-if="loggedIn" class="navbar-item">Admin |</span>
-            <router-link
-              v-if="loggedIn"
-              to="/"
-              class="navbar-item"
-              @click="logout"
-              >Logout</router-link
-            >
-            <router-link v-else to="/login" class="navbar-item"
-              >Login</router-link
-            >
-          </div>
+          <router-link v-else to="/login" class="navbar-item"
+            >Login</router-link
+          >
         </div>
       </div>
-    </nav>
-    <!-- Render the subtopics if showAssessmentTopics is true -->
-    <div v-if="showAssessmentTopics">
-      <ul>
-        <li>
-          <router-link to="/compact_as">Compact Assessment</router-link>
-        </li>
-        <li>
-          <router-link to="/complete_as">Complete Assessment</router-link>
-        </li>
-        <li>
-          <router-link to="/calendar_as">Calendar Assessment</router-link>
-        </li>
-      </ul>
     </div>
-    <router-view />
+  </nav>
+
+  <!-- Render the subtopics if showAssessmentTopics is true -->
+  <div v-if="showAssessmentTopics">
+    <ul>
+      <li>
+        <router-link to="/compact_as">Compact Assessment</router-link>
+      </li>
+      <li>
+        <router-link to="/complete_as">Complete Assessment</router-link>
+      </li>
+      <li>
+        <router-link to="/calendar_as">Calendar Assessment</router-link>
+      </li>
+    </ul>
   </div>
+  <router-view />
 </template>
 
 <script>
@@ -74,7 +73,7 @@ export default {
 
 <style>
 .navbar {
-  background-color: #f5f5f5;
+  background-color: #d1fff7;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
@@ -118,7 +117,27 @@ export default {
 
 .container {
   position: relative;
+  display: flex;
+  height: calc(100vh - 50px);
+}
+.left-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for left sidebar */
+}
 
-  background: #71ffe5;
+.content {
+  width: 50%;
+  background-color: #eafffc; /* Background color for main content */
+}
+
+.right-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for right sidebar */
+}
+
+.left-sidebar,
+.content,
+.right-sidebar {
+  padding: 20px; /* Add some padding to the areas to separate the content */
 }
 </style>

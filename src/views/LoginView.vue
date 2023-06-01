@@ -1,15 +1,20 @@
 <template>
-  <div class="container">
-    <h1>Login Page</h1>
-    <form @submit.prevent="login">
-      <label for="username">Username:</label>
-      <input type="text" id="username" v-model="username" required />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" required />
-      <br />
-      <button type="submit">Login</button>
-    </form>
+  <div class="box">
+    <div class="container">
+      <div class="content">
+        <!-- Main content -->
+        <h1>Login Page</h1>
+        <form @submit.prevent="login">
+          <label for="username">Username:</label>
+          <input type="text" id="username" v-model="username" required />
+          <br />
+          <label for="password">Password:</label>
+          <input type="password" id="password" v-model="password" required />
+          <br />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,13 +57,33 @@ export default {
 
 <style scoped>
 .container {
-  display: flex;
+  width: 500px;
+  height: 300px;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  text-align: center;
 }
 
 h1 {
   color: #2c3e50;
+}
+.box {
+  display: relative;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 20px;
+  text-align: center;
+  background-color: #71ffe5;
+}
+
+.content {
+  width: 50%;
+  background-color: #eafffc; /* Background color for main content */
+}
+
+.bg {
+  background-color: #71ffe5;
 }
 </style>

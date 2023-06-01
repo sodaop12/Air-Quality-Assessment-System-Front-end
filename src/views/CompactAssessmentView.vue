@@ -1,62 +1,78 @@
 <template>
-  <div>
-    <label for="dropdown">Select number of days:</label>
-    <select id="dropdown" v-model="selectedDays">
-      <option value="">Select</option>
-      <option v-for="day in days" :value="day" :key="day">{{ day }}</option>
-    </select>
+  <div class="container">
+    <div class="left-sidebar">
+      <!-- Left sidebar content -->
+    </div>
+    <div class="content">
+      <!-- Main content -->
+      <div>
+        <label for="dropdown">Select number of days:</label>
+        <select id="dropdown" v-model="selectedDays">
+          <option value="">Select</option>
+          <option v-for="day in days" :value="day" :key="day">{{ day }}</option>
+        </select>
 
-    <label for="averageHours">Average Hours Outside:</label>
-    <input type="number" id="averageHours" v-model="averageHours" required />
+        <label for="averageHours">Average Hours Outside:</label>
+        <input
+          type="number"
+          id="averageHours"
+          v-model="averageHours"
+          required
+        />
+      </div>
+      <label for="location1">Select Location 1:</label>
+      <select id="location1" v-model="selectedLocations[0]">
+        <option value="">-- Select Location --</option>
+        <option
+          v-for="(location, index) in locations"
+          :key="index"
+          :value="location"
+        >
+          {{ location }}
+        </option>
+      </select>
+
+      <label for="location2">Select Location 2:</label>
+      <select id="location2" v-model="selectedLocations[1]">
+        <option value="">-- Select Location --</option>
+        <option
+          v-for="(location, index) in locations"
+          :key="index"
+          :value="location"
+        >
+          {{ location }}
+        </option>
+      </select>
+
+      <label for="location3">Select Location 3:</label>
+      <select id="location3" v-model="selectedLocations[2]">
+        <option value="">-- Select Location --</option>
+        <option
+          v-for="(location, index) in locations"
+          :key="index"
+          :value="location"
+        >
+          {{ location }}
+        </option>
+      </select>
+      <button @click="submitData">Submit</button>
+
+      <pre>{{ selectedDays }}</pre>
+      <pre>{{ averageHours }}</pre>
+      <pre>{{ selectedLocations }}</pre>
+      <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
+      <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
+      <p v-if="responseReceived">maximun AQL: {{ max }}</p>
+      <p v-if="responseReceived">minimun AQI: {{ min }}</p>
+      <p v-if="responseReceived">
+        CGRS that you consume according to AQI: {{ Cgrs }}
+      </p>
+      <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
+    </div>
+    <div class="right-sidebar">
+      <!-- Right sidebar content -->
+    </div>
   </div>
-  <label for="location1">Select Location 1:</label>
-  <select id="location1" v-model="selectedLocations[0]">
-    <option value="">-- Select Location --</option>
-    <option
-      v-for="(location, index) in locations"
-      :key="index"
-      :value="location"
-    >
-      {{ location }}
-    </option>
-  </select>
-
-  <label for="location2">Select Location 2:</label>
-  <select id="location2" v-model="selectedLocations[1]">
-    <option value="">-- Select Location --</option>
-    <option
-      v-for="(location, index) in locations"
-      :key="index"
-      :value="location"
-    >
-      {{ location }}
-    </option>
-  </select>
-
-  <label for="location3">Select Location 3:</label>
-  <select id="location3" v-model="selectedLocations[2]">
-    <option value="">-- Select Location --</option>
-    <option
-      v-for="(location, index) in locations"
-      :key="index"
-      :value="location"
-    >
-      {{ location }}
-    </option>
-  </select>
-  <button @click="submitData">Submit</button>
-
-  <pre>{{ selectedDays }}</pre>
-  <pre>{{ averageHours }}</pre>
-  <pre>{{ selectedLocations }}</pre>
-  <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
-  <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
-  <p v-if="responseReceived">maximun AQL: {{ max }}</p>
-  <p v-if="responseReceived">minimun AQI: {{ min }}</p>
-  <p v-if="responseReceived">
-    CGRS that you consume according to AQI: {{ Cgrs }}
-  </p>
-  <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
 </template>
 
 <script>
@@ -141,5 +157,23 @@ export default {
 label,
 input {
   margin-bottom: 10px;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+.left-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for left sidebar */
+}
+
+.content {
+  width: 50%;
+  background-color: #eafffc; /* Background color for main content */
+}
+
+.right-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for right sidebar */
 }
 </style>
