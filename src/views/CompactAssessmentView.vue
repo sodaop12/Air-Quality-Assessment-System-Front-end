@@ -49,9 +49,14 @@
   <pre>{{ selectedDays }}</pre>
   <pre>{{ averageHours }}</pre>
   <pre>{{ selectedLocations }}</pre>
-  <p v-if="responseReceived">averageAQI:{{ calculateaverage }}</p>
-  <p v-if="responseReceived">totalhour:{{ totalhour }}</p>
-  <p v-if="responseReceived">chatGPT suggestion{{ output_text }}</p>
+  <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
+  <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
+  <p v-if="responseReceived">maximun AQL: {{ max }}</p>
+  <p v-if="responseReceived">minimun AQI: {{ min }}</p>
+  <p v-if="responseReceived">
+    CGRS that you consume according to AQI: {{ Cgrs }}
+  </p>
+  <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
 </template>
 
 <script>
@@ -64,6 +69,9 @@ export default {
       output_text: null,
       responseReceived: false,
       averageHours: null,
+      max: null,
+      min: null,
+      Cgrs: null,
       selectedLocations: ["", "", ""],
       days: Array.from({ length: 30 }, (_, index) => index + 1),
       locations: [
@@ -113,6 +121,9 @@ export default {
             this.totalhour = data.totalhour;
             this.output_text = data.output_text;
             this.responseReceived = true;
+            this.max = data.max;
+            this.min = data.min;
+            this.Cgrs = data.CGRS;
             console.log(data);
           })
           .catch((error) => {
