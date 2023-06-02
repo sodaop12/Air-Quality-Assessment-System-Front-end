@@ -2,11 +2,16 @@
   <nav>
     <div class="navbar">
       <div class="navbar-brand">
-        <router-link to="/">Home</router-link>
-        <!-- Modify the router-link to have a click event -->
-        <router-link @click="toggleAssessmentTopics" to="#"
-          >Assessment ></router-link
-        >
+        <router-link to="/">Home | </router-link>
+        <!-- Add dropdown menu for Assessment topics -->
+        <div class="dropdown" @click="toggleAssessmentTopics">
+          <button class="dropdown-toggle">Assessment</button>
+          <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
+            <router-link to="/compact_as">Compact Assessment</router-link>
+            <router-link to="/complete_as">Complete Assessment</router-link>
+            <router-link to="/calendar_as">Calendar Assessment</router-link>
+          </div>
+        </div>
         <router-link to="/forecast">Forecast</router-link>
         <router-link to="/feedback">Feedback</router-link>
       </div>
@@ -18,30 +23,16 @@
             to="/"
             class="navbar-item"
             @click="logout"
-            >Logout</router-link
           >
-          <router-link v-else to="/login" class="navbar-item"
-            >Login</router-link
-          >
+            Logout
+          </router-link>
+          <router-link v-else to="/login" class="navbar-item">
+            Login
+          </router-link>
         </div>
       </div>
     </div>
   </nav>
-
-  <!-- Render the subtopics if showAssessmentTopics is true -->
-  <div v-if="showAssessmentTopics">
-    <ul>
-      <li>
-        <router-link to="/compact_as">Compact Assessment</router-link>
-      </li>
-      <li>
-        <router-link to="/complete_as">Complete Assessment</router-link>
-      </li>
-      <li>
-        <router-link to="/calendar_as">Calendar Assessment</router-link>
-      </li>
-    </ul>
-  </div>
   <router-view />
 </template>
 
@@ -78,10 +69,12 @@ export default {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  font-weight: bold;
 }
 
 .navbar-brand {
   display: flex;
+  font-weight: bold;
 }
 
 .navbar-brand a {
@@ -94,10 +87,12 @@ export default {
 .navbar-menu {
   display: flex;
   align-items: center;
+  font-weight: bold;
 }
 
 .navbar-end {
   display: flex;
+  font-weight: bold;
 }
 
 .navbar-item {
@@ -112,6 +107,45 @@ export default {
 }
 
 .router-link-exact-active {
+  color: #42b983;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  display: none;
+  padding: 10px;
+  z-index: 1;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.dropdown-menu a:hover {
   color: #42b983;
 }
 
@@ -133,11 +167,5 @@ export default {
 .right-sidebar {
   width: 25%;
   background-color: #71ffe5; /* Background color for right sidebar */
-}
-
-.left-sidebar,
-.content,
-.right-sidebar {
-  padding: 20px; /* Add some padding to the areas to separate the content */
 }
 </style>

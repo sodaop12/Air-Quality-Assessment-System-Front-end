@@ -139,7 +139,6 @@ export default {};
 <style scoped>
 .container {
   display: flex;
-
   height: 100vh;
 }
 .left-sidebar {
@@ -155,5 +154,19 @@ export default {};
 .right-sidebar {
   width: 25%;
   background-color: #71ffe5; /* Background color for right sidebar */
+}
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-sidebar,
+  .right-sidebar {
+    display: none;
+  }
+
+  .content {
+    width: 90%;
+  }
 }
 </style>

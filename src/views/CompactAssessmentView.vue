@@ -5,74 +5,124 @@
     </div>
     <div class="content">
       <!-- Main content -->
-      <div>
-        <label for="dropdown"
-          >During the last 30 days, on average, how many days have you spent
-          outdoors?</label
+      <div class="page-links">
+        <router-link to="/calendar_as" class="page-link">Calendar</router-link>
+        <router-link to="/compact_as" class="page-link-middle"
+          >Compact Assessment</router-link
         >
-        <select id="dropdown" v-model="selectedDays">
-          <option value="">Select</option>
-          <option v-for="day in days" :value="day" :key="day">{{ day }}</option>
-        </select>
-
-        <label for="averageHours"
-          >How much average hours have you spent outdoors each day?</label
-        >
-        <input
-          type="number"
-          id="averageHours"
-          v-model="averageHours"
-          required
-        />
+        <router-link to="/complete_as" class="page-link">Complete</router-link>
       </div>
-      <label for="location1">Select Location 1:</label>
-      <select id="location1" v-model="selectedLocations[0]">
-        <option value="">-- Select Location --</option>
-        <option
-          v-for="(location, index) in locations"
-          :key="index"
-          :value="location"
-        >
-          {{ location }}
-        </option>
-      </select>
+      <section class="DayNum">
+        <!-- Day, Number content -->
+        <h2 class="section-title">Day, Number content</h2>
+        <div>
+          <label for="dropdown"
+            >During the last 30 days, on average, how many days have you spent
+            outdoors?</label
+          >
+          <div class="DH_Box"></div>
+          <select id="dropdown" v-model="selectedDays">
+            <option value="">Select</option>
+            <option v-for="day in days" :value="day" :key="day">
+              {{ day }}
+            </option>
+          </select>
+          <div class="DH_Box"></div>
+          <label for="averageHours"
+            >How much average hours have you spent outdoors each day?</label
+          >
+          <input
+            type="number"
+            id="averageHours"
+            v-model="averageHours"
+            required
+          />
+        </div>
+      </section>
 
-      <label for="location2">Select Location 2:</label>
-      <select id="location2" v-model="selectedLocations[1]">
-        <option value="">-- Select Location --</option>
-        <option
-          v-for="(location, index) in locations"
-          :key="index"
-          :value="location"
-        >
-          {{ location }}
-        </option>
-      </select>
+      <section class="Location">
+        <h2 class="section-title">Location</h2>
+        <label for="location1">Select Location 1:</label>
+        <select id="location1" v-model="selectedLocations[0]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+        <div class="DH_Box"></div>
+        <label for="location2">Select Location 2:</label>
+        <select id="location2" v-model="selectedLocations[1]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+        <div class="DH_Box"></div>
+        <label for="location3">Select Location 3:</label>
+        <select id="location3" v-model="selectedLocations[2]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+      </section>
+      <div class="DH_Box"></div>
 
-      <label for="location3">Select Location 3:</label>
-      <select id="location3" v-model="selectedLocations[2]">
-        <option value="">-- Select Location --</option>
-        <option
-          v-for="(location, index) in locations"
-          :key="index"
-          :value="location"
-        >
-          {{ location }}
-        </option>
-      </select>
-      <button @click="submitData">Submit</button>
+      <section class="Report">
+        <div class="report-content">
+          <table>
+            <tr>
+              <th>Result Name</th>
+              <th>Result Value</th>
+            </tr>
+            <tr v-if="selectedDays !== ''">
+              <td>Selected Days</td>
+              <td>{{ selectedDays }}</td>
+            </tr>
+            <tr v-if="averageHours !== null">
+              <td>Average Hours</td>
+              <td>{{ averageHours }}</td>
+            </tr>
+            <tr v-if="selectedLocations[0] !== ''">
+              <td>Location 1</td>
+              <td>{{ selectedLocations[0] }}</td>
+            </tr>
+            <tr v-if="selectedLocations[1] !== ''">
+              <td>Location 2</td>
+              <td>{{ selectedLocations[1] }}</td>
+            </tr>
+            <tr v-if="selectedLocations[2] !== ''">
+              <td>Location 3</td>
+              <td>{{ selectedLocations[2] }}</td>
+            </tr>
+            <!-- Add more table rows for other results -->
+          </table>
+          <!-- Other paragraphs of text -->
 
-      <pre>{{ selectedDays }}</pre>
-      <pre>{{ averageHours }}</pre>
-      <pre>{{ selectedLocations }}</pre>
-      <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
-      <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
-      <p v-if="responseReceived">maximun AQL: {{ max }}</p>
-      <p v-if="responseReceived">minimun AQI: {{ min }}</p>
-      <p v-if="responseReceived">
-        CGRS that you consume according to AQI: {{ Cgrs }}
-      </p>
-      <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
+          <button @click="submitData">Submit</button>
+          <h2 class="section-title" v-if="responseReceived">Report</h2>
+          <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
+          <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
+          <p v-if="responseReceived">maximun AQL: {{ max }}</p>
+          <p v-if="responseReceived">minimun AQI: {{ min }}</p>
+          <p v-if="responseReceived">
+            CGRS that you consume according to AQI: {{ Cgrs }}
+          </p>
+          <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
+        </div>
+      </section>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -171,9 +221,17 @@ label,
 input {
   margin-bottom: 10px;
 }
+input,
+option,
+select {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #c1fff7;
+}
 .container {
   display: flex;
-  height: 100vh;
 }
 .left-sidebar {
   width: 25%;
@@ -182,11 +240,112 @@ input {
 
 .content {
   width: 50%;
-  background-color: #eafffc; /* Background color for main content */
+  background-color: #ffffff; /* Background color for main content */
 }
-
+.DH_Box {
+  margin: 10px;
+}
 .right-sidebar {
   width: 25%;
   background-color: #71ffe5; /* Background color for right sidebar */
+}
+
+/* set content are for small size */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-sidebar,
+  .right-sidebar {
+    display: none;
+  }
+
+  .content {
+    width: 90%;
+  }
+}
+
+/* for page link */
+.page-link-middle {
+  text-align: center;
+  background-color: #71ffe5;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #000;
+  flex-grow: 1;
+  font-size: large;
+}
+
+.page-links {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  font-weight: bold;
+  background-color: #eafffc;
+}
+
+.page-link {
+  background-color: #71ffe5;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #000;
+}
+.page-link:hover {
+  background-color: #48d6b4;
+}
+
+.section {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: #b9fff2;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.Report {
+  margin-top: 20px;
+}
+
+.report-content {
+  background-color: #ffffff;
+  padding: 10px;
+  overflow-wrap: break-word; /* Ensure long lines of text wrap */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+th {
+  background-color: #b9fff2;
+}
+
+tr:nth-child(even) {
+  background-color: #c1fff7;
+}
+
+tr:hover {
+  background-color: cyan;
 }
 </style>
