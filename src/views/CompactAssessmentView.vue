@@ -6,13 +6,18 @@
     <div class="content">
       <!-- Main content -->
       <div>
-        <label for="dropdown">Select number of days:</label>
+        <label for="dropdown"
+          >During the last 30 days, on average, how many days have you spent
+          outdoors?</label
+        >
         <select id="dropdown" v-model="selectedDays">
           <option value="">Select</option>
           <option v-for="day in days" :value="day" :key="day">{{ day }}</option>
         </select>
 
-        <label for="averageHours">Average Hours Outside:</label>
+        <label for="averageHours"
+          >How much average hours have you spent outdoors each day?</label
+        >
         <input
           type="number"
           id="averageHours"
@@ -117,34 +122,42 @@ export default {
   },
   methods: {
     submitData() {
-      if (this.numberOfDays !== null && this.averageHours !== null) {
-        const requestData = {
-          locations: this.selectedLocations,
-          selectedDays: this.selectedDays,
-          averageHours: this.averageHours,
-        };
+      if (this.selectedDays !== "" && this.averageHours !== null) {
+        if (this.selectedDays >= 1 && this.selectedDays <= 30) {
+          if (this.averageHours >= 1 && this.averageHours <= 24) {
+            const requestData = {
+              locations: this.selectedLocations,
+              selectedDays: this.selectedDays,
+              averageHours: this.averageHours,
+            };
 
-        fetch("http://127.0.0.1:5000/submitcompactdata", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            this.calculateaverage = data.calculateaverage;
-            this.totalhour = data.totalhour;
-            this.output_text = data.output_text;
-            this.responseReceived = true;
-            this.max = data.max;
-            this.min = data.min;
-            this.Cgrs = data.CGRS;
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error("API error:", error);
-          });
+            fetch("http://127.0.0.1:5000/submitcompactdata", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(requestData),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                this.calculateaverage = data.calculateaverage;
+                this.totalhour = data.totalhour;
+                this.output_text = data.output_text;
+                this.responseReceived = true;
+                this.max = data.max;
+                this.min = data.min;
+                this.Cgrs = data.CGRS;
+                console.log(data);
+              })
+              .catch((error) => {
+                console.error("API error:", error);
+              });
+          } else {
+            alert("Please enter a valid value for average hours (1-24).");
+          }
+        } else {
+          alert("Please enter a valid value for selected days (1-30).");
+        }
       } else {
         alert("Please fill in all fields.");
       }
