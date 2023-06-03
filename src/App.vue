@@ -5,7 +5,7 @@
         <router-link to="/">Home | </router-link>
         <!-- Add dropdown menu for Assessment topics -->
         <div class="dropdown" @click="toggleAssessmentTopics">
-          <button class="dropdown-toggle">Assessment</button>
+          <button class="dropdown-toggle">Assessment ></button>
           <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
             <router-link to="/compact_as">Compact Assessment</router-link>
             <router-link to="/complete_as">Complete Assessment</router-link>

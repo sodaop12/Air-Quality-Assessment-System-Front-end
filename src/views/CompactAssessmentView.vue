@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="left-sidebar">
-      <!-- Left sidebar content -->
+      <!-- Left sidebar content ASDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD-->
     </div>
     <div class="content">
       <!-- Main content -->
@@ -14,7 +14,7 @@
       </div>
       <section class="DayNum">
         <!-- Day, Number content -->
-        <h2 class="section-title">Day, Number content</h2>
+        <h2 class="section-title">Average Day&Hours</h2>
         <div>
           <label for="dropdown"
             >During the last 30 days, on average, how many days have you spent
@@ -22,7 +22,7 @@
           >
           <div class="DH_Box"></div>
           <select id="dropdown" v-model="selectedDays">
-            <option value="">Select</option>
+            <option value="">-- How much days --</option>
             <option v-for="day in days" :value="day" :key="day">
               {{ day }}
             </option>
@@ -36,6 +36,7 @@
             id="averageHours"
             v-model="averageHours"
             required
+            placeholder="-- Average hours --"
           />
         </div>
       </section>
@@ -78,14 +79,14 @@
           </option>
         </select>
       </section>
-      <div class="DH_Box"></div>
 
       <section class="Report">
+        <h2 class="section-title">Summary</h2>
         <div class="report-content">
           <table>
             <tr>
-              <th>Result Name</th>
-              <th>Result Value</th>
+              <th>Content</th>
+              <th>Information</th>
             </tr>
             <tr v-if="selectedDays !== ''">
               <td>Selected Days</td>
@@ -109,18 +110,43 @@
             </tr>
             <!-- Add more table rows for other results -->
           </table>
-          <!-- Other paragraphs of text -->
 
-          <button @click="submitData">Submit</button>
+          <!-- Loading pop-up -->
+          <div class="loading-popup" v-if="loading">
+            <div class="loading-text">Loading Result...</div>
+          </div>
+          <!-- Other paragraphs of text -->
+          <div class="button-container">
+            <button @click="submitData" class="submit-button">Submit</button>
+          </div>
           <h2 class="section-title" v-if="responseReceived">Report</h2>
-          <p v-if="responseReceived">averageAQI: {{ calculateaverage }}</p>
-          <p v-if="responseReceived">totalhour: {{ totalhour }}</p>
-          <p v-if="responseReceived">maximun AQL: {{ max }}</p>
-          <p v-if="responseReceived">minimun AQI: {{ min }}</p>
-          <p v-if="responseReceived">
-            CGRS that you consume according to AQI: {{ Cgrs }}
-          </p>
-          <p v-if="responseReceived">chatGPT suggestion {{ output_text }}</p>
+          <table v-if="responseReceived">
+            <tr>
+              <td>Average AQI:</td>
+              <td>{{ calculateaverage }}</td>
+            </tr>
+            <tr>
+              <td>Total Hour:</td>
+              <td>{{ totalhour }}</td>
+            </tr>
+            <tr>
+              <td>Maximum AQI:</td>
+              <td>{{ max }}</td>
+            </tr>
+            <tr>
+              <td>Minimum AQI:</td>
+              <td>{{ min }}</td>
+            </tr>
+            <tr>
+              <td>Cigarettes according to AQI:</td>
+              <td>{{ Cgrs }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p v-html="output_text"></p>
+              </td>
+            </tr>
+          </table>
         </div>
       </section>
     </div>
@@ -134,6 +160,7 @@
 export default {
   data() {
     return {
+      loading: false,
       selectedDays: "",
       calculateaverage: null,
       totalhour: null,
@@ -180,7 +207,7 @@ export default {
               selectedDays: this.selectedDays,
               averageHours: this.averageHours,
             };
-
+            this.loading = true;
             fetch("http://127.0.0.1:5000/submitcompactdata", {
               method: "POST",
               headers: {
@@ -198,9 +225,11 @@ export default {
                 this.min = data.min;
                 this.Cgrs = data.CGRS;
                 console.log(data);
+                this.loading = false;
               })
               .catch((error) => {
                 console.error("API error:", error);
+                this.loading = false;
               });
           } else {
             alert("Please enter a valid value for average hours (1-24).");
@@ -224,22 +253,28 @@ input {
 input,
 option,
 select {
-  width: 100%;
+  width: 60%;
   height: 40px;
   padding: 5px;
   box-sizing: border-box;
   background-color: #c1fff7;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
 }
 .container {
   display: flex;
 }
 .left-sidebar {
   width: 25%;
+  height: 100%;
   background-color: #71ffe5; /* Background color for left sidebar */
 }
 
 .content {
   width: 50%;
+  height: 100%;
   background-color: #ffffff; /* Background color for main content */
 }
 .DH_Box {
@@ -247,6 +282,7 @@ select {
 }
 .right-sidebar {
   width: 25%;
+  height: 100%;
   background-color: #71ffe5; /* Background color for right sidebar */
 }
 
@@ -264,6 +300,17 @@ select {
   .content {
     width: 90%;
   }
+
+  .page-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-link {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 0;
+  }
 }
 
 /* for page link */
@@ -280,16 +327,16 @@ select {
 }
 
 .page-links {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  margin: 20px;
   font-weight: bold;
-  background-color: #eafffc;
 }
 
 .page-link {
   background-color: #71ffe5;
   padding: 10px 20px;
+  margin-left: 10px;
   margin-right: 10px;
   border-radius: 20px;
   text-decoration: none;
@@ -299,13 +346,8 @@ select {
   background-color: #48d6b4;
 }
 
-.section {
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-}
-
 .section-title {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -333,12 +375,12 @@ table {
 
 th,
 td {
-  border: 1px solid #000;
+  border: 1px solid white;
   padding: 8px;
 }
 
 th {
-  background-color: #b9fff2;
+  background-color: #8fffeb;
 }
 
 tr:nth-child(even) {
@@ -347,5 +389,42 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: cyan;
+}
+
+.submit-button {
+  background-color: #71ffe5; /* Set your desired button color here */
+  color: #ffffff; /* Set the text color */
+  border: none;
+  border-radius: 25px; /* Set the desired border radius for a rounded shape */
+  padding: 10px 10px;
+  font-size: 16px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.submit-button:active {
+  background-color: #00926f;
+}
+
+.loading-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-text {
+  font-size: 20px;
+  color: #fff;
 }
 </style>
