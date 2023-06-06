@@ -145,6 +145,9 @@
           <pre>{{ selectedLocation30 }}</pre>
           <button @click="submitData">Submit</button>
         </div>
+        <div>
+          <p v-if="responseReceived">{{ calculateaverage }}</p>
+        </div>
       </div>
       <pre>{{ additionalHours }}</pre>
       <div class="right-sidebar">
@@ -167,6 +170,8 @@ export default {
       additionalText: null,
       additionalStartDate: null,
       additionalEndDate: null,
+      responseReceived: false,
+      calculateaverage: null,
       days: Array.from({ length: 30 }, (_, index) => index + 1), // Generate an array of numbers from 1 to 30
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
@@ -233,7 +238,16 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.calculateaverage = data.calculateaverage;
+          this.responseReceived = true;
+        })
+        .catch((error) => {
+          console.error("API error:", error);
+          this.loading = false;
+        });
     },
   },
 };
