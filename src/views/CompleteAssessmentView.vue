@@ -52,7 +52,7 @@
                 </option>
               </select>
             </div>
-            <label>Enter text:</label>
+            <label>Enter congenital disease:</label>
             <input
               :id="'textInput' + inputIndex"
               type="text"
@@ -81,21 +81,41 @@
               type="number"
               v-model="Hours"
             />
-            <label>Enter text:</label>
+            <label>Enter congenital disease:</label>
             <input
               :id="'textInput' + inputIndex"
               type="text"
               v-model="additionalText"
             />
-            <label for="locationDropdown">Select Locations:</label>
-            <select
-              id="locationDropdown"
-              v-model="selectedLocations[inputIndex - 1]"
-            >
+            <label for="location1">Select Location 1:</label>
+            <select id="location1" v-model="selectedLocation30[0]">
+              <option value="">-- Select Location --</option>
               <option
-                v-for="location in locations"
+                v-for="(location, index) in locations"
+                :key="index"
                 :value="location"
-                :key="location"
+              >
+                {{ location }}
+              </option>
+            </select>
+            <label for="location1">Select Location 2:</label>
+            <select id="location1" v-model="selectedLocation30[1]">
+              <option value="">-- Select Location --</option>
+              <option
+                v-for="(location, index) in locations"
+                :key="index"
+                :value="location"
+              >
+                {{ location }}
+              </option>
+            </select>
+            <label for="location1">Select Location 3:</label>
+            <select id="location1" v-model="selectedLocation30[2]">
+              <option value="">-- Select Location --</option>
+              <option
+                v-for="(location, index) in locations"
+                :key="index"
+                :value="location"
               >
                 {{ location }}
               </option>
@@ -107,6 +127,12 @@
               :id="'hoursInput' + inputIndex"
               type="number"
               v-model="Hours"
+            />
+            <label>Enter congenital disease:</label>
+            <input
+              :id="'textInput' + inputIndex"
+              type="text"
+              v-model="additionalText"
             />
             <label for="location1">Select Location 1:</label>
             <select id="location1" v-model="selectedLocation30[0]">
@@ -145,11 +171,14 @@
           <pre>{{ selectedLocation30 }}</pre>
           <button @click="submitData">Submit</button>
         </div>
-        <div>
-          <p v-if="responseReceived">{{ calculateaverage }}</p>
+        <div v-if="responseReceived">
+          <p>average{{ calculateaverage }}</p>
+          <p>Max: {{ max }}</p>
+          <p>Min: {{ min }}</p>
+          <p>Cgrs: {{ Cgrs }}</p>
+          <p>ChatGPT:{{ output_text }}</p>
         </div>
       </div>
-      <pre>{{ additionalHours }}</pre>
       <div class="right-sidebar">
         <!-- Right sidebar content -->
       </div>
@@ -166,12 +195,17 @@ export default {
       additionalHours: [],
       selectedLocations: [],
       selectedLocation30: ["", "", ""],
+      output_text: null,
       Hours: null,
       additionalText: null,
       additionalStartDate: null,
       additionalEndDate: null,
       responseReceived: false,
       calculateaverage: null,
+      max: null,
+      min: null,
+      Cgrs: null,
+      totalhour: null,
       days: Array.from({ length: 30 }, (_, index) => index + 1), // Generate an array of numbers from 1 to 30
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
@@ -241,7 +275,12 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
+          this.max = data.max;
+          this.min = data.min;
+          this.Cgrs = data.CGRS;
+          this.output_text = data.output_text;
           this.calculateaverage = data.calculateaverage;
+          this.output_text = data.output_text;
           this.responseReceived = true;
         })
         .catch((error) => {
