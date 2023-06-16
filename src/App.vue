@@ -2,18 +2,25 @@
   <nav>
     <div class="navbar">
       <div class="navbar-brand">
-        <router-link to="/">Home | </router-link>
+        <router-link to="/" class="nav-title">Home |</router-link>
         <!-- Add dropdown menu for Assessment topics -->
         <div class="dropdown" @click="toggleAssessmentTopics">
-          <button class="dropdown-toggle">Assessment ></button>
+          <button class="dropdown-toggle">Assessment</button>
           <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
-            <router-link to="/compact_as">Compact Assessment</router-link>
-            <router-link to="/complete_as">Complete Assessment</router-link>
-            <router-link to="/calendar_as">Calendar Assessment</router-link>
+            <router-link to="/compact_as" class="mini_topic"
+              >Compact Assessment</router-link
+            >
+            <router-link to="/complete_as" class="mini_topic"
+              >Complete Assessment</router-link
+            >
+            <router-link to="/calendar_as" class="mini_topic"
+              >Calendar Assessment</router-link
+            >
           </div>
         </div>
-        <router-link to="/forecast">Forecast</router-link>
-        <router-link to="/feedback">Feedback</router-link>
+        <div class="box"></div>
+        <router-link to="/forecast" class="nav-title">Forecast</router-link>
+        <router-link to="/feedback" class="nav-title">Feedback</router-link>
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
@@ -65,6 +72,7 @@ export default {
 <style>
 .navbar {
   background-color: #d1fff7;
+  color: #00926f;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   display: flex;
@@ -84,6 +92,25 @@ export default {
   font-weight: bold;
 }
 
+.nav-title,
+.dropdown-toggle,
+.navbar-item,
+.mini_topic {
+  color: #00926f; /* Default text color */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-title:hover,
+.dropdown-toggle:hover,
+.navbar-item:hover {
+  /* Background color on hover */
+  color: #fff; /* Text color on hover */
+}
+
+.mini_topic:hover {
+  background: #00926f;
+}
+
 .navbar-menu {
   display: flex;
   align-items: center;
@@ -100,10 +127,6 @@ export default {
   text-decoration: none;
   margin-left: 10px;
   font-weight: bold;
-}
-
-.navbar-item:hover {
-  color: #42b983;
 }
 
 .router-link-exact-active {
@@ -133,6 +156,10 @@ export default {
   padding: 10px;
   z-index: 1;
 }
+
+.box {
+  width: 15px;
+} /* space between object */
 
 .dropdown-menu.show {
   display: block;

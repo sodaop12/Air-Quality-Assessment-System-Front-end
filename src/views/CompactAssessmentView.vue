@@ -292,24 +292,8 @@ select {
     flex-direction: column;
   }
 
-  .left-sidebar,
-  .right-sidebar {
-    display: none;
-  }
-
   .content {
-    width: 90%;
-  }
-
-  .page-links {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .page-link {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-right: 0;
+    width: 100%;
   }
 }
 

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <nav class="navbar">
-      <!-- Navigation bar content -->
-    </nav>
     <div class="container">
       <div class="left-sidebar">
         <!-- Left sidebar content -->
@@ -309,5 +306,15 @@ export default {
 .right-sidebar {
   width: 25%;
   background-color: #71ffe5; /* Background color for right sidebar */
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+  }
 }
 </style>

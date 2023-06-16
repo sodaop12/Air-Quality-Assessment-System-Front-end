@@ -86,4 +86,14 @@ h1 {
 .bg {
   background-color: #71ffe5;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .content {
+    width: 100%;
+  }
+}
 </style>

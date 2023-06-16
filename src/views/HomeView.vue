@@ -160,13 +160,8 @@ export default {};
     flex-direction: column;
   }
 
-  .left-sidebar,
-  .right-sidebar {
-    display: none;
-  }
-
   .content {
-    width: 90%;
+    width: 100%;
   }
 }
 </style>

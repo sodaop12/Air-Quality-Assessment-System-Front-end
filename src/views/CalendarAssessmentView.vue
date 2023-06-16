@@ -1,8 +1,5 @@
 <template>
   <div>
-    <nav class="navbar">
-      <!-- Navigation bar content -->
-    </nav>
     <div class="container">
       <div class="left-sidebar">
         <!-- Left sidebar content -->
