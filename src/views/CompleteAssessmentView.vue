@@ -1,184 +1,186 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="left-sidebar">
-        <!-- Left sidebar content -->
+  <div class="container">
+    <div class="left-sidebar">
+      <!-- Left sidebar content -->
+    </div>
+    <div class="content">
+      <!-- Main content -->
+      <div class="page-links">
+        <router-link to="/compact_as" class="page-link">Compact</router-link>
+        <router-link to="/complete_as" class="page-link-middle"
+          >Complete Assessment</router-link
+        >
+        <router-link to="/calendar_as" class="page-link">Calendar</router-link>
       </div>
-      <div class="content">
-        <!-- Main content -->
-        <div class="complete_as">
-          <h1>Complete Home</h1>
+      <div>
+        <label for="dropdown">Select number of days:</label>
+        <select
+          id="dropdown"
+          v-model="selectedDays"
+          @change="generateAdditionalInputs"
+        >
+          <option value="">Select</option>
+          <option v-for="day in days" :value="day" :key="day">
+            {{ day }}
+          </option>
+        </select>
+        <div v-if="selectedDays >= 1 && selectedDays <= 7">
+          <div v-for="inputIndex in additionalInputsCount" :key="inputIndex">
+            <label :for="'additionalInput' + inputIndex">Enter Date :</label>
+            <input
+              :id="'additionalInput' + inputIndex"
+              type="number"
+              v-model="additionalDays[inputIndex - 1]"
+            />
+            <label :for="'hoursInput' + inputIndex">Enter hours:</label>
+            <input
+              :id="'hoursInput' + inputIndex"
+              type="number"
+              v-model="additionalHours[inputIndex - 1]"
+            />
+            <label for="locationDropdown">Select Locations:</label>
+            <select
+              id="locationDropdown"
+              v-model="selectedLocations[inputIndex - 1]"
+            >
+              <option
+                v-for="location in locations"
+                :value="location"
+                :key="location"
+              >
+                {{ location }}
+              </option>
+            </select>
+          </div>
+          <label>Enter congenital disease:</label>
+          <input
+            :id="'textInput' + inputIndex"
+            type="text"
+            v-model="additionalText"
+          />
         </div>
-        <div>
-          <label for="dropdown">Select number of days:</label>
-          <select
-            id="dropdown"
-            v-model="selectedDays"
-            @change="generateAdditionalInputs"
-          >
-            <option value="">Select</option>
-            <option v-for="day in days" :value="day" :key="day">
-              {{ day }}
+        <div v-if="selectedDays >= 8 && selectedDays <= 29">
+          <input
+            :id="'startDateInput' + inputIndex"
+            type="number"
+            v-model="additionalStartDate"
+            min="1"
+            max="31"
+          />
+          <span>to</span>
+          <input
+            :id="'endDateInput' + inputIndex"
+            type="number"
+            v-model="additionalEndDate"
+            min="1"
+            max="31"
+          />
+          <label>average hours</label>
+          <input
+            :id="'hoursInput' + inputIndex"
+            type="number"
+            v-model="Hours"
+          />
+          <label>Enter congenital disease:</label>
+          <input
+            :id="'textInput' + inputIndex"
+            type="text"
+            v-model="additionalText"
+          />
+          <label for="location1">Select Location 1:</label>
+          <select id="location1" v-model="selectedLocation30[0]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
             </option>
           </select>
-          <div v-if="selectedDays >= 1 && selectedDays <= 7">
-            <div v-for="inputIndex in additionalInputsCount" :key="inputIndex">
-              <label :for="'additionalInput' + inputIndex">Enter Date :</label>
-              <input
-                :id="'additionalInput' + inputIndex"
-                type="number"
-                v-model="additionalDays[inputIndex - 1]"
-              />
-              <label :for="'hoursInput' + inputIndex">Enter hours:</label>
-              <input
-                :id="'hoursInput' + inputIndex"
-                type="number"
-                v-model="additionalHours[inputIndex - 1]"
-              />
-              <label for="locationDropdown">Select Locations:</label>
-              <select
-                id="locationDropdown"
-                v-model="selectedLocations[inputIndex - 1]"
-              >
-                <option
-                  v-for="location in locations"
-                  :value="location"
-                  :key="location"
-                >
-                  {{ location }}
-                </option>
-              </select>
-            </div>
-            <label>Enter congenital disease:</label>
-            <input
-              :id="'textInput' + inputIndex"
-              type="text"
-              v-model="additionalText"
-            />
-          </div>
-          <div v-if="selectedDays >= 8 && selectedDays <= 29">
-            <input
-              :id="'startDateInput' + inputIndex"
-              type="number"
-              v-model="additionalStartDate"
-              min="1"
-              max="31"
-            />
-            <span>to</span>
-            <input
-              :id="'endDateInput' + inputIndex"
-              type="number"
-              v-model="additionalEndDate"
-              min="1"
-              max="31"
-            />
-            <label>average hours</label>
-            <input
-              :id="'hoursInput' + inputIndex"
-              type="number"
-              v-model="Hours"
-            />
-            <label>Enter congenital disease:</label>
-            <input
-              :id="'textInput' + inputIndex"
-              type="text"
-              v-model="additionalText"
-            />
-            <label for="location1">Select Location 1:</label>
-            <select id="location1" v-model="selectedLocation30[0]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-            <label for="location1">Select Location 2:</label>
-            <select id="location1" v-model="selectedLocation30[1]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-            <label for="location1">Select Location 3:</label>
-            <select id="location1" v-model="selectedLocation30[2]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-          </div>
-          <div v-if="selectedDays == 30">
-            <label>average hours</label>
-            <input
-              :id="'hoursInput' + inputIndex"
-              type="number"
-              v-model="Hours"
-            />
-            <label>Enter congenital disease:</label>
-            <input
-              :id="'textInput' + inputIndex"
-              type="text"
-              v-model="additionalText"
-            />
-            <label for="location1">Select Location 1:</label>
-            <select id="location1" v-model="selectedLocation30[0]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-            <label for="location1">Select Location 2:</label>
-            <select id="location1" v-model="selectedLocation30[1]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-            <label for="location1">Select Location 3:</label>
-            <select id="location1" v-model="selectedLocation30[2]">
-              <option value="">-- Select Location --</option>
-              <option
-                v-for="(location, index) in locations"
-                :key="index"
-                :value="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-          </div>
-          <pre>{{ selectedLocation30 }}</pre>
-          <button @click="submitData">Submit</button>
+          <label for="location1">Select Location 2:</label>
+          <select id="location1" v-model="selectedLocation30[1]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
+            </option>
+          </select>
+          <label for="location1">Select Location 3:</label>
+          <select id="location1" v-model="selectedLocation30[2]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
+            </option>
+          </select>
         </div>
-        <div v-if="responseReceived">
-          <p>average{{ calculateaverage }}</p>
-          <p>Max: {{ max }}</p>
-          <p>Min: {{ min }}</p>
-          <p>Cgrs: {{ Cgrs }}</p>
-          <p>ChatGPT:{{ output_text }}</p>
+        <div v-if="selectedDays == 30">
+          <label>average hours</label>
+          <input
+            :id="'hoursInput' + inputIndex"
+            type="number"
+            v-model="Hours"
+          />
+          <label>Enter congenital disease:</label>
+          <input
+            :id="'textInput' + inputIndex"
+            type="text"
+            v-model="additionalText"
+          />
+          <label for="location1">Select Location 1:</label>
+          <select id="location1" v-model="selectedLocation30[0]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
+            </option>
+          </select>
+          <label for="location1">Select Location 2:</label>
+          <select id="location1" v-model="selectedLocation30[1]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
+            </option>
+          </select>
+          <label for="location1">Select Location 3:</label>
+          <select id="location1" v-model="selectedLocation30[2]">
+            <option value="">-- Select Location --</option>
+            <option
+              v-for="(location, index) in locations"
+              :key="index"
+              :value="location"
+            >
+              {{ location }}
+            </option>
+          </select>
         </div>
+        <pre>{{ selectedLocation30 }}</pre>
+        <button @click="submitData">Submit</button>
       </div>
-      <div class="right-sidebar">
-        <!-- Right sidebar content -->
+      <div v-if="responseReceived">
+        <p>average{{ calculateaverage }}</p>
+        <p>Max: {{ max }}</p>
+        <p>Min: {{ min }}</p>
+        <p>Cgrs: {{ Cgrs }}</p>
+        <p>ChatGPT:{{ output_text }}</p>
       </div>
+    </div>
+    <div class="right-sidebar">
+      <!-- Right sidebar content -->
     </div>
   </div>
 </template>
@@ -289,32 +291,7 @@ export default {
 };
 </script>
 <style scoped>
-.container {
-  display: flex;
-  height: 100vh;
-}
-.left-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for left sidebar */
-}
-
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
-}
-
-.right-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for right sidebar */
-}
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .content {
-    width: 100%;
-  }
-}
+@import "../assets/css/Based_Element.css";
+@import "../assets/css/Action_Element.css";
+/* for page link */
 </style>

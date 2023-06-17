@@ -1,39 +1,29 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="left-sidebar">
-        <!-- Left sidebar content -->
-      </div>
-      <div class="content">
-        <!-- Main content -->
-        <div class="calendar_as">
-          <h1>Calendar Home</h1>
+  <div class="container">
+    <div class="left-sidebar">
+      <!-- Left sidebar content -->
+    </div>
+    <div class="content">
+      <!-- Main content -->
+      <div class="calendar_as">
+        <div class="page-links">
+          <router-link to="/complete_as" class="page-link"
+            >Complete</router-link
+          >
+          <router-link to="/calendar_as" class="page-link-middle"
+            >Calendar Assessment</router-link
+          >
+          <router-link to="/compact_as" class="page-link">Compact</router-link>
         </div>
       </div>
-      <div class="right-sidebar">
-        <!-- Right sidebar content -->
-      </div>
+    </div>
+    <div class="right-sidebar">
+      <!-- Right sidebar content -->
     </div>
   </div>
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  height: 100vh;
-}
-.left-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for left sidebar */
-}
-
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
-}
-
-.right-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for right sidebar */
-}
+@import "../assets/css/Based_Element.css";
+@import "../assets/css/Action_Element.css";
 </style>
