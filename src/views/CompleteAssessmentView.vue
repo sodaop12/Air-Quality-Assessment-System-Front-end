@@ -13,7 +13,9 @@
         <router-link to="/calendar_as" class="page-link">Calendar</router-link>
       </div>
       <div>
+        <h2 class="section-title">Date & Time & Location</h2>
         <label for="dropdown">Select number of days:</label>
+
         <select
           id="dropdown"
           v-model="selectedDays"
@@ -24,6 +26,7 @@
             {{ day }}
           </option>
         </select>
+        <!-- START 1-7 DAY [1]-->
         <div v-if="selectedDays >= 1 && selectedDays <= 7">
           <div v-for="inputIndex in additionalInputsCount" :key="inputIndex">
             <label :for="'additionalInput' + inputIndex">Enter Date :</label>
@@ -52,13 +55,69 @@
               </option>
             </select>
           </div>
-          <label>Enter congenital disease:</label>
+          <h2 class="section-title">Congenital Disease 1</h2>
+          <label
+            >Are you having any health problems? (such as congenital disease,
+            illness and others):</label
+          >
           <input
             :id="'textInput' + inputIndex"
             type="text"
             v-model="additionalText"
           />
+          <h2 class="section-title">Summary 1</h2>
+          <table>
+            <!-- Table header -->
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+
+            <!-- Table body -->
+            <tbody>
+              <!-- Display selectedDays input -->
+              <tr>
+                <td>Selected Days</td>
+                <td>{{ selectedDays }}</td>
+              </tr>
+
+              <!-- Display additionalDays inputs -->
+              <tr v-for="(additionalDay, index) in additionalDays" :key="index">
+                <td>Additional Day {{ index + 1 }}</td>
+                <td>{{ additionalDay }}</td>
+              </tr>
+
+              <!-- Display additionalHours inputs -->
+              <tr
+                v-for="(additionalHour, index) in additionalHours"
+                :key="index"
+              >
+                <td>Additional Hour {{ index + 1 }}</td>
+                <td>{{ additionalHour }}</td>
+              </tr>
+
+              <!-- Display selectedLocations inputs -->
+              <tr
+                v-for="(selectedLocation, index) in selectedLocations"
+                :key="index"
+              >
+                <td>Selected Location {{ index + 1 }}</td>
+                <td>{{ selectedLocation }}</td>
+              </tr>
+
+              <!-- Display additionalText input -->
+              <tr>
+                <td>Additional Text</td>
+                <td>{{ additionalText }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- END 1-7 DAY [1]-->
         </div>
+        <!-- START 8-29 DAY [2]-->
         <div v-if="selectedDays >= 8 && selectedDays <= 29">
           <input
             :id="'startDateInput' + inputIndex"
@@ -81,12 +140,7 @@
             type="number"
             v-model="Hours"
           />
-          <label>Enter congenital disease:</label>
-          <input
-            :id="'textInput' + inputIndex"
-            type="text"
-            v-model="additionalText"
-          />
+
           <label for="location1">Select Location 1:</label>
           <select id="location1" v-model="selectedLocation30[0]">
             <option value="">-- Select Location --</option>
@@ -120,7 +174,70 @@
               {{ location }}
             </option>
           </select>
+          <h2 class="section-title">Congenital Disease 2</h2>
+          <label
+            >Are you having any health problems? (such as congenital disease,
+            illness and others):</label
+          >
+          <input
+            :id="'textInput' + inputIndex"
+            type="text"
+            v-model="additionalText"
+          />
+          <h2 class="section-title">Summary 2</h2>
+          <table>
+            <!-- Table header -->
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+
+            <!-- Table body -->
+            <tbody>
+              <!-- Display selectedDays input -->
+              <tr>
+                <td>Selected Days:</td>
+                <td>{{ selectedDays }}</td>
+              </tr>
+
+              <!-- Display additionalStartDate and additionalEndDate inputs -->
+              <tr>
+                <td>Additional Start Date:</td>
+                <td>{{ additionalStartDate }}</td>
+              </tr>
+              <tr>
+                <td>Additional End Date:</td>
+                <td>{{ additionalEndDate }}</td>
+              </tr>
+
+              <!-- Display selectedLocation30 inputs -->
+              <tr
+                v-for="(selectedLocation, index) in selectedLocation30"
+                :key="index"
+              >
+                <td>Selected Location {{ index + 1 }} (30 days):</td>
+                <td>{{ selectedLocation }}</td>
+              </tr>
+
+              <!-- Display Hours input -->
+              <tr>
+                <td>Hours:</td>
+                <td>{{ Hours }}</td>
+              </tr>
+
+              <!-- Display additionalText input -->
+              <tr>
+                <td>Additional Text:</td>
+                <td>{{ additionalText }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- END 8-29 DAY [2]-->
         </div>
+        <!-- START 30 DAY [3]-->
         <div v-if="selectedDays == 30">
           <label>average hours</label>
           <input
@@ -128,12 +245,7 @@
             type="number"
             v-model="Hours"
           />
-          <label>Enter congenital disease:</label>
-          <input
-            :id="'textInput' + inputIndex"
-            type="text"
-            v-model="additionalText"
-          />
+
           <label for="location1">Select Location 1:</label>
           <select id="location1" v-model="selectedLocation30[0]">
             <option value="">-- Select Location --</option>
@@ -167,8 +279,57 @@
               {{ location }}
             </option>
           </select>
+          <h2 class="section-title">Congenital Disease 3</h2>
+          <label
+            >Are you having any health problems? (such as congenital disease,
+            illness and others):</label
+          >
+          <input
+            :id="'textInput' + inputIndex"
+            type="text"
+            v-model="additionalText"
+          />
+          <h2 class="section-title">Summary 3</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Display selectedDays input -->
+              <tr>
+                <td>Selected Days:</td>
+                <td>{{ selectedDays }}</td>
+              </tr>
+
+              <!-- Display selectedLocation30 inputs -->
+              <tr
+                v-for="(selectedLocation, index) in selectedLocation30"
+                :key="index"
+              >
+                <td>Selected Location {{ index + 1 }} (30 days):</td>
+                <td>{{ selectedLocation }}</td>
+              </tr>
+
+              <!-- Display Hours input -->
+              <tr>
+                <td>Hours:</td>
+                <td>{{ Hours }}</td>
+              </tr>
+
+              <!-- Display additionalText input -->
+              <tr>
+                <td>Additional Text:</td>
+                <td>{{ additionalText }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- END 30 DAY [3]-->
         </div>
-        <pre>{{ selectedLocation30 }}</pre>
+
         <button @click="submitData">Submit</button>
       </div>
       <div v-if="responseReceived">
