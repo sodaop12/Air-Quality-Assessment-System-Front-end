@@ -2,10 +2,10 @@
   <nav>
     <div class="navbar">
       <div class="navbar-brand">
-        <router-link to="/" class="nav-title">Home |</router-link>
+        <p class="nav-title"><router-link to="/">Home |</router-link></p>
         <!-- Add dropdown menu for Assessment topics -->
         <div class="dropdown" @click="toggleAssessmentTopics">
-          <button class="dropdown-toggle">Assessment</button>
+          <div class="nav-sub">Assessment ▼</div>
           <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
             <router-link to="/compact_as" class="mini_topic"
               >Compact Assessment</router-link
@@ -18,9 +18,12 @@
             >
           </div>
         </div>
-        <div class="box"></div>
-        <router-link to="/forecast" class="nav-title">Forecast</router-link>
-        <router-link to="/feedback" class="nav-title">Feedback</router-link>
+        <p class="nav-sub">
+          <router-link to="/forecast" class="links">Forecast</router-link>
+        </p>
+        <p class="nav-sub">
+          <router-link to="/feedback" class="links">Feedback</router-link>
+        </p>
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
@@ -70,51 +73,75 @@ export default {
 </script>
 
 <style>
+.container {
+  position: relative;
+  display: flex;
+  height: calc(100vh - 50px);
+}
+.left-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for left sidebar */
+}
+
+.content {
+  width: 50%;
+  background-color: #eafffc; /* Background color for main content */
+}
+
+.right-sidebar {
+  width: 25%;
+  background-color: #71ffe5; /* Background color for right sidebar */
+}
 .navbar {
   background-color: #d1fff7;
   color: #00926f;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   justify-content: space-between;
   font-weight: bold;
 }
 
-.navbar-brand {
+.navbar-brand,
+.dropdown {
   display: flex;
-  font-weight: bold;
-}
-
-.navbar-brand a {
-  color: #333;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 100%;
   text-decoration: none;
   margin-right: 20px;
   font-weight: bold;
 }
 
-.nav-title,
-.dropdown-toggle,
-.navbar-item,
-.mini_topic {
-  color: #00926f; /* Default text color */
-  transition: background-color 0.3s, color 0.3s;
+.navbar-brand a {
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: bold;
 }
 
-.nav-title:hover,
-.dropdown-toggle:hover,
-.navbar-item:hover {
-  /* Background color on hover */
-  color: #fff; /* Text color on hover */
+.nav-title {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 100%;
+}
+
+.nav-sub,
+.mini_topic {
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
 }
 
 .mini_topic:hover {
-  background: #00926f;
+  background: white;
 }
 
 .navbar-menu {
   display: flex;
   align-items: center;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 100%;
 }
 
 .navbar-end {
@@ -123,7 +150,6 @@ export default {
 }
 
 .navbar-item {
-  color: #333;
   text-decoration: none;
   margin-left: 10px;
   font-weight: bold;
@@ -137,21 +163,11 @@ export default {
   position: relative;
 }
 
-.dropdown-toggle {
-  background: none;
-  border: none;
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #fff;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #d1fff7;
   display: none;
   padding: 10px;
   z-index: 1;
@@ -176,23 +192,7 @@ export default {
   color: #42b983;
 }
 
-.container {
-  position: relative;
-  display: flex;
-  height: calc(100vh - 50px);
-}
-.left-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for left sidebar */
-}
-
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
-}
-
-.right-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for right sidebar */
+.dropdown.active .nav-sub {
+  color: #fff; /* Text color when dropdown is active */
 }
 </style>
