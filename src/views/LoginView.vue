@@ -1,19 +1,19 @@
 <template>
-  <div class="box">
-    <div class="container">
-      <div class="content">
-        <!-- Main content -->
-        <h1>Login Page</h1>
-        <form @submit.prevent="login">
-          <label for="username">Username:</label>
+  <div class="container">
+    <div class="content-box">
+      <!-- Main content -->
+      <h1>Login</h1>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="username">Username</label>
           <input type="text" id="username" v-model="username" required />
           <br />
-          <label for="password">Password:</label>
+          <label for="password">Password</label>
           <input type="password" id="password" v-model="password" required />
-          <br />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+        </div>
+        <br />
+        <button class="submit-button" type="submit">Login</button>
+      </form>
     </div>
   </div>
 </template>
@@ -57,42 +57,62 @@ export default {
 
 <style scoped>
 .container {
-  width: 500px;
-  height: 300px;
+  display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  height: 100vh;
+  background-color: #71ffe5;
 }
 
+.content-box {
+  width: 50%;
+  background-color: #eafffc; /* Background color for main content */
+  padding: 20px;
+  text-align: center;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  text-align: left;
+  margin-bottom: 5px;
+  margin-left: 20%; /* Adjust the left margin as desired */
+  font-family: "Inter", sans-serif; /* Change the font family */
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 70%;
+  height: 40px;
+  margin: 0 auto;
+  background: #c1fff7;
+}
 h1 {
   color: #2c3e50;
 }
-.box {
-  display: relative;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  margin-top: 100px;
-  padding: 20px;
-  text-align: center;
-  background-color: #71ffe5;
+/* for submit button */
+.submit-button {
+  background-color: #71ffe5; /* Set your desired button color here */
+  width: 120px;
+  color: #ffffff; /* Set the text color */
+  border: none;
+  border-radius: 25px; /* Set the desired border radius for a rounded shape */
+  padding: 10px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Inter", sans-serif; /* Change the font family */
+  color: #777777;
 }
 
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
+.submit-button:active {
+  background-color: #00926f;
+  color: white;
 }
-
-.bg {
-  background-color: #71ffe5;
-}
-
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .content {
+  .content-box {
     width: 100%;
   }
 }

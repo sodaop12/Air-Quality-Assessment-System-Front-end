@@ -104,6 +104,7 @@ export default {
 
 .navbar-brand,
 .dropdown {
+  font-family: "Inter", sans-serif;
   display: flex;
   font-size: 20px;
   font-weight: 500;
@@ -123,6 +124,8 @@ export default {
   font-size: 25px;
   font-weight: 500;
   line-height: 100%;
+  color: green; /* Default title color */
+  transition: color 0.3s; /* Smooth transition for color change */
 }
 
 .nav-sub,
