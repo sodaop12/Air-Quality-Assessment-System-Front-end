@@ -28,33 +28,53 @@
         </select>
         <!-- START 1-7 DAY [1]-->
         <div v-if="selectedDays >= 1 && selectedDays <= 7">
-          <div v-for="inputIndex in additionalInputsCount" :key="inputIndex">
-            <label :for="'additionalInput' + inputIndex">Enter Date :</label>
-            <input
-              :id="'additionalInput' + inputIndex"
-              type="number"
-              v-model="additionalDays[inputIndex - 1]"
-            />
-            <label :for="'hoursInput' + inputIndex">Enter hours:</label>
-            <input
-              :id="'hoursInput' + inputIndex"
-              type="number"
-              v-model="additionalHours[inputIndex - 1]"
-            />
-            <label for="locationDropdown">Select Locations:</label>
-            <select
-              id="locationDropdown"
-              v-model="selectedLocations[inputIndex - 1]"
-            >
-              <option
-                v-for="location in locations"
-                :value="location"
-                :key="location"
-              >
-                {{ location }}
-              </option>
-            </select>
-          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="inputIndex in additionalInputsCount" :key="inputIndex">
+                <td>
+                  <label :for="'additionalInput' + inputIndex"
+                    >Enter Date :</label
+                  >
+                  <input
+                    :id="'additionalInput' + inputIndex"
+                    type="number"
+                    v-model="additionalDays[inputIndex - 1]"
+                  />
+                </td>
+                <td>
+                  <label :for="'hoursInput' + inputIndex">Enter hours:</label>
+                  <input
+                    :id="'hoursInput' + inputIndex"
+                    type="number"
+                    v-model="additionalHours[inputIndex - 1]"
+                  />
+                </td>
+                <td>
+                  <label for="locationDropdown">Select Locations:</label>
+                  <select
+                    id="locationDropdown"
+                    v-model="selectedLocations[inputIndex - 1]"
+                  >
+                    <option
+                      v-for="location in locations"
+                      :value="location"
+                      :key="location"
+                    >
+                      {{ location }}
+                    </option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
           <h2 class="section-title">Congenital Disease 1</h2>
           <label
             >Are you having any health problems? (such as congenital disease,
@@ -65,6 +85,7 @@
             type="text"
             v-model="additionalText"
           />
+
           <h2 class="section-title">Summary 1</h2>
           <table>
             <!-- Table header -->
@@ -119,21 +140,41 @@
         </div>
         <!-- START 8-29 DAY [2]-->
         <div v-if="selectedDays >= 8 && selectedDays <= 29">
-          <input
-            :id="'startDateInput' + inputIndex"
-            type="number"
-            v-model="additionalStartDate"
-            min="1"
-            max="31"
-          />
-          <span>to</span>
-          <input
-            :id="'endDateInput' + inputIndex"
-            type="number"
-            v-model="additionalEndDate"
-            min="1"
-            max="31"
-          />
+          <table>
+            <thead>
+              <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label :for="'startDateInput' + inputIndex"
+                    >Start Date:</label
+                  >
+                  <input
+                    :id="'startDateInput' + inputIndex"
+                    type="number"
+                    v-model="additionalStartDate"
+                    min="1"
+                    max="31"
+                  />
+                </td>
+                <td>
+                  <label :for="'endDateInput' + inputIndex">End Date:</label>
+                  <input
+                    :id="'endDateInput' + inputIndex"
+                    type="number"
+                    v-model="additionalEndDate"
+                    min="1"
+                    max="31"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- finish Start-End -->
           <label>average hours</label>
           <input
             :id="'hoursInput' + inputIndex"
@@ -330,15 +371,44 @@
           <!-- END 30 DAY [3]-->
         </div>
 
-        <button @click="submitData">Submit</button>
+        <!-- Loading pop-up -->
+        <div class="loading-popup" v-if="loading">
+          <div class="loading-text">Loading Result...</div>
+        </div>
+
+        <!-- Other paragraphs of text -->
+        <div class="button-container">
+          <button @click="submitData" class="submit-button">Submit</button>
+        </div>
       </div>
-      <div v-if="responseReceived">
-        <p>average{{ calculateaverage }}</p>
-        <p>Max: {{ max }}</p>
-        <p>Min: {{ min }}</p>
-        <p>Cgrs: {{ Cgrs }}</p>
-        <p>ChatGPT:{{ output_text }}</p>
-      </div>
+      <h2 class="section-title" v-if="responseReceived">Report</h2>
+      <table v-if="responseReceived">
+        <tr>
+          <td>Average AQI:</td>
+          <td>{{ calculateaverage }}</td>
+        </tr>
+        <tr>
+          <td>Total Hour:</td>
+          <td>{{ totalhour }}</td>
+        </tr>
+        <tr>
+          <td>Maximum AQI:</td>
+          <td>{{ max }}</td>
+        </tr>
+        <tr>
+          <td>Minimum AQI:</td>
+          <td>{{ min }}</td>
+        </tr>
+        <tr>
+          <td>Cigarettes according to AQI:</td>
+          <td>{{ Cgrs }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p v-html="output_text"></p>
+          </td>
+        </tr>
+      </table>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -350,6 +420,7 @@
 export default {
   data() {
     return {
+      loading: false,
       selectedDays: "",
       additionalDays: [],
       additionalHours: [],
@@ -426,6 +497,7 @@ export default {
         locations30: this.selectedLocation30,
         hours30: this.Hours,
       };
+      this.loading = true;
       fetch("http://127.0.0.1:5000/submitcompletedata", {
         method: "POST",
         headers: {
@@ -438,10 +510,10 @@ export default {
           this.max = data.max;
           this.min = data.min;
           this.Cgrs = data.CGRS;
-          this.output_text = data.output_text;
           this.calculateaverage = data.calculateaverage;
           this.output_text = data.output_text;
           this.responseReceived = true;
+          this.loading = false;
         })
         .catch((error) => {
           console.error("API error:", error);
@@ -454,5 +526,21 @@ export default {
 <style scoped>
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
-/* for page link */
+label,
+input {
+  margin-bottom: 10px;
+}
+input,
+option,
+select {
+  width: 60%;
+  height: 40px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #c1fff7;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+}
 </style>
