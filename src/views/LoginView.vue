@@ -14,6 +14,8 @@
         <br />
         <button class="submit-button" type="submit">Login</button>
       </form>
+      <span v-show="showSpan"> </span>
+      <p></p>
     </div>
   </div>
 </template>
@@ -24,6 +26,7 @@ export default {
     return {
       username: "",
       password: "",
+      showSpan: false,
     };
   },
   methods: {
@@ -45,6 +48,7 @@ export default {
             this.$router.push("/");
           } else {
             alert("Login failed");
+            this.showSpan = true;
           }
         })
         .catch((error) => {
@@ -115,5 +119,7 @@ h1 {
   .content-box {
     width: 100%;
   }
+}
+.error-message {
 }
 </style>
