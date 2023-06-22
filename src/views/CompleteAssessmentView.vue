@@ -46,7 +46,13 @@
                     :id="'additionalInput' + inputIndex"
                     type="number"
                     v-model="additionalDays[inputIndex - 1]"
+                    min="1"
+                    max="31"
+                    @input="validateDay(inputIndex - 1)"
                   />
+                  <p v-if="dayErrors[inputIndex - 1]" class="error-message">
+                    Please enter a number between 1 and 31.
+                  </p>
                 </td>
                 <td>
                   <label :for="'hoursInput' + inputIndex">Enter hours:</label>
@@ -54,6 +60,8 @@
                     :id="'hoursInput' + inputIndex"
                     type="number"
                     v-model="additionalHours[inputIndex - 1]"
+                    min="1"
+                    max="24"
                   />
                 </td>
                 <td>
@@ -136,7 +144,7 @@
             </tbody>
           </table>
 
-          <!-- END 1-7 DAY [1]-->
+          <!-- END 1-7 DAY [1]------------------------------------------------------------------------------>
         </div>
         <!-- START 8-29 DAY [2]-->
         <div v-if="selectedDays >= 8 && selectedDays <= 29">
@@ -159,6 +167,7 @@
                     v-model="additionalStartDate"
                     min="1"
                     max="31"
+                    @keydown="adjustStartDate"
                   />
                 </td>
                 <td>
@@ -169,6 +178,7 @@
                     v-model="additionalEndDate"
                     min="1"
                     max="31"
+                    @keydown="adjustEndDate"
                   />
                 </td>
               </tr>
@@ -246,13 +256,17 @@
               <!-- Display additionalStartDate and additionalEndDate inputs -->
               <tr>
                 <td>Additional Start Date:</td>
-                <td>{{ additionalStartDate }}</td>
+                <td>{{ additionalStartDate }}/05/2023</td>
               </tr>
               <tr>
                 <td>Additional End Date:</td>
-                <td>{{ additionalEndDate }}</td>
+                <td>{{ additionalEndDate }}/05/2023</td>
               </tr>
-
+              <!-- Display selectedDaysRange -->
+              <tr>
+                <td>Selected Days:</td>
+                <td>{{ selectedDaysRange }}</td>
+              </tr>
               <!-- Display selectedLocation30 inputs -->
               <tr
                 v-for="(selectedLocation, index) in selectedLocation30"
@@ -276,7 +290,7 @@
             </tbody>
           </table>
 
-          <!-- END 8-29 DAY [2]-->
+          <!-- END 8-29 DAY [2]----------------------------------------------------------------------------->
         </div>
         <!-- START 30 DAY [3]-->
         <div v-if="selectedDays == 30">
@@ -368,7 +382,7 @@
             </tbody>
           </table>
 
-          <!-- END 30 DAY [3]-->
+          <!-- END 30 DAY [3]----------------------------------------------------------------------------->
         </div>
 
         <!-- Loading pop-up -->
@@ -437,6 +451,7 @@ export default {
       min: null,
       Cgrs: null,
       totalhour: null,
+      dayErrors: [],
       days: Array.from({ length: 30 }, (_, index) => index + 1), // Generate an array of numbers from 1 to 30
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
@@ -469,6 +484,25 @@ export default {
     },
   },
   methods: {
+    validateDay(index) {
+      const day = this.additionalDays[index];
+      this.dayErrors[index] = day < 1 || day > 31;
+      return this.dayErrors[index];
+    },
+    validateForm() {
+      let hasErrors = false;
+
+      // Validate additionalDays inputs
+      this.additionalDays.forEach((day, index) => {
+        this.dayErrors[index] = day < 1 || day > 31;
+        if (this.dayErrors[index]) {
+          hasErrors = true;
+        }
+      });
+
+      // Return true if there are any validation errors
+      return hasErrors;
+    },
     generateAdditionalInputs() {
       this.additionalDays = [];
       this.additionalStartDate = null;
@@ -486,6 +520,14 @@ export default {
       }
     },
     submitData() {
+      // Perform validation here
+      const hasErrors = this.validateForm();
+
+      // Display warning message if there are errors
+      if (hasErrors) {
+        alert("Please correct the invalid inputs before submitting.");
+        return;
+      }
       const data = {
         selectedDays: this.selectedDays,
         additionalDays: this.additionalDays,
@@ -542,5 +584,8 @@ select {
   display: block;
   text-align: center;
   border-radius: 10px;
+}
+.error-message {
+  color: red;
 }
 </style>
