@@ -159,6 +159,7 @@
                     v-model="additionalStartDate"
                     min="1"
                     max="31"
+                    @input="adjustStartDate"
                   />
                 </td>
                 <td>
@@ -169,6 +170,7 @@
                     v-model="additionalEndDate"
                     min="1"
                     max="31"
+                    @input="adjustEndDate"
                   />
                 </td>
               </tr>
@@ -468,7 +470,38 @@ export default {
       return this.selectedDays;
     },
   },
+  /*
+  watch: {
+    additionalStartDate(value) {
+      this.additionalStartDate = value;
+    },
+    additionalEndDate(value) {
+      this.additionalEndDate = value;
+    },
+  },*/
   methods: {
+    adjustStartDate() {
+      if (this.additionalStartDate > 31) {
+        this.additionalStartDate = 31;
+      } else if (this.additionalStartDate < 1) {
+        this.additionalStartDate = 1;
+      } else if (
+        this.additionalStartDate + this.selectedDays >
+        31 - this.selectedDays
+      ) {
+        this.additionalStartDate = 31 - this.selectedDays;
+      }
+    },
+    adjustEndDate() {
+      if (this.additionalEndDate > 31) {
+        this.additionalEndDate = 31;
+      } else if (
+        this.additionalEndDate > this.additionalStartDate + this.selectedDays ||
+        this.additionalEndDate < this.additionalStartDate + this.selectedDays
+      ) {
+        this.additionalEndDate = this.additionalStartDate + this.selectedDays;
+      }
+    },
     generateAdditionalInputs() {
       this.additionalDays = [];
       this.additionalStartDate = null;
