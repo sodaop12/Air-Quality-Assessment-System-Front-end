@@ -26,7 +26,7 @@
             {{ day }}
           </option>
         </select>
-        <!-- START 1-7 DAY [1]-->
+        <!-- START 1-7 DAY [1]------------------------------------------------------------>
         <div v-if="selectedDays >= 1 && selectedDays <= 7">
           <table>
             <thead>
@@ -136,9 +136,9 @@
             </tbody>
           </table>
 
-          <!-- END 1-7 DAY [1]-->
+          <!-- END 1-7 DAY [1]------------------------------------------------------------>
         </div>
-        <!-- START 8-29 DAY [2]-->
+        <!-- START 8-29 DAY [2]------------------------------------------------------------>
         <div v-if="selectedDays >= 8 && selectedDays <= 29">
           <table>
             <thead>
@@ -182,6 +182,7 @@
             :id="'hoursInput' + inputIndex"
             type="number"
             v-model="Hours"
+            @input="adjustAverageHours"
           />
 
           <label for="location1">Select Location 1:</label>
@@ -278,15 +279,16 @@
             </tbody>
           </table>
 
-          <!-- END 8-29 DAY [2]-->
+          <!-- END 8-29 DAY [2]------------------------------------------------------------>
         </div>
-        <!-- START 30 DAY [3]-->
+        <!-- START 30 DAY [3]------------------------------------------------------------>
         <div v-if="selectedDays == 30">
           <label>average hours</label>
           <input
             :id="'hoursInput' + inputIndex"
             type="number"
             v-model="Hours"
+            @input="adjustAverageHours"
           />
 
           <label for="location1">Select Location 1:</label>
@@ -370,7 +372,7 @@
             </tbody>
           </table>
 
-          <!-- END 30 DAY [3]-->
+          <!-- END 30 DAY [3]------------------------------------------------------------>
         </div>
 
         <!-- Loading pop-up -->
@@ -480,6 +482,13 @@ export default {
     },
   },*/
   methods: {
+    adjustAverageHours() {
+      if (this.Hours < 1) {
+        this.Hours = 1;
+      } else if (this.Hours > 24) {
+        this.Hours = 24;
+      }
+    },
     adjustStartDate() {
       if (this.additionalStartDate > 31) {
         this.additionalStartDate = 31;
