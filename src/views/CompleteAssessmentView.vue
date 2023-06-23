@@ -46,6 +46,9 @@
                     :id="'additionalInput' + inputIndex"
                     type="number"
                     v-model="additionalDays[inputIndex - 1]"
+                    min="1"
+                    max="31"
+                    @input="adjustAdditionalDate(inputIndex - 1)"
                   />
                 </td>
                 <td>
@@ -54,6 +57,9 @@
                     :id="'hoursInput' + inputIndex"
                     type="number"
                     v-model="additionalHours[inputIndex - 1]"
+                    min="1"
+                    max="24"
+                    @input="adjustAdditionalHours(inputIndex - 1)"
                   />
                 </td>
                 <td>
@@ -84,6 +90,7 @@
             :id="'textInput' + inputIndex"
             type="text"
             v-model="additionalText"
+            maxlength="50"
           />
 
           <h2 class="section-title">Summary 1</h2>
@@ -227,6 +234,7 @@
             :id="'textInput' + inputIndex"
             type="text"
             v-model="additionalText"
+            maxlength="50"
           />
           <h2 class="section-title">Summary 2</h2>
           <table>
@@ -333,6 +341,7 @@
             :id="'textInput' + inputIndex"
             type="text"
             v-model="additionalText"
+            maxlength="50"
           />
           <h2 class="section-title">Summary 3</h2>
           <table>
@@ -382,7 +391,13 @@
 
         <!-- Other paragraphs of text -->
         <div class="button-container">
-          <button @click="submitData" class="submit-button">Submit</button>
+          <button
+            @click="submitData"
+            class="submit-button"
+            v-if="selectedDays >= 1 && selectedDays <= 30"
+          >
+            Submit
+          </button>
         </div>
       </div>
       <h2 class="section-title" v-if="responseReceived">Report</h2>
@@ -482,6 +497,23 @@ export default {
     },
   },*/
   methods: {
+    //limit the specific date [from 1-31], for 1-7
+    adjustAdditionalDate(index) {
+      if (this.additionalDays[index] < 1) {
+        this.additionalDays[index] = 1;
+      } else if (this.additionalDays[index] > 31) {
+        this.additionalDays[index] = 31;
+      }
+    },
+    //limit the average hours [from 1-24], for 1-7
+    adjustAdditionalHours(index) {
+      if (this.additionalHours[index] < 1) {
+        this.additionalHours[index] = 1;
+      } else if (this.additionalHours[index] > 24) {
+        this.additionalHours[index] = 24;
+      }
+    },
+    //limit the average hours [from 1-24], for 8-29/ 30
     adjustAverageHours() {
       if (this.Hours < 1) {
         this.Hours = 1;
@@ -489,6 +521,7 @@ export default {
         this.Hours = 24;
       }
     },
+    //limit the Day range between Start - End [from 1-30], for 8-29
     adjustStartDate() {
       if (this.additionalStartDate > 31) {
         this.additionalStartDate = 31;
