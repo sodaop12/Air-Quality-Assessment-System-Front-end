@@ -123,7 +123,7 @@
           <table v-if="responseReceived">
             <tr>
               <td>Average AQI:</td>
-              <td>{{ calculateaverage }}</td>
+              <td>{{ calculateaverage.toFixed(2) }}</td>
             </tr>
             <tr>
               <td>Total Hour:</td>
@@ -139,7 +139,7 @@
             </tr>
             <tr>
               <td>Cigarettes according to AQI:</td>
-              <td>{{ Cgrs }}</td>
+              <td>{{ Cgrs.toFixed(2) }}</td>
             </tr>
             <tr>
               <td colspan="2">

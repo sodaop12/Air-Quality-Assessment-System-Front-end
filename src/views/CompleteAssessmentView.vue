@@ -399,16 +399,14 @@
             Submit
           </button>
         </div>
+        <!-- Warning message
+        <div v-if="showWarning">alert("Please fill in all fields.");</div>-->
       </div>
       <h2 class="section-title" v-if="responseReceived">Report</h2>
       <table v-if="responseReceived">
         <tr>
           <td>Average AQI:</td>
-          <td>{{ calculateaverage }}</td>
-        </tr>
-        <tr>
-          <td>Total Hour:</td>
-          <td>{{ totalhour }}</td>
+          <td>{{ calculateaverage.toFixed(2) }}</td>
         </tr>
         <tr>
           <td>Maximum AQI:</td>
@@ -420,7 +418,7 @@
         </tr>
         <tr>
           <td>Cigarettes according to AQI:</td>
-          <td>{{ Cgrs }}</td>
+          <td>{{ Cgrs.toFixed(2) }}</td>
         </tr>
         <tr>
           <td colspan="2">
@@ -440,6 +438,7 @@ export default {
   data() {
     return {
       loading: false,
+      showWarning: false,
       selectedDays: "",
       additionalDays: [],
       additionalHours: [],
@@ -544,6 +543,7 @@ export default {
         this.additionalEndDate = this.additionalStartDate + this.selectedDays;
       }
     },
+    //-----------------------------------------------------------
     generateAdditionalInputs() {
       this.additionalDays = [];
       this.additionalStartDate = null;
@@ -561,6 +561,124 @@ export default {
       }
     },
     submitData() {
+      // Check if all required fields are filled
+      if (this.selectedDays >= 1 && this.selectedDays <= 7) {
+        for (let i = 0; i < this.additionalInputsCount; i++) {
+          if (
+            !this.additionalDays[i] ||
+            !this.additionalHours[i] ||
+            !this.selectedLocations[i] ||
+            !this.additionalText
+          ) {
+            this.showWarning = true;
+            alert("Please fill in all fields.");
+            return;
+          }
+        } // all condition are filled
+
+        // If all fields are filled in, continue with the submission logic
+        this.showWarning = false;
+        // ... continue with the submission logic
+        const data = {
+          selectedDays: this.selectedDays,
+          additionalDays: this.additionalDays,
+          additionalStartDate: this.additionalStartDate,
+          additionalEndDate: this.additionalEndDate,
+          additionalHours: this.additionalHours,
+          additionalText: this.additionalText,
+          locations: this.selectedLocations,
+          locations30: this.selectedLocation30,
+          hours30: this.Hours,
+        };
+        this.loading = true;
+        fetch("http://127.0.0.1:5000/submitcompletedata", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            this.max = data.max;
+            this.min = data.min;
+            this.Cgrs = data.CGRS;
+            this.calculateaverage = data.calculateaverage;
+            this.output_text = data.output_text;
+            this.responseReceived = true;
+            this.loading = false;
+          })
+          .catch((error) => {
+            console.error("API error:", error);
+            this.loading = false;
+          });
+      } else if (this.selectedDays >= 8 && this.selectedDays <= 29) {
+        if (
+          !this.additionalStartDate ||
+          !this.additionalEndDate ||
+          !this.Hours ||
+          !this.selectedLocation30[0] ||
+          !this.selectedLocation30[1] ||
+          !this.selectedLocation30[2] ||
+          !this.additionalText
+        ) {
+          this.showWarning = true;
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        // If all fields are filled in, continue with the submission logic
+        this.showWarning = false;
+        // ... continue with the submission logic
+        const data = {
+          selectedDays: this.selectedDays,
+          additionalDays: this.additionalDays,
+          additionalStartDate: this.additionalStartDate,
+          additionalEndDate: this.additionalEndDate,
+          additionalHours: this.additionalHours,
+          additionalText: this.additionalText,
+          locations: this.selectedLocations,
+          locations30: this.selectedLocation30,
+          hours30: this.Hours,
+        };
+        this.loading = true;
+        fetch("http://127.0.0.1:5000/submitcompletedata", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            this.max = data.max;
+            this.min = data.min;
+            this.Cgrs = data.CGRS;
+            this.calculateaverage = data.calculateaverage;
+            this.output_text = data.output_text;
+            this.responseReceived = true;
+            this.loading = false;
+          })
+          .catch((error) => {
+            console.error("API error:", error);
+            this.loading = false;
+          });
+      } else if (this.selectedDays == 30) {
+        if (
+          !this.Hours ||
+          !this.selectedLocation30[0] ||
+          !this.selectedLocation30[1] ||
+          !this.selectedLocation30[2] ||
+          !this.additionalText
+        ) {
+          this.showWarning = true;
+          alert("Please fill in all fields.");
+          return;
+        }
+      }
+      // If all fields are filled in, continue with the submission logic
+      this.showWarning = false;
+      // ... continue with the submission logic
       const data = {
         selectedDays: this.selectedDays,
         additionalDays: this.additionalDays,
@@ -594,6 +712,20 @@ export default {
           console.error("API error:", error);
           this.loading = false;
         });
+    },
+    resetResult() {
+      this.max = null;
+      this.min = null;
+      this.Cgrs = null;
+      this.calculateaverage = null;
+      this.output_text = null;
+      this.responseReceived = false;
+    },
+  },
+  // Assuming you have a watcher for the selectedDays property
+  watch: {
+    selectedDays() {
+      this.resetResult();
     },
   },
 };
