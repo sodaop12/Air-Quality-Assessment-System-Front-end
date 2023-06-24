@@ -14,18 +14,31 @@
       </div>
       <div>
         <h2 class="section-title">Date & Time & Location</h2>
-        <label for="dropdown">Select number of days:</label>
-
-        <select
-          id="dropdown"
-          v-model="selectedDays"
-          @change="generateAdditionalInputs"
-        >
-          <option value="">Select</option>
-          <option v-for="day in days" :value="day" :key="day">
-            {{ day }}
-          </option>
-        </select>
+        <div class="form-wrapper">
+          <div class="form-left">
+            <label for="dropdown" class="select_Head_day"
+              >Select Day Range:</label
+            >
+          </div>
+          <div class="form-right">
+            <select
+              id="dropdown"
+              v-model="selectedDays"
+              @change="generateAdditionalInputs"
+              class="option_head"
+            >
+              <option value="">Select</option>
+              <option
+                v-for="day in days"
+                :value="day"
+                :key="day"
+                class="option_day"
+              >
+                {{ day }}
+              </option>
+            </select>
+          </div>
+        </div>
         <!-- START 1-7 DAY [1]------------------------------------------------------------>
         <div v-if="selectedDays >= 1 && selectedDays <= 7">
           <table>
@@ -39,7 +52,9 @@
             <tbody>
               <tr v-for="inputIndex in additionalInputsCount" :key="inputIndex">
                 <td>
-                  <label :for="'additionalInput' + inputIndex"
+                  <label
+                    class="select_day"
+                    :for="'additionalInput' + inputIndex"
                     >Enter Date :</label
                   >
                   <input
@@ -52,7 +67,9 @@
                   />
                 </td>
                 <td>
-                  <label :for="'hoursInput' + inputIndex">Enter hours:</label>
+                  <label class="select_day" :for="'hoursInput' + inputIndex"
+                    >Enter hours:</label
+                  >
                   <input
                     :id="'hoursInput' + inputIndex"
                     type="number"
@@ -63,7 +80,9 @@
                   />
                 </td>
                 <td>
-                  <label for="locationDropdown">Select Locations:</label>
+                  <label class="select_day" for="locationDropdown"
+                    >Select Locations:</label
+                  >
                   <select
                     id="locationDropdown"
                     v-model="selectedLocations[inputIndex - 1]"
@@ -72,6 +91,7 @@
                       v-for="location in locations"
                       :value="location"
                       :key="location"
+                      class="option_day"
                     >
                       {{ location }}
                     </option>
@@ -82,17 +102,19 @@
           </table>
 
           <h2 class="section-title">Congenital Disease 1</h2>
-          <label
-            >Are you having any health problems? (such as congenital disease,
-            illness and others):</label
-          >
-          <input
-            :id="'textInput' + inputIndex"
-            type="text"
-            v-model="additionalText"
-            maxlength="50"
-          />
-
+          <div class="disease_ex">
+            <label
+              >Are you having any health problems? (such as congenital disease,
+              illness and others)</label
+            >
+            <input
+              class="disease_des"
+              :id="'textInput' + inputIndex"
+              type="text"
+              v-model="additionalText"
+              maxlength="50"
+            />
+          </div>
           <h2 class="section-title">Summary 1</h2>
           <table>
             <!-- Table header -->
@@ -107,14 +129,14 @@
             <tbody>
               <!-- Display selectedDays input -->
               <tr>
-                <td>Selected Days</td>
+                <td>Days Range:</td>
                 <td>{{ selectedDays }}</td>
               </tr>
 
               <!-- Display additionalDays inputs -->
               <tr v-for="(additionalDay, index) in additionalDays" :key="index">
-                <td>Additional Day {{ index + 1 }}</td>
-                <td>{{ additionalDay }}</td>
+                <td>Selected Date for Day {{ index + 1 }}</td>
+                <td>{{ additionalDay }}{{ month_now }}</td>
               </tr>
 
               <!-- Display additionalHours inputs -->
@@ -122,7 +144,7 @@
                 v-for="(additionalHour, index) in additionalHours"
                 :key="index"
               >
-                <td>Additional Hour {{ index + 1 }}</td>
+                <td>Average Hour {{ index + 1 }}:</td>
                 <td>{{ additionalHour }}</td>
               </tr>
 
@@ -131,13 +153,13 @@
                 v-for="(selectedLocation, index) in selectedLocations"
                 :key="index"
               >
-                <td>Selected Location {{ index + 1 }}</td>
+                <td>Location {{ index + 1 }}:</td>
                 <td>{{ selectedLocation }}</td>
               </tr>
 
               <!-- Display additionalText input -->
               <tr>
-                <td>Additional Text</td>
+                <td>Congenital Disease:</td>
                 <td>{{ additionalText }}</td>
               </tr>
             </tbody>
@@ -157,7 +179,7 @@
             <tbody>
               <tr>
                 <td>
-                  <label :for="'startDateInput' + inputIndex"
+                  <label class="select_day" :for="'startDateInput' + inputIndex"
                     >Start Date:</label
                   >
                   <input
@@ -167,10 +189,13 @@
                     min="1"
                     max="31"
                     @input="adjustStartDate"
+                    class="option_day"
                   />
                 </td>
                 <td>
-                  <label :for="'endDateInput' + inputIndex">End Date:</label>
+                  <label class="select_day" :for="'endDateInput' + inputIndex"
+                    >End Date:</label
+                  >
                   <input
                     :id="'endDateInput' + inputIndex"
                     type="number"
@@ -178,22 +203,28 @@
                     min="1"
                     max="31"
                     @input="adjustEndDate"
+                    class="option_day"
                   />
                 </td>
               </tr>
             </tbody>
           </table>
           <!-- finish Start-End -->
-          <label>average hours</label>
+          <label class="select_day">Average hours:</label>
           <input
             :id="'hoursInput' + inputIndex"
             type="number"
             v-model="Hours"
             @input="adjustAverageHours"
+            class="option_day"
           />
 
-          <label for="location1">Select Location 1:</label>
-          <select id="location1" v-model="selectedLocation30[0]">
+          <label class="select_day" for="location1">Select Location 1:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[0]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -203,8 +234,12 @@
               {{ location }}
             </option>
           </select>
-          <label for="location1">Select Location 2:</label>
-          <select id="location1" v-model="selectedLocation30[1]">
+          <label class="select_day" for="location1">Select Location 2:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[1]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -214,8 +249,12 @@
               {{ location }}
             </option>
           </select>
-          <label for="location1">Select Location 3:</label>
-          <select id="location1" v-model="selectedLocation30[2]">
+          <label class="select_day" for="location1">Select Location 3:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[2]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -226,16 +265,19 @@
             </option>
           </select>
           <h2 class="section-title">Congenital Disease 2</h2>
-          <label
-            >Are you having any health problems? (such as congenital disease,
-            illness and others):</label
-          >
-          <input
-            :id="'textInput' + inputIndex"
-            type="text"
-            v-model="additionalText"
-            maxlength="50"
-          />
+          <div class="disease_ex">
+            <label
+              >Are you having any health problems? (such as congenital disease,
+              illness and others):</label
+            >
+            <input
+              class="disease_des"
+              :id="'textInput' + inputIndex"
+              type="text"
+              v-model="additionalText"
+              maxlength="50"
+            />
+          </div>
           <h2 class="section-title">Summary 2</h2>
           <table>
             <!-- Table header -->
@@ -250,18 +292,18 @@
             <tbody>
               <!-- Display selectedDays input -->
               <tr>
-                <td>Selected Days:</td>
+                <td>Days Range:</td>
                 <td>{{ selectedDays }}</td>
               </tr>
 
               <!-- Display additionalStartDate and additionalEndDate inputs -->
               <tr>
-                <td>Additional Start Date:</td>
-                <td>{{ additionalStartDate }}</td>
+                <td>Start Date:</td>
+                <td>{{ additionalStartDate }}{{ month_now }}</td>
               </tr>
               <tr>
-                <td>Additional End Date:</td>
-                <td>{{ additionalEndDate }}</td>
+                <td>End Date:</td>
+                <td>{{ additionalEndDate }}{{ month_now }}</td>
               </tr>
 
               <!-- Display selectedLocation30 inputs -->
@@ -269,19 +311,19 @@
                 v-for="(selectedLocation, index) in selectedLocation30"
                 :key="index"
               >
-                <td>Selected Location {{ index + 1 }} (30 days):</td>
+                <td>Location {{ index + 1 }} (30 days):</td>
                 <td>{{ selectedLocation }}</td>
               </tr>
 
               <!-- Display Hours input -->
               <tr>
-                <td>Hours:</td>
+                <td>Average Hours:</td>
                 <td>{{ Hours }}</td>
               </tr>
 
               <!-- Display additionalText input -->
               <tr>
-                <td>Additional Text:</td>
+                <td>Congenital Disease:</td>
                 <td>{{ additionalText }}</td>
               </tr>
             </tbody>
@@ -291,16 +333,21 @@
         </div>
         <!-- START 30 DAY [3]------------------------------------------------------------>
         <div v-if="selectedDays == 30">
-          <label>average hours</label>
+          <label class="select_day">Average hours:</label>
           <input
             :id="'hoursInput' + inputIndex"
             type="number"
             v-model="Hours"
             @input="adjustAverageHours"
+            class="option_day"
           />
 
-          <label for="location1">Select Location 1:</label>
-          <select id="location1" v-model="selectedLocation30[0]">
+          <label class="select_day" for="location1">Select Location 1:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[0]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -310,8 +357,12 @@
               {{ location }}
             </option>
           </select>
-          <label for="location1">Select Location 2:</label>
-          <select id="location1" v-model="selectedLocation30[1]">
+          <label class="select_day" for="location1">Select Location 2:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[1]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -321,8 +372,12 @@
               {{ location }}
             </option>
           </select>
-          <label for="location1">Select Location 3:</label>
-          <select id="location1" v-model="selectedLocation30[2]">
+          <label class="select_day" for="location1">Select Location 3:</label>
+          <select
+            id="location1"
+            class="option_day"
+            v-model="selectedLocation30[2]"
+          >
             <option value="">-- Select Location --</option>
             <option
               v-for="(location, index) in locations"
@@ -333,16 +388,19 @@
             </option>
           </select>
           <h2 class="section-title">Congenital Disease 3</h2>
-          <label
-            >Are you having any health problems? (such as congenital disease,
-            illness and others):</label
-          >
-          <input
-            :id="'textInput' + inputIndex"
-            type="text"
-            v-model="additionalText"
-            maxlength="50"
-          />
+          <div class="disease_ex">
+            <label
+              >Are you having any health problems? (such as congenital disease,
+              illness and others):</label
+            >
+            <input
+              class="disease_des"
+              :id="'textInput' + inputIndex"
+              type="text"
+              v-model="additionalText"
+              maxlength="50"
+            />
+          </div>
           <h2 class="section-title">Summary 3</h2>
           <table>
             <thead>
@@ -354,7 +412,7 @@
             <tbody>
               <!-- Display selectedDays input -->
               <tr>
-                <td>Selected Days:</td>
+                <td>Days Range:</td>
                 <td>{{ selectedDays }}</td>
               </tr>
 
@@ -363,19 +421,19 @@
                 v-for="(selectedLocation, index) in selectedLocation30"
                 :key="index"
               >
-                <td>Selected Location {{ index + 1 }} (30 days):</td>
+                <td>Location {{ index + 1 }} (30 days):</td>
                 <td>{{ selectedLocation }}</td>
               </tr>
 
               <!-- Display Hours input -->
               <tr>
-                <td>Hours:</td>
+                <td>Average Hours:</td>
                 <td>{{ Hours }}</td>
               </tr>
 
               <!-- Display additionalText input -->
               <tr>
-                <td>Additional Text:</td>
+                <td>Congenital Disease:</td>
                 <td>{{ additionalText }}</td>
               </tr>
             </tbody>
@@ -455,6 +513,7 @@ export default {
       min: null,
       Cgrs: null,
       totalhour: null,
+      month_now: "/5/2023",
       days: Array.from({ length: 30 }, (_, index) => index + 1), // Generate an array of numbers from 1 to 30
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
@@ -504,7 +563,7 @@ export default {
         this.additionalDays[index] = 31;
       }
     },
-    //limit the average hours [from 1-24], for 1-7
+    //limit the average hours [from 1-24],   for 1-7
     adjustAdditionalHours(index) {
       if (this.additionalHours[index] < 1) {
         this.additionalHours[index] = 1;
@@ -744,10 +803,58 @@ select {
   height: 40px;
   padding: 5px;
   box-sizing: border-box;
-  background-color: #c1fff7;
   margin: 0 auto;
   display: block;
   text-align: center;
-  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.disease_des {
+  background-color: #e2fefa;
+  display: flex;
+  justify-content: center;
+}
+.disease_ex {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 550;
+  color: #00926f;
+}
+
+.form-wrapper {
+  display: flex;
+  align-items: center;
+}
+.form-left,
+.form-right {
+  width: 100%;
+  align-items: center;
+}
+.form-right {
+  position: relative;
+}
+.select {
+  width: 100%;
+}
+.form-left {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.select_day {
+  font-size: 14px; /* Change the font-size as desired */
+  font-weight: 600;
+  padding-left: 5%;
+  color: #00926f;
+}
+.select_Head_day {
+  font-size: 20x; /* Change the font-size as desired */
+  font-weight: 700;
+  color: #00926f;
+}
+.option_head,
+.option_day {
+  background-color: #e2fefa; /* Change the background color as desired */
 }
 </style>

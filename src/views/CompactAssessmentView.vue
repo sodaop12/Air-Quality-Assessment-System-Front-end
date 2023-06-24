@@ -263,6 +263,5 @@ select {
   margin: 0 auto;
   display: block;
   text-align: center;
-  border-radius: 10px;
 }
 </style>
