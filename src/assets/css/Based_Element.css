@@ -89,6 +89,18 @@
   margin-bottom: 10px;
 }
 
+.section-title-mini {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  background-color: #8fffeb;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
 .DH_Box {
   margin: 10px;
 }

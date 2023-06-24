@@ -13,7 +13,7 @@
         <router-link to="/calendar_as" class="page-link">Calendar</router-link>
       </div>
       <div>
-        <h2 class="section-title">Date & Time & Location</h2>
+        <h2 class="section-title">Data range (1/5/2023 - 30/5/2023)</h2>
         <div class="form-wrapper">
           <div class="form-left">
             <label for="dropdown" class="select_Head_day"
@@ -135,7 +135,7 @@
 
               <!-- Display additionalDays inputs -->
               <tr v-for="(additionalDay, index) in additionalDays" :key="index">
-                <td>Selected Date for Day {{ index + 1 }}</td>
+                <td>Date for Day {{ index + 1 }}</td>
                 <td>{{ additionalDay }}{{ month_now }}</td>
               </tr>
 
@@ -210,6 +210,7 @@
             </tbody>
           </table>
           <!-- finish Start-End -->
+          <h3 class="section-title-mini">Time</h3>
           <label class="select_day">Average hours:</label>
           <input
             :id="'hoursInput' + inputIndex"
@@ -218,7 +219,7 @@
             @input="adjustAverageHours"
             class="option_day"
           />
-
+          <h3 class="section-title-mini">Location</h3>
           <label class="select_day" for="location1">Select Location 1:</label>
           <select
             id="location1"
@@ -333,15 +334,22 @@
         </div>
         <!-- START 30 DAY [3]------------------------------------------------------------>
         <div v-if="selectedDays == 30">
-          <label class="select_day">Average hours:</label>
-          <input
-            :id="'hoursInput' + inputIndex"
-            type="number"
-            v-model="Hours"
-            @input="adjustAverageHours"
-            class="option_day"
-          />
-
+          <h3 class="section-title-mini">Time</h3>
+          <div class="form-wrapper">
+            <div class="form-left">
+              <label class="select_Head_day">Average hours:</label>
+            </div>
+            <div class="form-right">
+              <input
+                :id="'hoursInput' + inputIndex"
+                type="number"
+                v-model="Hours"
+                @input="adjustAverageHours"
+                class="option_day"
+              />
+            </div>
+          </div>
+          <h3 class="section-title-mini">Location</h3>
           <label class="select_day" for="location1">Select Location 1:</label>
           <select
             id="location1"
