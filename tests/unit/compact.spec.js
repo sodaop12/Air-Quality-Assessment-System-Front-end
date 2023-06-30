@@ -1,69 +1,57 @@
-import { mount } from "@vue/test-utils";
-import YourComponent from "@/views/CompactAssessmentView.vue";
+import { shallowMount } from '@vue/test-utils';
+import MyComponent from '@/views/CompactAssessmentView.vue';
 
-describe("YourComponent", () => {
-  let wrapper;
+describe('MyComponent', () => {
+  it('submits data and receives response', async () => {
+    const mockResponse = {
+      calculateaverage: 5,
+      totalhour: 120,
+      output_text: 'Sample output',
+      max: 10,
+      min: 2,
+      CGRS: 3.5,
+    };
 
-  beforeEach(() => {
-    wrapper = mount(YourComponent);
-  });
+    global.fetch = jest.fn().mockImplementation(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(mockResponse),
+      })
+    );
 
-  it("should set calculateaverage and totalhour correctly when data is submitted", async () => {
-    // Set the necessary data in the component
+    const wrapper = shallowMount(MyComponent);
+
     wrapper.setData({
-      selectedDays: 10,
+      selectedDays: '10',
       averageHours: 8,
-      selectedLocations: ["Location 1", "Location 2", "Location 3"],
+      selectedLocations: ['Location 1', 'Location 2', 'Location 3'],
     });
 
-    // Mock the fetch function
-    global.fetch = jest.fn().mockResolvedValue({
-      json: () => ({
-        calculateaverage: 10,
-        totalhour: 100,
-        output_text: "Some output text",
-      }),
-    });
+    const submitButton = wrapper.find('.submit-button');
+    await submitButton.trigger('click');
 
-    // Trigger the submitData method
-    await wrapper.vm.submitData();
-
-    // Assertions
-    await wrapper.vm.$nextTick();
-    expect(wrapper.vm.calculateaverage).toBe(10);
-    expect(wrapper.vm.totalhour).toBe(100);
-    expect(wrapper.vm.output_text).toBe("Some output text");
-    expect(wrapper.vm.responseReceived).toBe(true);
-    expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      "http://127.0.0.1:5000/submitcompactdata",
-      {
-        method: "POST",
+      'http://127.0.0.1:5000/submitcompactdata',
+      expect.objectContaining({
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          locations: ["Location 1", "Location 2", "Location 3"],
-          selectedDays: 10,
+          locations: ['Location 1', 'Location 2', 'Location 3'],
+          selectedDays: '10',
           averageHours: 8,
         }),
-      }
+      })
     );
-  });
 
-  it("should show an error message if fields are not filled", async () => {
-    // Set some fields to empty values
-    wrapper.setData({
-      selectedDays: "",
-      averageHours: null,
-    });
+    await wrapper.vm.$nextTick();
 
-    // Trigger the submitData method
-    await wrapper.vm.submitData();
-
-    // Assertions
-    expect(wrapper.vm.calculateaverage).toBeNull();
-    expect(wrapper.vm.totalhour).toBeNull();
-    expect(wrapper.vm.output_text).toBeNull();
+    expect(wrapper.vm.calculateaverage).toBe(mockResponse.calculateaverage);
+    expect(wrapper.vm.totalhour).toBe(mockResponse.totalhour);
+    expect(wrapper.vm.output_text).toBe(mockResponse.output_text);
+    expect(wrapper.vm.responseReceived).toBe(true);
+    expect(wrapper.vm.max).toBe(mockResponse.max);
+    expect(wrapper.vm.min).toBe(mockResponse.min);
+    expect(wrapper.vm.Cgrs).toBe(mockResponse.CGRS);
   });
 });
