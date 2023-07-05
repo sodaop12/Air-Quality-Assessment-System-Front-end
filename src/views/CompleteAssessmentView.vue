@@ -62,7 +62,7 @@
                     type="number"
                     v-model="additionalDays[inputIndex - 1]"
                     min="1"
-                    max="31"
+                    max="30"
                     @input="adjustAdditionalDate(inputIndex - 1)"
                   />
                 </td>
@@ -187,7 +187,7 @@
                     type="number"
                     v-model="additionalStartDate"
                     min="1"
-                    max="31"
+                    max="30"
                     @input="adjustStartDate"
                     class="option_day"
                   />
@@ -201,7 +201,7 @@
                     type="number"
                     v-model="additionalEndDate"
                     min="1"
-                    max="31"
+                    max="30"
                     @input="adjustEndDate"
                     class="option_day"
                   />
@@ -563,12 +563,12 @@ export default {
     },
   },*/
   methods: {
-    //limit the specific date [from 1-31], for 1-7
+    //limit the specific date [from 1-30], for 1-7
     adjustAdditionalDate(index) {
       if (this.additionalDays[index] < 1) {
         this.additionalDays[index] = 1;
-      } else if (this.additionalDays[index] > 31) {
-        this.additionalDays[index] = 31;
+      } else if (this.additionalDays[index] > 30) {
+        this.additionalDays[index] = 30;
       }
     },
     //limit the average hours [from 1-24],   for 1-7
@@ -589,20 +589,20 @@ export default {
     },
     //limit the Day range between Start - End [from 1-30], for 8-29
     adjustStartDate() {
-      if (this.additionalStartDate > 31) {
-        this.additionalStartDate = 31;
+      if (this.additionalStartDate > 30) {
+        this.additionalStartDate = 30;
       } else if (this.additionalStartDate < 1) {
         this.additionalStartDate = 1;
       } else if (
         this.additionalStartDate + this.selectedDays >
-        31 - this.selectedDays
+        30 - this.selectedDays
       ) {
-        this.additionalStartDate = 31 - this.selectedDays;
+        this.additionalStartDate = 30 - this.selectedDays;
       }
     },
     adjustEndDate() {
-      if (this.additionalEndDate > 31) {
-        this.additionalEndDate = 31;
+      if (this.additionalEndDate > 30) {
+        this.additionalEndDate = 30;
       } else if (
         this.additionalEndDate > this.additionalStartDate + this.selectedDays ||
         this.additionalEndDate < this.additionalStartDate + this.selectedDays
