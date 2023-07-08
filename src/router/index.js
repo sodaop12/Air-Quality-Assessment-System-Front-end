@@ -32,7 +32,12 @@ const routes = [
 
     component: () => import("../views/FeedbackView.vue"),
   },
+  {
+    path: "/allfeedback",
+    name: "allfeedback",
 
+    component: () => import("../views/AllFeedbackView.vue"),
+  },
   {
     path: "/forecast",
     name: "forecast",

@@ -24,10 +24,16 @@
         <p class="nav-sub">
           <router-link to="/feedback" class="links">Feedback</router-link>
         </p>
+        <!-- Generate new nav-sub when loggedIn is true -->
+        <p v-if="loggedIn" class="nav-sub">
+          <router-link to="/allfeedback" class="links"
+            >All Feedback</router-link
+          >
+        </p>
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
-          <span v-if="loggedIn" class="navbar-item">Admin |</span>
+          <span v-if="loggedIn" class="navbar-item">Feedback Auditor |</span>
           <router-link
             v-if="loggedIn"
             to="/"
@@ -37,7 +43,7 @@
             Logout
           </router-link>
           <router-link v-else to="/login" class="navbar-item">
-            Login
+            for auditor
           </router-link>
         </div>
       </div>

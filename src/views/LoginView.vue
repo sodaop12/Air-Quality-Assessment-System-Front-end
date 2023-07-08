@@ -47,7 +47,7 @@ export default {
             this.$store.dispatch("setLoggedIn", true);
             this.$router.push("/");
           } else {
-            alert("Login failed");
+            alert("Incorrect username or password");
             this.showSpan = true;
           }
         })
