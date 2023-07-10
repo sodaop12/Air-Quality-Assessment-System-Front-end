@@ -6,10 +6,22 @@
       <form @submit.prevent="login">
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" v-model="username" required />
+          <input
+            type="text"
+            id="username"
+            v-model="username"
+            maxlength="20"
+            required
+          />
           <br />
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password" required />
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            maxlength="20"
+            required
+          />
         </div>
         <br />
         <button class="submit-button" type="submit">Login</button>
