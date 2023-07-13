@@ -199,7 +199,11 @@ export default {
   },
   methods: {
     submitData() {
-      if (this.selectedDays !== "" && this.averageHours !== null) {
+      if (
+        this.selectedDays !== "" &&
+        this.averageHours !== null &&
+        this.selectedLocations.some((location) => location !== "")
+      ) {
         if (this.selectedDays >= 1 && this.selectedDays <= 30) {
           if (this.averageHours >= 1 && this.averageHours <= 24) {
             const requestData = {
