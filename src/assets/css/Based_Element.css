@@ -24,22 +24,15 @@
 }
 
 /* set content are for small size */
-@media (max-width: 479px) {
+@media (max-width: 768px) {
   .container {
     flex-direction: column;
   }
 
   .content {
     width: 100%;
-    margin: 0 auto;
-    /* Optional: Centers the content horizontally */
   }
-
-  /* Optional: Hide other elements outside the content area */
-
-
 }
-
 
 /* for page link */
 .page-link-middle {

@@ -35,6 +35,9 @@
             type="number"
             id="averageHours"
             v-model="averageHours"
+            min="1"
+            max="24"
+            @input="adjustAverageHours"
             required
             placeholder="-- Average hours --"
           />
@@ -85,8 +88,8 @@
         <div class="report-content">
           <table>
             <tr>
-              <th>Content</th>
-              <th>Information</th>
+              <th v-if="responseReceived">Content</th>
+              <th v-if="responseReceived">Information</th>
             </tr>
             <tr v-if="selectedDays !== ''">
               <td>Selected Days</td>
@@ -113,11 +116,19 @@
 
           <!-- Loading pop-up -->
           <div class="loading-popup" v-if="loading">
-            <div class="loading-text">Loading Result...</div>
+            <div class="loading-text" v-if="responseReceived">
+              Loading Result...
+            </div>
           </div>
           <!-- Other paragraphs of text -->
           <div class="button-container">
-            <button @click="submitData" class="submit-button">Submit</button>
+            <button
+              @click="submitData"
+              class="submit-button"
+              v-if="responseReceived"
+            >
+              Submit
+            </button>
           </div>
           <h2 class="section-title" v-if="responseReceived">Report</h2>
           <table v-if="responseReceived">
@@ -198,6 +209,14 @@ export default {
     };
   },
   methods: {
+    //limit the average hours [from 1-24]
+    adjustAverageHours() {
+      if (this.averageHours < 1) {
+        this.averageHours = 1;
+      } else if (this.averageHours > 24) {
+        this.averageHours = 24;
+      }
+    },
     submitData() {
       if (
         this.selectedDays !== "" &&

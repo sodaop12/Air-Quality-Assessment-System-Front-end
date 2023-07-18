@@ -2,19 +2,19 @@
   <nav>
     <div class="navbar">
       <div class="navbar-brand">
-        <p class="nav-title"><router-link to="/">Home |</router-link></p>
+        <p class="nav-title"><router-link to="/">AQAS |</router-link></p>
         <!-- Add dropdown menu for Assessment topics -->
         <div class="dropdown" @click="toggleAssessmentTopics">
-          <div class="nav-sub">Assessment ▼</div>
+          <p class="nav-sub">Assessment ▼</p>
           <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
             <router-link to="/compact_as" class="mini_topic"
-              >Compact Assessment</router-link
+              >Compact</router-link
             >
             <router-link to="/complete_as" class="mini_topic"
-              >Complete Assessment</router-link
+              >Complete</router-link
             >
             <router-link to="/calendar_as" class="mini_topic"
-              >Calendar Assessment</router-link
+              >Calendar</router-link
             >
           </div>
         </div>
@@ -139,8 +139,14 @@ export default {
   transition: background-color 0.3s, color 0.3s;
   display: flex;
   align-items: center;
+  padding: 5px;
 }
-
+.nav-title:hover,
+.navbar-item:hover,
+.nav-sub:hover {
+  transition: background-color 0.3s, color 0.3s;
+  background: white;
+}
 .mini_topic:hover {
   background: white;
 }

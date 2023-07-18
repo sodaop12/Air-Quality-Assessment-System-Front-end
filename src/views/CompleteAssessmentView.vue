@@ -678,6 +678,10 @@ export default {
           .catch((error) => {
             console.error("API error:", error);
             this.loading = false;
+            // Refresh the page
+            window.location.reload();
+            this.showWarning = true;
+            alert("Do not found API!!");
           });
       } else if (this.selectedDays >= 8 && this.selectedDays <= 29) {
         if (
@@ -729,6 +733,10 @@ export default {
           .catch((error) => {
             console.error("API error:", error);
             this.loading = false;
+            // Refresh the page
+            window.location.reload();
+            this.showWarning = true;
+            alert("Do not found API!!");
           });
       } else if (this.selectedDays == 30) {
         if (
@@ -778,6 +786,10 @@ export default {
         .catch((error) => {
           console.error("API error:", error);
           this.loading = false;
+          // Refresh the page
+          window.location.reload();
+          this.showWarning = true;
+          alert("Do not found API!!");
         });
     },
     resetResult() {
