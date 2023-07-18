@@ -125,7 +125,7 @@
             <button
               @click="submitData"
               class="submit-button"
-              v-if="responseReceived"
+              v-if="selectedDays >= 1 && selectedDays <= 30"
             >
               Submit
             </button>
