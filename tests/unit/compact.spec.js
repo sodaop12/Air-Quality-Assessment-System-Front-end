@@ -41,13 +41,14 @@ describe("MyComponent", () => {
     wrapper.setData({
       selectedDays: "10",
       averageHours: 8,
-      selectedLocations: ["", "", ""],
+      selectedLocations: ["Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่"],
     });
-
-    const submitButton = wrapper.find(".submit-button");
-    submitButton.trigger("click");
     await wrapper.vm.$nextTick();
-
+    const submitButton = wrapper.find(".submit-button");
+    await wrapper.vm.$nextTick();
+    await submitButton.trigger("click");
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
     expect(fetch).toHaveBeenCalledWith(
       "http://127.0.0.1:5000/submitcompactdata",
       {
@@ -56,7 +57,7 @@ describe("MyComponent", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          locations: ["", "", ""],
+          locations: ["Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่"],
           selectedDays: "10",
           averageHours: 8,
         }),
@@ -85,12 +86,13 @@ describe("MyComponent", () => {
     wrapper.setData({
       selectedDays: "10",
       averageHours: 8,
-      selectedLocations: ["", "", ""],
+      selectedLocations: ["Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่"],
     });
-
-    const submitButton = wrapper.find(".submit-button");
-    submitButton.trigger("click");
     await wrapper.vm.$nextTick();
+    const submitButton = wrapper.find(".submit-button");
+    await wrapper.vm.$nextTick();
+    submitButton.trigger("click");
+    
 
     expect(fetch).toHaveBeenCalledWith(
       "http://127.0.0.1:5000/submitcompactdata",
@@ -100,7 +102,7 @@ describe("MyComponent", () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          locations: ["", "", ""],
+          locations: ["Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่", "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่"],
           selectedDays: "10",
           averageHours: 8,
         }),
