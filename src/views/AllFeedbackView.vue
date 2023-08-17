@@ -8,6 +8,11 @@
         <!-- Main content -->
         <div class="forecast">
           <h1>All Feedback</h1>
+          <ul>
+            <li v-for="(feedback, index) in getFetchedFeedback" :key="index">
+              {{ feedback }}
+            </li>
+          </ul>
         </div>
       </div>
       <div class="right-sidebar">
@@ -16,6 +21,22 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["getFetchedFeedback"]),
+  },
+  methods: {
+    ...mapActions(["fetchFeedback"]), // Map the fetchFeedback action
+  },
+  created() {
+    this.fetchFeedback(); // Call fetchFeedback when the component is created
+  },
+};
+</script>
 
 <style scoped>
 .container {

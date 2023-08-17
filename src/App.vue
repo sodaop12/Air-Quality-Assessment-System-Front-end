@@ -50,10 +50,15 @@
     </div>
   </nav>
   <router-view />
+  <Footer />
 </template>
 
 <script>
+import Footer from "@/components/FeedbackComponent.vue";
 export default {
+  components: {
+    Footer, // Register the Footer component
+  },
   data() {
     return {
       showAssessmentTopics: false,
