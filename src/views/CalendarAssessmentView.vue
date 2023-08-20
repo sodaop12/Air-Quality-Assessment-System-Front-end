@@ -16,6 +16,7 @@
           <router-link to="/compact_as" class="page-link">Compact</router-link>
         </div>
         <!-- Generate the table for a month with 30 days -->
+        <!-- Generate the table for a month with custom start and end dates -->
         <table class="month-table">
           <tr>
             <th>Sun</th>
@@ -27,7 +28,11 @@
             <th>Sat</th>
           </tr>
           <tr v-for="week in weeks" :key="week">
-            <td v-for="day in week" :key="day" class="day-cell">
+            <td
+              v-for="day in week"
+              :key="day"
+              :class="['day-cell', { highlighted: isHighlighted(day) }]"
+            >
               <div v-if="day !== null">
                 <button @click="toggleInput(day)" class="day-button">
                   {{ day }}
@@ -44,6 +49,27 @@
           </tr>
         </table>
       </div>
+      <!-- Input boxes for start date and end date -->
+      <div class="date-inputs">
+        <label for="start-date">Start Date:</label>
+        <input
+          id="start-date"
+          v-model="startDate"
+          type="number"
+          min="1"
+          max="30"
+          class="date-input"
+        />
+        <label for="end-date">End Date:</label>
+        <input
+          id="end-date"
+          v-model="endDate"
+          type="number"
+          min="1"
+          max="30"
+          class="date-input"
+        />
+      </div>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -55,6 +81,8 @@
 export default {
   data() {
     return {
+      startDate: 1, // Default start date
+      endDate: 30, // Default end date
       weeks: [
         [null, 1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12, 13],
@@ -66,10 +94,19 @@ export default {
       averageHours: Array(31).fill(0), // An array to store average hours
     };
   },
+  computed: {
+    // Calculate the number of days in the range (start date to end date)
+    daysInRange() {
+      return this.endDate - this.startDate + 1;
+    },
+  },
   methods: {
     toggleInput(day) {
       // Toggle the input visibility for the clicked day
       this.showInput[day] = !this.showInput[day];
+    },
+    isHighlighted(day) {
+      return day >= this.startDate && day <= this.endDate;
     },
   },
 };
@@ -102,8 +139,15 @@ export default {
   background-color: transparent;
   cursor: pointer;
 }
-
+.date-input {
+  width: 40px;
+  margin: 0 5px;
+}
 .date-inputs {
   margin-top: 10px;
+}
+
+.highlighted {
+  background-color: yellow; /* You can choose your desired highlighting color */
 }
 </style>
