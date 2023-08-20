@@ -86,7 +86,6 @@ export default {
 
 .month-table th,
 .month-table td {
-  border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
 }
@@ -102,5 +101,9 @@ export default {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.date-inputs {
+  margin-top: 10px;
 }
 </style>
