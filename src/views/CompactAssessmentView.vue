@@ -287,4 +287,8 @@ select {
   display: block;
   text-align: center;
 }
+/* Add styles to target the <p> element within the <td> */
+td p {
+  margin: 0; /* Remove default margin from <p> element */
+}
 </style>
