@@ -70,7 +70,27 @@
           class="date-input"
         />
       </div>
+      <!-- Display the logged data as a table -->
+      <div class="logged-data">
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>Average Hours</th>
+          </tr>
+          <tr v-for="(hoursArray, day) in loggedData" :key="day">
+            <td>{{ day }}</td>
+            <td>
+              <ul>
+                <li v-for="(hours, index) in hoursArray" :key="index">
+                  {{ hours }}
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
+
     <div class="right-sidebar">
       <!-- Right sidebar content -->
     </div>
@@ -83,6 +103,7 @@ export default {
     return {
       startDate: 1, // Default start date
       endDate: 30, // Default end date
+      loggedData: {}, // A dictionary to store the logged data
       weeks: [
         [null, 1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12, 13],
@@ -104,6 +125,17 @@ export default {
     toggleInput(day) {
       // Toggle the input visibility for the clicked day
       this.showInput[day] = !this.showInput[day];
+      // Log the average hours for the clicked day
+      if (this.showInput[day]) {
+        console.log(`Average hours for Day ${day}: ${this.averageHours[day]}`);
+        if (!this.loggedData[day]) {
+          this.loggedData[day] = [];
+        }
+        this.loggedData[day].push(this.averageHours[day]);
+      } else {
+        console.log(`Average hours for Day ${day} cleared.`);
+        this.loggedData[day] = null;
+      }
     },
     isHighlighted(day) {
       return day >= this.startDate && day <= this.endDate;
@@ -149,5 +181,21 @@ export default {
 
 .highlighted {
   background-color: yellow; /* You can choose your desired highlighting color */
+}
+
+.logged-data {
+  margin-top: 20px;
+}
+
+.logged-data table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.logged-data th,
+.logged-data td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 </style>
