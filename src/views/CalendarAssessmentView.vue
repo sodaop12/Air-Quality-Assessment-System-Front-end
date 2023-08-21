@@ -38,7 +38,7 @@
                   {{ day }}
                 </button>
                 <input
-                  v-model="averageHours[day]"
+                  v-model="averageHours[day - 1]"
                   v-if="showInput[day]"
                   class="hours-input"
                   type="number"
@@ -49,6 +49,44 @@
           </tr>
         </table>
       </div>
+      <section class="Location">
+        <h2 class="section-title">Location</h2>
+        <label for="location1">Select Location 1:</label>
+        <select id="location1" v-model="selectedLocations[0]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+        <div class="DH_Box"></div>
+        <label for="location2">Select Location 2:</label>
+        <select id="location2" v-model="selectedLocations[1]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+        <div class="DH_Box"></div>
+        <label for="location3">Select Location 3:</label>
+        <select id="location3" v-model="selectedLocations[2]">
+          <option value="">-- Select Location --</option>
+          <option
+            v-for="(location, index) in locations"
+            :key="index"
+            :value="location"
+          >
+            {{ location }}
+          </option>
+        </select>
+      </section>
       <!-- Input boxes for start date and end date -->
       <div class="date-inputs">
         <label for="start-date">Start Date:</label>
@@ -69,6 +107,8 @@
           max="30"
           class="date-input"
         />
+
+        <button @click="submitData" class="submit-button">Submit</button>
       </div>
       <!-- Display the logged data as a table -->
       <div class="logged-data">
@@ -77,20 +117,47 @@
             <th>Date</th>
             <th>Average Hours</th>
           </tr>
-          <tr v-for="(hoursArray, day) in loggedData" :key="day">
-            <td>{{ day }}</td>
+          <tr v-for="dayData in loggedData" :key="dayData.day">
+            <td>{{ dayData.day }}</td>
             <td>
               <ul>
-                <li v-for="(hours, index) in hoursArray" :key="index">
-                  {{ hours }}
+                <li>
+                  {{ averageHours[dayData.day - 1] }}
                 </li>
               </ul>
             </td>
           </tr>
         </table>
       </div>
+      <h2 class="section-title" v-if="responseReceived">Report</h2>
+      <table v-if="responseReceived">
+        <tr>
+          <td>Average AQI:</td>
+          <td>{{ calculateaverage.toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td>Total Hour:</td>
+          <td>{{ totalhour }}</td>
+        </tr>
+        <tr>
+          <td>Maximum AQI:</td>
+          <td>{{ max }}</td>
+        </tr>
+        <tr>
+          <td>Minimum AQI:</td>
+          <td>{{ min }}</td>
+        </tr>
+        <tr>
+          <td>Cigarettes according to AQI:</td>
+          <td>{{ Cgrs.toFixed(2) }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p v-html="output_text"></p>
+          </td>
+        </tr>
+      </table>
     </div>
-
     <div class="right-sidebar">
       <!-- Right sidebar content -->
     </div>
@@ -101,9 +168,15 @@
 export default {
   data() {
     return {
+      output_text: null,
+      totalhour: null,
+      responseReceived: false,
+      max: null,
+      min: null,
+      Cgrs: null,
       startDate: 1, // Default start date
       endDate: 30, // Default end date
-      loggedData: {}, // A dictionary to store the logged data
+      loggedData: [], // A dictionary to store the logged data
       weeks: [
         [null, 1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12, 13],
@@ -112,7 +185,31 @@ export default {
         [28, 29, 30], // Last week with fewer days
       ],
       showInput: Array(31).fill(false), // An array to track input visibility
-      averageHours: Array(31).fill(0), // An array to store average hours
+      averageHours: [], // An array to store average hours
+      selectedLocations: ["", "", ""],
+      locations: [
+        "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
+        "คณะบริหารธุรกิจ มช. ต.สุเทพ อ.เมือง จ.เชียงใหม่",
+        "คณะมนุษยศาสตร์ มช. (HB5) ต.สุเทพ อ.เมือง จ.เชียงใหม่",
+        "คณะสังคมศาสตร์ มช. ต.สุเทพ อ.เมือง จ.เชียงใหม่",
+        "ชุมชนล่ามช้าง ต.ช้างม่อย อ.เมือง จ.เชียงใหม่ จุดที่ 1 (Indoor)",
+        "ชุมชนวัดเกต ต.วัดเกต อ.เมือง จ.เชียงใหม่ จุดที่ 1 (Indoor)",
+        "ชุมชนสวนดอก ต.สุเทพ อ.เมือง จ.เชียงใหม่",
+        "ชุมชนหมื่นสาร จุดที่ 1B (อาสา DustBoy, Outdoor) ต.หายยา อ.เมือง จ.เชียงใหม่",
+        "ทต.เมืองนะ ต.เมืองนะ อ.เชียงดาว จ.เชียงใหม่",
+        "บ.พะอัน ต.สบโขง อ.อมก๋อย จ.เชียงใหม่",
+        "บ้านดอยสันเกี๋ยง ต.ช่างเคิ่ง อ.แม่แจ่ม จ.เชียงใหม่",
+        "บ้านห้วยบง ต.ทาเหนือ อ.แม่ออน จ.เชียงใหม่",
+        "บ้านห้วยริน ต.ช่างเคิ่ง อ.แม่แจ่ม จ.เชียงใหม่",
+        "มช. แคมปัสแม่เหียะ ต.สุเทพ อ.เมือง จ.เชียงใหม่",
+        "มทร.ล้านนา (ดอยสะเก็ด) ต.ป่าป้อง อ.ดอยสะเก็ด จ.เชียงใหม่",
+        "รพ.ฝาง ต.เวียง อ.ฝาง จ.เชียงใหม่",
+        "รพ.พร้าว ต.เวียง อ.พร้าว จ.เชียงใหม่",
+        "รพ.สต.บ้านไตรสภาวคาม ต.เมืองงาย อ.เชียงดาว จ.เชียงใหม่",
+        "รพ.หางดง ต.หางดง อ.หางดง จ.เชียงใหม่",
+        "สสอ.ฮอด ต.หางดง อ.ฮอด จ.เชียงใหม่",
+        "ศพด.บ้านทับเดื่อ ต.อินทขิล อ.แม่แตง จ.เชียงใหม่",
+      ],
     };
   },
   computed: {
@@ -123,19 +220,42 @@ export default {
   },
   methods: {
     toggleInput(day) {
-      // Toggle the input visibility for the clicked day
       this.showInput[day] = !this.showInput[day];
-      // Log the average hours for the clicked day
-      if (this.showInput[day]) {
-        console.log(`Average hours for Day ${day}: ${this.averageHours[day]}`);
-        if (!this.loggedData[day]) {
-          this.loggedData[day] = [];
-        }
-        this.loggedData[day].push(this.averageHours[day]);
-      } else {
-        console.log(`Average hours for Day ${day} cleared.`);
-        this.loggedData[day] = null;
-      }
+      this.loggedData[day - 1] = {
+        day: day,
+      };
+    },
+    submitData() {
+      const dataToSend = {
+        startDate: this.startDate,
+        endDate: this.endDate,
+        selectedLocations: this.selectedLocations,
+        averageHours: this.averageHours,
+      };
+
+      fetch("http://127.0.0.1:5000/submitcalenderdata", {
+        method: "POST", // Use the appropriate HTTP method
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.calculateaverage = data.calculateaverage;
+          this.totalhour = data.totalhour;
+          this.output_text = data.output_text;
+          this.responseReceived = true;
+          this.max = data.max;
+          this.min = data.min;
+          this.Cgrs = data.CGRS;
+          console.log(data);
+          this.loading = false;
+        })
+        .catch((error) => {
+          console.error("API error:", error);
+          this.loading = false;
+        });
     },
     isHighlighted(day) {
       return day >= this.startDate && day <= this.endDate;
