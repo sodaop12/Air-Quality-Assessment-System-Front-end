@@ -17,4 +17,17 @@ describe("MyComponent", () => {
       "Response from Flask:"
     );
   });
+  it("forecast api fail", async () => {
+    const wrapper = mount(MyComponent);
+
+    // Simulate entering numbers and submitting
+    await wrapper.setData({ numbers: [1] });
+    await wrapper.find(".submit-button").trigger("click");
+
+    // Wait for asynchronous response update
+    await wrapper.vm.$nextTick();
+  
+
+    expect(wrapper.vm.forecast).toBeNull();
+  });
 });

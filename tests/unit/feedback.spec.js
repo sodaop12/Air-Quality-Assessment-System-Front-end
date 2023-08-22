@@ -9,6 +9,7 @@ describe("Footer.vue", () => {
     });
 
     const wrapper = mount(Footer);
+    const mockAlert = jest.spyOn(window, "alert");
 
     // Set the feedback textarea value
     const feedbackTextarea = wrapper.find("textarea");
@@ -35,8 +36,15 @@ describe("Footer.vue", () => {
     expect(wrapper.vm.feedback).toBe("");
     expect(wrapper.vm.$data.feedback).toBe("");
 
+
     // You can also assert the alert message if you've mocked the window.alert function.
     // For example: expect(window.alert).toHaveBeenCalledWith('Thank you for your feedback!');
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    expect(mockAlert).toHaveBeenCalledWith(
+      "Thank you for your feedback!"
+    );
+    mockAlert.mockRestore();
   });
 
   it("shows an alert when submitting empty feedback", async () => {
