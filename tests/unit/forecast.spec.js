@@ -26,7 +26,6 @@ describe("MyComponent", () => {
 
     // Wait for asynchronous response update
     await wrapper.vm.$nextTick();
-  
 
     expect(wrapper.vm.forecast).toBeNull();
   });

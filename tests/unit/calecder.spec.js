@@ -1,7 +1,7 @@
 // CalendarComponent.spec.js
 
-import { mount } from '@vue/test-utils';
-import CalendarComponent from '@/views/CalendarAssessmentView.vue';
+import { mount } from "@vue/test-utils";
+import CalendarComponent from "@/views/CalendarAssessmentView.vue";
 
 // Mock the fetch function
 global.fetch = jest.fn(() =>
@@ -13,24 +13,24 @@ global.fetch = jest.fn(() =>
         max: 150,
         min: 50,
         CGRS: 2.4,
-        output_text: 'Some output text',
+        output_text: "Some output text",
       }),
   })
 );
 
-describe('CalendarComponent', () => {
+describe("CalendarComponent", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(CalendarComponent);
   });
 
-  it('submits data and displays results', async () => {
+  it("submits data and displays results", async () => {
     // Simulate user interactions (e.g., selecting dates, entering data)
     // ...
 
     // Simulate a click on the submit button
-    await wrapper.find('.submit-button').trigger('click');
+    await wrapper.find(".submit-button").trigger("click");
 
     // Wait for the Vue component to update after the API response
     await wrapper.vm.$nextTick();
@@ -44,23 +44,23 @@ describe('CalendarComponent', () => {
     expect(wrapper.vm.Cgrs).toBe(2.4);
   });
 
-  it('toggles input fields when a day is clicked', async () => {
+  it("toggles input fields when a day is clicked", async () => {
     // Simulate a click on a day button
-    await wrapper.find('.day-button').trigger('click');
+    await wrapper.find(".day-button").trigger("click");
 
     // Wait for the Vue component to update after the click
     await wrapper.vm.$nextTick();
 
     // Assert that the input field is displayed
-    expect(wrapper.find('.hours-input').exists()).toBe(true);
+    expect(wrapper.find(".hours-input").exists()).toBe(true);
 
     // Simulate a second click on the same day button
-    await wrapper.find('.day-button').trigger('click');
+    await wrapper.find(".day-button").trigger("click");
 
     // Wait for the Vue component to update after the click
     await wrapper.vm.$nextTick();
 
     // Assert that the input field is hidden
-    expect(wrapper.find('.hours-input').exists()).toBe(false);
+    expect(wrapper.find(".hours-input").exists()).toBe(false);
   });
 });

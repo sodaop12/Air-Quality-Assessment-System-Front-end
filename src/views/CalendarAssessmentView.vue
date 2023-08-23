@@ -34,9 +34,9 @@
               :class="['day-cell', { highlighted: isHighlighted(day) }]"
             >
               <div v-if="day !== null">
-                <button @click="toggleInput(day)" class="day-button">
+                <a class="day-button">
                   {{ day }}
-                </button>
+                </a>
                 <input
                   v-model="averageHours[day - 1]"
                   v-if="showInput[day]"
@@ -128,6 +128,20 @@
             </td>
           </tr>
         </table>
+        <!--  split table two table   -->
+        <table>
+          <tr>
+            <th>Location</th>
+            <th></th>
+          </tr>
+          <tr
+            v-for="(selectedLocation, index) in selectedLocations"
+            :key="index"
+          >
+            <td>Location {{ index + 1 }} (30 days):</td>
+            <td>{{ selectedLocation }}</td>
+          </tr>
+        </table>
       </div>
       <h2 class="section-title" v-if="responseReceived">Report</h2>
       <table v-if="responseReceived">
@@ -174,18 +188,18 @@ export default {
       max: null,
       min: null,
       Cgrs: null,
-      startDate: 1, // Default start date
-      endDate: 30, // Default end date
-      loggedData: [], // A dictionary to store the logged data
+      startDate: 1,
+      endDate: 30,
+      loggedData: [],
+      showInput: Array(31).fill(false), // Initialize showInput array
+      averageHours: Array(30).fill(0), // Initialize averageHours array
       weeks: [
         [null, 1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12, 13],
         [14, 15, 16, 17, 18, 19, 20],
         [21, 22, 23, 24, 25, 26, 27],
-        [28, 29, 30], // Last week with fewer days
+        [28, 29, 30],
       ],
-      showInput: Array(31).fill(false), // An array to track input visibility
-      averageHours: [], // An array to store average hours
       selectedLocations: ["", "", ""],
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
@@ -219,12 +233,6 @@ export default {
     },
   },
   methods: {
-    toggleInput(day) {
-      this.showInput[day] = !this.showInput[day];
-      this.loggedData[day - 1] = {
-        day: day,
-      };
-    },
     submitData() {
       const dataToSend = {
         startDate: this.startDate,
@@ -260,6 +268,21 @@ export default {
     isHighlighted(day) {
       return day >= this.startDate && day <= this.endDate;
     },
+  },
+  mounted() {
+    // Automatically set showInput to true for the selected date range
+    for (let day = this.startDate; day <= this.endDate; day++) {
+      console.log(
+        "day = " +
+          day +
+          " // start = " +
+          this.startDate +
+          " // end = " +
+          this.endDate
+      );
+      this.showInput[day] = true;
+      this.loggedData[day - 1] = { day: day };
+    }
   },
 };
 </script>
