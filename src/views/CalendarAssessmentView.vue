@@ -112,12 +112,13 @@
       </div>
       <!-- Display the logged data as a table -->
       <div class="logged-data">
+        <!-- <p>Total Active Average Hours: {{ totalActiveHours }}</p>-->
         <table>
           <tr>
             <th>Date</th>
             <th>Average Hours</th>
           </tr>
-          <tr v-for="dayData in loggedData" :key="dayData.day">
+          <tr v-for="dayData in filteredLoggedData" :key="dayData.day">
             <td>{{ dayData.day }}</td>
             <td>
               <ul>
@@ -128,7 +129,7 @@
             </td>
           </tr>
         </table>
-        <!--  split table two table   -->
+        <!-- Split table for selected locations -->
         <table>
           <tr>
             <th>Location</th>
@@ -143,6 +144,7 @@
           </tr>
         </table>
       </div>
+
       <h2 class="section-title" v-if="responseReceived">Report</h2>
       <table v-if="responseReceived">
         <tr>
@@ -228,6 +230,17 @@ export default {
     };
   },
   computed: {
+    totalActiveHours() {
+      return this.filteredLoggedData.reduce(
+        (total, dayData) => total + this.averageHours[dayData.day - 1],
+        0
+      );
+    },
+    filteredLoggedData() {
+      return this.loggedData.filter(
+        (dayData) => this.averageHours[dayData.day - 1] !== 0
+      );
+    },
     // Calculate the number of days in the range (start date to end date)
     daysInRange() {
       return this.endDate - this.startDate + 1;
