@@ -38,8 +38,8 @@
                   {{ day }}
                 </a>
                 <input
+                  v-if="showInputComputed[day]"
                   v-model="averageHours[day - 1]"
-                  v-if="showInput[day]"
                   class="hours-input"
                   type="number"
                   placeholder="Avg Hours"
@@ -190,9 +190,10 @@ export default {
       Cgrs: null,
       startDate: 1,
       endDate: 30,
-      loggedData: [],
+      loggedData: Array(30).fill({ day: 0, averageHours: 0 }), // Initialize loggedData array
       showInput: Array(31).fill(false), // Initialize showInput array
       averageHours: Array(30).fill(0), // Initialize averageHours array
+
       weeks: [
         [null, 1, 2, 3, 4, 5, 6],
         [7, 8, 9, 10, 11, 12, 13],
@@ -231,6 +232,22 @@ export default {
     daysInRange() {
       return this.endDate - this.startDate + 1;
     },
+    showInputComputed() {
+      // Generate the showInputData array based on the selected start and end dates
+      const showInputArray = Array(31).fill(false);
+      for (let day = this.startDate; day <= this.endDate; day++) {
+        showInputArray[day] = true;
+        console.log(
+          "day = " +
+            day +
+            " // start = " +
+            this.startDate +
+            " // end = " +
+            this.endDate
+        );
+      }
+      return showInputArray;
+    },
   },
   methods: {
     submitData() {
@@ -242,7 +259,7 @@ export default {
       };
 
       fetch("http://127.0.0.1:5000/submitcalenderdata", {
-        method: "POST", // Use the appropriate HTTP method
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -257,7 +274,14 @@ export default {
           this.max = data.max;
           this.min = data.min;
           this.Cgrs = data.CGRS;
-          console.log(data);
+          // Log the updated loggedData and averageHours arrays
+          console.log("Updated loggedData:", this.loggedData);
+          console.log("Updated averageHours:", this.averageHours);
+
+          // Update loggedData with average hours data
+          for (let day = this.startDate; day <= this.endDate; day++) {
+            this.loggedData[day - 1].averageHours = this.averageHours[day - 1];
+          }
           this.loading = false;
         })
         .catch((error) => {
@@ -272,15 +296,7 @@ export default {
   mounted() {
     // Automatically set showInput to true for the selected date range
     for (let day = this.startDate; day <= this.endDate; day++) {
-      console.log(
-        "day = " +
-          day +
-          " // start = " +
-          this.startDate +
-          " // end = " +
-          this.endDate
-      );
-      this.showInput[day] = true;
+      this.showInputComputed[day] = true;
       this.loggedData[day - 1] = { day: day };
     }
   },
