@@ -29,13 +29,10 @@ describe("CalendarComponent", () => {
     // Simulate user interactions (e.g., selecting dates, entering data)
     // ...
 
-    // Simulate a click on the submit button
     await wrapper.find(".submit-button").trigger("click");
 
-    // Wait for the Vue component to update after the API response
     await wrapper.vm.$nextTick();
 
-    // Assert that the results are displayed as expected
     expect(wrapper.vm.calculateaverage).toBe(10);
     expect(wrapper.vm.totalhour).toBe(100);
     expect(wrapper.vm.output_text).toBe("Some output text");
@@ -60,7 +57,23 @@ describe("CalendarComponent", () => {
     // Wait for the Vue component to update after the click
     await wrapper.vm.$nextTick();
 
-    // Assert that the input field is hidden
-    expect(wrapper.find(".hours-input").exists()).toBe(false);
+    wrapper.setData({ startDate: 5, endDate: 15 });
+
+    // Test specific days to check if they're highlighted
+    expect(wrapper.vm.isHighlighted(3)).toBe(false); // Should not be highlighted
+    expect(wrapper.vm.isHighlighted(10)).toBe(true);  // Should be highlighted
+    expect(wrapper.vm.isHighlighted(20)).toBe(false);
+  });
+  it('handles API error correctly', async () => {
+    // Mock the fetch function to return a rejected promise
+    global.fetch = jest.fn(() => Promise.reject(new Error('API Error')));
+
+    const wrapper = mount(CalendarComponent);
+
+    // Assuming your component has a "submitData" method that triggers the API call
+    await wrapper.vm.submitData();
+
+    // Ensure that the responseReceived state is still false after the failed API call
+    expect(wrapper.vm.responseReceived).toBe(false);
   });
 });

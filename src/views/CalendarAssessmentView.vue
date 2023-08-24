@@ -250,14 +250,6 @@ export default {
       const showInputArray = Array(31).fill(false);
       for (let day = this.startDate; day <= this.endDate; day++) {
         showInputArray[day] = true;
-        console.log(
-          "day = " +
-            day +
-            " // start = " +
-            this.startDate +
-            " // end = " +
-            this.endDate
-        );
       }
       return showInputArray;
     },

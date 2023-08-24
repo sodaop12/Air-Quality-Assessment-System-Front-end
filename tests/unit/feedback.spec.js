@@ -29,7 +29,7 @@ describe("Footer.vue", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ feedback: "Testing feedback" }),
+        body: JSON.stringify({ feedback: "Testing feedback (null)" }),
       })
     );
 

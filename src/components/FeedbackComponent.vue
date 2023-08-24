@@ -7,6 +7,18 @@
         rows="4"
         placeholder="Enter your feedback"
       ></textarea>
+      <div class="rating">
+        <span>Rate your experience:</span>
+        <label v-for="score in 5" :key="score">
+          <input
+            type="radio"
+            :id="'rating-' + score"
+            :value="score"
+            v-model="selectedScore"
+          />
+          <label :for="'rating-' + score">{{ score }}</label>
+        </label>
+      </div>
       <button @click="submitFeedback">Submit</button>
     </div>
     <div class="social-media">
@@ -24,6 +36,7 @@ export default {
   data() {
     return {
       feedback: "",
+      selectedScore: null,
     };
   },
   methods: {
@@ -32,14 +45,15 @@ export default {
         alert("Please provide feedback before submitting.");
         return;
       }
-
+      const feedbackWithScore = `${this.feedback} (${this.selectedScore})`;
+      console.log("Feedback with Score:", feedbackWithScore);
       try {
         const response = await fetch("http://127.0.0.1:5000/submit_feedback", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ feedback: this.feedback }),
+          body: JSON.stringify({ feedback: feedbackWithScore }),
         });
 
         const data = await response.json();
