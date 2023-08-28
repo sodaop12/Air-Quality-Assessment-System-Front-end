@@ -61,12 +61,12 @@ describe("CalendarComponent", () => {
 
     // Test specific days to check if they're highlighted
     expect(wrapper.vm.isHighlighted(3)).toBe(false); // Should not be highlighted
-    expect(wrapper.vm.isHighlighted(10)).toBe(true);  // Should be highlighted
+    expect(wrapper.vm.isHighlighted(10)).toBe(true); // Should be highlighted
     expect(wrapper.vm.isHighlighted(20)).toBe(false);
   });
-  it('handles API error correctly', async () => {
+  it("handles API error correctly", async () => {
     // Mock the fetch function to return a rejected promise
-    global.fetch = jest.fn(() => Promise.reject(new Error('API Error')));
+    global.fetch = jest.fn(() => Promise.reject(new Error("API Error")));
 
     const wrapper = mount(CalendarComponent);
 
