@@ -169,7 +169,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <p v-html="output_text"></p>
+            <p v-html="formattedOutputText"></p>
           </td>
         </tr>
       </table>
@@ -230,6 +230,10 @@ export default {
     };
   },
   computed: {
+    formattedOutputText() {
+      // Replace spaces with <br> to create new lines
+      return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
+    },
     totalActiveHours() {
       return this.filteredLoggedData.reduce(
         (total, dayData) => total + this.averageHours[dayData.day - 1],
@@ -282,6 +286,7 @@ export default {
           // Log the updated loggedData and averageHours arrays
           console.log("Updated loggedData:", this.loggedData);
           console.log("Updated averageHours:", this.averageHours);
+          console.log(this.output_text);
 
           // Update loggedData with average hours data
           for (let day = this.startDate; day <= this.endDate; day++) {
