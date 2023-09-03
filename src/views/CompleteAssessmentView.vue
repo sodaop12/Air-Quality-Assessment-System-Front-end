@@ -488,7 +488,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <p v-html="output_text"></p>
+            <p v-html="formattedOutputText"></p>
           </td>
         </tr>
       </table>
@@ -551,6 +551,10 @@ export default {
   computed: {
     additionalInputsCount() {
       return this.selectedDays;
+    },
+    formattedOutputText() {
+      // Replace spaces with <br> to create new lines
+      return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
     },
   },
   /*
@@ -674,6 +678,7 @@ export default {
             this.output_text = data.output_text;
             this.responseReceived = true;
             this.loading = false;
+            console.log(this.output_text);
           })
           .catch((error) => {
             console.error("API error:", error);

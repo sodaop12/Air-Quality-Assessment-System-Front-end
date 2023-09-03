@@ -154,7 +154,7 @@
             </tr>
             <tr>
               <td colspan="2">
-                <p v-html="output_text"></p>
+                <p v-html="formattedOutputText"></p>
               </td>
             </tr>
           </table>
@@ -208,6 +208,12 @@ export default {
       ],
     };
   },
+  computed: {
+    formattedOutputText() {
+      // Replace spaces with <br> to create new lines
+      return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
+    },
+  },
   methods: {
     //limit the average hours [from 1-24]
     adjustAverageHours() {
@@ -249,6 +255,7 @@ export default {
                 this.Cgrs = data.CGRS;
                 console.log(data);
                 this.loading = false;
+                console.log(this.output_text);
               })
               .catch((error) => {
                 console.error("API error:", error);

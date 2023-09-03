@@ -1,13 +1,37 @@
 <template>
   <div>
-    <h1>Feedback</h1>
-    <div v-for="(feedbackItem, index) in feedback" :key="index">
-      <div class="out-box">
-        <div class="card-set">
-          <img :src="getImagePath(feedbackItem.rating)" alt="Rating Image" />
-          <p>Rating: {{ feedbackItem.rating }}</p>
-          <p>Comment: {{ feedbackItem.feedback }}</p>
+    <div class="container">
+      <div class="left-sidebar">
+        <!-- Left sidebar content -->
+      </div>
+      <div class="content">
+        <!-- Main content -->
+        <h1>Feedback</h1>
+        <div v-for="(feedbackItem, index) in feedback" :key="index">
+          <div
+            class="out-box"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 10px;
+            "
+          >
+            <div class="card-set" style="width: 500px; height: 200px">
+              <img
+                :src="getImagePath(feedbackItem.rating)"
+                alt="Rating Image"
+                style="width: 250px; height: 50px"
+              />
+
+              <p>Rating: {{ feedbackItem.rating }}</p>
+              <p>Comment: {{ feedbackItem.feedback }}</p>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="right-sidebar">
+        <!-- Right sidebar content -->
       </div>
     </div>
   </div>
@@ -36,13 +60,16 @@ export default {
       }
     },
     getImagePath(rating) {
-      return require(`@/assets/images/star${rating}.jpg`); // Assuming images are named star1.png, star2.png, etc.
+      return require(`@/assets/images/star${rating}.png`); // Assuming images are named star1.png, star2.png, etc.
     },
   },
 };
 </script>
 
 <style scope>
+@import "../assets/css/Based_Element.css";
+@import "../assets/css/Action_Element.css";
+
 .feedback-card {
   margin-bottom: 10px;
 }

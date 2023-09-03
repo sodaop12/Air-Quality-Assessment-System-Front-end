@@ -8,13 +8,13 @@
           <p class="nav-sub">Assessment ▼</p>
           <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
             <router-link to="/compact_as" class="mini_topic"
-              >Compact</router-link
+              >Compact Assessment</router-link
             >
             <router-link to="/complete_as" class="mini_topic"
-              >Complete</router-link
+              >Complete Assessment</router-link
             >
             <router-link to="/calendar_as" class="mini_topic"
-              >Calendar</router-link
+              >Calendar Assessment</router-link
             >
           </div>
         </div>
