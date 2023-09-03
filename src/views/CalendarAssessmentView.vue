@@ -15,8 +15,8 @@
           >
           <router-link to="/compact_as" class="page-link">Compact</router-link>
         </div>
-        <!-- Generate the table for a month with 30 days -->
-        <!-- Generate the table for a month with custom start and end dates -->
+
+        <h2 class="section-title">Calendar (1/5/2023 - 30/5/2023)</h2>
         <table class="month-table">
           <tr>
             <th>Sun</th>
@@ -49,6 +49,30 @@
           </tr>
         </table>
       </div>
+
+      <h2 class="section-title">Start Date - End Date</h2>
+      <!-- Add a container div to center align the date input boxes -->
+      <div class="date-input-container">
+        <label for="start-date">Start Date:</label>
+        <input
+          id="start-date"
+          v-model="startDate"
+          type="number"
+          min="1"
+          max="30"
+          class="date-input"
+        />
+        <label for="end-date">End Date:</label>
+        <input
+          id="end-date"
+          v-model="endDate"
+          type="number"
+          min="1"
+          max="30"
+          class="date-input"
+        />
+      </div>
+
       <section class="Location">
         <h2 class="section-title">Location</h2>
         <label for="location1">Select Location 1:</label>
@@ -87,31 +111,10 @@
           </option>
         </select>
       </section>
-      <!-- Input boxes for start date and end date -->
-      <div class="date-inputs">
-        <label for="start-date">Start Date:</label>
-        <input
-          id="start-date"
-          v-model="startDate"
-          type="number"
-          min="1"
-          max="30"
-          class="date-input"
-        />
-        <label for="end-date">End Date:</label>
-        <input
-          id="end-date"
-          v-model="endDate"
-          type="number"
-          min="1"
-          max="30"
-          class="date-input"
-        />
 
-        <button @click="submitData" class="submit-button">Submit</button>
-      </div>
+      <h2 class="section-title">Summary</h2>
       <!-- Display the logged data as a table -->
-      <div class="logged-data">
+      <div class="logged-data" v-if="hasInputData">
         <!-- <p>Total Active Average Hours: {{ totalActiveHours }}</p>-->
         <table>
           <tr>
@@ -119,7 +122,7 @@
             <th>Average Hours</th>
           </tr>
           <tr v-for="dayData in filteredLoggedData" :key="dayData.day">
-            <td>{{ dayData.day }}</td>
+            <td>{{ dayData.day }}/5/2023</td>
             <td>
               <ul>
                 <li>
@@ -130,6 +133,8 @@
           </tr>
         </table>
         <!-- Split table for selected locations -->
+      </div>
+      <div class="logged-data" v-if="hasInputData2">
         <table>
           <tr>
             <th>Location</th>
@@ -169,10 +174,17 @@
         </tr>
         <tr>
           <td colspan="2">
-            <p v-html="formattedOutputText"></p>
+            <p
+              v-html="formattedOutputText"
+              style="font-size: 16px; line-height: 1.6"
+            ></p>
           </td>
         </tr>
       </table>
+      <!-- Center-align the "Submit" button -->
+      <div class="submit-button-container">
+        <button @click="submitData" class="submit-button">Submit</button>
+      </div>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -230,6 +242,20 @@ export default {
     };
   },
   computed: {
+    hasInputData() {
+      // Check if any input fields in the table have non-zero values
+      const hasAverageHours = this.averageHours.some((hours) => hours !== 0);
+
+      // Return true if either input fields or locations are selected
+      return (
+        hasAverageHours ||
+        this.selectedLocations.some((location) => location !== "")
+      );
+    },
+    hasInputData2() {
+      // Return true if either input fields or locations are selected
+      return this.selectedLocations.some((location) => location !== "");
+    },
     formattedOutputText() {
       // Replace spaces with <br> to create new lines
       return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
@@ -317,6 +343,24 @@ export default {
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
 
+label {
+  margin-bottom: 10px;
+}
+option,
+select {
+  width: 60%;
+  height: 40px;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: #c1fff7;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+/* Add styles to target the <p> element within the <td> */
+td p {
+  margin: 0; /* Remove default margin from <p> element */
+}
 .month-table {
   width: 100%;
   border-collapse: collapse;
@@ -349,7 +393,12 @@ export default {
 }
 
 .highlighted {
-  background-color: yellow; /* You can choose your desired highlighting color */
+  background-color: rgba(
+    233,
+    255,
+    66,
+    0.719
+  ); /* You can choose your desired highlighting color */
 }
 
 .logged-data {
@@ -366,5 +415,32 @@ export default {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+}
+
+/* Center align the date input container */
+.date-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping of date inputs if necessary */
+  margin-top: 10px;
+}
+
+/* Adjust the styles for labels and inputs */
+.date-input-container label {
+  margin-right: 5px;
+  white-space: nowrap; /* Prevent labels from wrapping */
+}
+
+.date-input-container input {
+  width: 40px;
+  margin: 0 5px;
+}
+
+/* Center-align the "Submit" button */
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin-top as needed */
 }
 </style>

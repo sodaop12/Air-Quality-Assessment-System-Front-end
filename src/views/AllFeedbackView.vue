@@ -28,7 +28,7 @@
               />
 
               <!--<p>Rating: {{ feedbackItem.rating }}</p>-->
-              <p>Comment: {{ feedbackItem.feedback }}</p>
+              <p>{{ feedbackItem.feedback }}</p>
             </div>
           </div>
         </div>

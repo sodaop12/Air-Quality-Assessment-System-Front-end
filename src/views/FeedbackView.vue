@@ -128,16 +128,19 @@ button {
 .comment textarea,
 label {
   width: 70%;
-  height: 100px;
   line-height: 40px;
+  display: inline-block;
 }
 /* Add this to your style section */
 .rating label {
-  width: 100px;
+  width: 130px;
   height: 40px;
   line-height: 40px;
   display: inline-block;
   cursor: pointer;
+}
+
+.rating {
 }
 
 .rating label i {
@@ -186,6 +189,7 @@ input {
 }
 .center-content {
   text-align: center;
+  width: 100%;
 }
 
 .rate-background,

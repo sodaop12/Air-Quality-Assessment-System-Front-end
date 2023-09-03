@@ -14,7 +14,7 @@
       </div>
       <section class="DayNum">
         <!-- Day, Number content -->
-        <h2 class="section-title">Average Day&Hours</h2>
+        <h2 class="section-title">Average Day&Hours (1/5/2023 - 30/5/2023)</h2>
         <div>
           <label for="dropdown"
             >During the last 30 days, on average, how many days have you spent

@@ -30,7 +30,7 @@
   }
   
   tr:hover {
-    background-color: cyan;
+    background-color: rgba(0, 255, 255, 0.396);
   }
   
   /* for submit button */
