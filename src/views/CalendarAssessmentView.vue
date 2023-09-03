@@ -4,6 +4,12 @@
       <!-- Left sidebar content -->
     </div>
     <div class="content">
+      <!-- Loading pop-up -->
+      <div class="loading-popup" v-if="loading">
+        <div class="loading-text" v-if="responseReceived">
+          Loading Result...
+        </div>
+      </div>
       <!-- Main content -->
       <div class="calendar_as">
         <div class="page-links">
@@ -52,26 +58,36 @@
 
       <h2 class="section-title">Start Date - End Date</h2>
       <!-- Add a container div to center align the date input boxes -->
-      <div class="date-input-container">
-        <label class="select_Head_day" for="start-date">Start Date:</label>
-        <input
-          id="start-date"
-          v-model="startDate"
-          type="number"
-          min="1"
-          max="30"
-          class="date-input"
-        />
-        <label class="select_Head_day" for="end-date">End Date:</label>
-        <input
-          id="end-date"
-          v-model="endDate"
-          type="number"
-          min="1"
-          max="30"
-          class="date-input"
-        />
-      </div>
+      <table class="date-input-table">
+        <tr>
+          <td style="background-color: #e2fefa">
+            <label for="start-date">Start Date:</label>
+          </td>
+          <td style="background-color: #e2fefa">
+            <input
+              id="start-date"
+              v-model="startDate"
+              type="number"
+              min="1"
+              max="30"
+              class="date-input"
+            />
+          </td>
+          <td style="background-color: #e2fefa">
+            <label for="end-date">End Date:</label>
+          </td>
+          <td style="background-color: #e2fefa">
+            <input
+              id="end-date"
+              v-model="endDate"
+              type="number"
+              min="1"
+              max="30"
+              class="date-input"
+            />
+          </td>
+        </tr>
+      </table>
 
       <section class="Location">
         <h2 class="section-title">Location</h2>
@@ -189,7 +205,9 @@
       </table>
       <!-- Center-align the "Submit" button -->
       <div class="submit-button-container">
-        <button @click="submitData" class="submit-button">Submit</button>
+        <button @click="validateAndSubmitData" class="submit-button">
+          Submit
+        </button>
       </div>
     </div>
     <div class="right-sidebar">
@@ -202,6 +220,7 @@
 export default {
   data() {
     return {
+      loading: false, // Add this loading property,
       output_text: null,
       totalhour: null,
       responseReceived: false,
@@ -291,6 +310,42 @@ export default {
     },
   },
   methods: {
+    validateAndSubmitData() {
+      console.log("Validation started...");
+
+      // Check if any input fields are empty
+      const emptyInputs =
+        this.selectedLocations.some((location) => location === "") ||
+        !this.startDate ||
+        !this.endDate;
+
+      if (!emptyInputs) {
+        console.log("Validation successful.");
+        // Proceed with counting and other relevant logic
+        console.log("Start Date:", this.startDate);
+        console.log("End Date:", this.endDate);
+        console.log("Selected Locations:", this.selectedLocations);
+
+        // Continue with other relevant logic here
+        // For example, you can count the selected locations and perform calculations.
+
+        // Calculate the count of selected locations
+        const selectedLocationCount = this.selectedLocations.filter(
+          (location) => location !== ""
+        ).length;
+        console.log("Selected Location Count:", selectedLocationCount);
+
+        // Perform other calculations or actions as needed
+
+        // Call the submitData method to submit the data
+        this.submitData();
+      } else {
+        console.log("Validation failed.");
+        // Display an alert if any input fields are empty
+        alert("Please fill in all location and date fields!!");
+      }
+    },
+
     submitData() {
       const dataToSend = {
         startDate: this.startDate,
@@ -298,7 +353,7 @@ export default {
         selectedLocations: this.selectedLocations,
         averageHours: this.averageHours,
       };
-
+      this.loading = true;
       fetch("http://127.0.0.1:5000/submitcalenderdata", {
         method: "POST",
         headers: {
@@ -319,7 +374,7 @@ export default {
           console.log("Updated loggedData:", this.loggedData);
           console.log("Updated averageHours:", this.averageHours);
           console.log(this.output_text);
-
+          this.loading = false;
           // Update loggedData with average hours data
           for (let day = this.startDate; day <= this.endDate; day++) {
             this.loggedData[day - 1].averageHours = this.averageHours[day - 1];
