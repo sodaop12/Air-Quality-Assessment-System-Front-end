@@ -20,6 +20,9 @@
         </label>
       </div>
       <button @click="submitFeedback">Submit</button>
+      <p v-if="showValidationMessage" class="validation-message">
+        Please provide both feedback and a rating before submitting.
+      </p>
     </div>
     <div class="social-media">
       <h3>Follow Us</h3>
@@ -41,12 +44,14 @@ export default {
   },
   methods: {
     async submitFeedback() {
-      if (!this.feedback.trim()) {
-        alert("Please provide feedback before submitting.");
+      if (!this.feedback.trim() || !this.selectedScore) {
+        alert("Please provide both feedback and a rating before submitting.");
         return;
       }
+
       const feedbackWithScore = `${this.feedback} (${this.selectedScore})`;
       console.log("Feedback with Score:", feedbackWithScore);
+
       try {
         const response = await fetch("http://127.0.0.1:5000/submit_feedback", {
           method: "POST",
@@ -61,6 +66,7 @@ export default {
 
         alert("Thank you for your feedback!");
         this.feedback = ""; // Clear the feedback field
+        this.selectedScore = null; // Clear the selectedScore
       } catch (error) {
         console.error("API error:", error);
         alert("An error occurred while submitting feedback.");
@@ -116,5 +122,10 @@ export default {
 
 .social-icons a:hover {
   color: #007bff;
+}
+
+.validation-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>
