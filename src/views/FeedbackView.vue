@@ -100,6 +100,7 @@ export default {
 <style scoped>
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
+@import "../assets/css/custom_main_font.css";
 .container {
   display: flex;
   height: 100vh;

@@ -2,3 +2,18 @@
 body {
     font-family: "Inter", sans-serif;
 }
+
+.select_day {
+    font-size: 14px;
+    /* Change the font-size as desired */
+    font-weight: 600;
+    padding-left: 5%;
+    color: #00926f;
+}
+
+.select_Head_day {
+    font-size: 20x;
+    /* Change the font-size as desired */
+    font-weight: 700;
+    color: #00926f;
+}

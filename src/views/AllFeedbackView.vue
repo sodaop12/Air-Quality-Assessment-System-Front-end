@@ -24,7 +24,7 @@
               <img
                 :src="getImagePath(feedbackItem.rating)"
                 alt="Rating Image"
-                style="width: 250px; height: 50px"
+                style="width: 250px; height: 45px"
               />
 
               <!--<p>Rating: {{ feedbackItem.rating }}</p>-->
@@ -72,7 +72,7 @@ export default {
 <style scope>
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
-
+@import "../assets/css/custom_main_font.css";
 .feedback-card {
   margin-bottom: 10px;
 }

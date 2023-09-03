@@ -16,7 +16,7 @@
         <!-- Day, Number content -->
         <h2 class="section-title">Average Day&Hours (1/5/2023 - 30/5/2023)</h2>
         <div>
-          <label for="dropdown"
+          <label class="select_Head_day" for="dropdown"
             >During the last 30 days, on average, how many days have you spent
             outdoors?</label
           >
@@ -28,7 +28,7 @@
             </option>
           </select>
           <div class="DH_Box"></div>
-          <label for="averageHours"
+          <label class="select_Head_day" for="averageHours"
             >How much average hours have you spent outdoors each day?</label
           >
           <input
@@ -46,7 +46,9 @@
 
       <section class="Location">
         <h2 class="section-title">Location</h2>
-        <label for="location1">Select Location 1:</label>
+        <label class="select_Head_day" for="location1"
+          >Select Location 1:</label
+        >
         <select id="location1" v-model="selectedLocations[0]">
           <option value="">-- Select Location --</option>
           <option
@@ -58,7 +60,9 @@
           </option>
         </select>
         <div class="DH_Box"></div>
-        <label for="location2">Select Location 2:</label>
+        <label class="select_Head_day" for="location2"
+          >Select Location 2:</label
+        >
         <select id="location2" v-model="selectedLocations[1]">
           <option value="">-- Select Location --</option>
           <option
@@ -70,7 +74,9 @@
           </option>
         </select>
         <div class="DH_Box"></div>
-        <label for="location3">Select Location 3:</label>
+        <label class="select_Head_day" for="location3"
+          >Select Location 3:</label
+        >
         <select id="location3" v-model="selectedLocations[2]">
           <option value="">-- Select Location --</option>
           <option
@@ -278,6 +284,7 @@ export default {
 <style scoped>
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
+@import "../assets/css/custom_main_font.css";
 label,
 input {
   margin-bottom: 10px;

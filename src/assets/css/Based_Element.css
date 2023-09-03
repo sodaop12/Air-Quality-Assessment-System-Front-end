@@ -1,24 +1,28 @@
 .container {
   display: flex;
+  height: 100%;
+  /* Ensure the layout takes the full viewport height */
+}
+
+.content-container {
+  display: flex;
+  flex: 1; /* Ensure the content container expands to fill available space */
 }
 
 .left-sidebar {
   width: 25%;
-  height: 100%;
   background-color: #71ffe5;
   /* Background color for left sidebar */
 }
 
 .content {
-  width: 50%;
-  height: 100%;
+  flex: 1; /* Allow the content area to grow within the content container */
   background-color: #ffffff;
   /* Background color for main content */
 }
 
 .right-sidebar {
   width: 25%;
-  height: 100%;
   background-color: #71ffe5;
   /* Background color for right sidebar */
 }

@@ -11,7 +11,7 @@
           <form @submit.prevent="submitNumbers" class="input-form">
             <table>
               <thead>
-                <tr>
+                <tr class="select_Head_day">
                   <th>Day</th>
                   <th>AQI</th>
                 </tr>
@@ -36,7 +36,7 @@
           <div class="response-section">
             <table>
               <thead>
-                <tr>
+                <tr class="select_Head_day">
                   <th>Next Date AQI</th>
                 </tr>
               </thead>
@@ -95,6 +95,7 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/custom_main_font.css";
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
