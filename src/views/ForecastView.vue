@@ -5,29 +5,50 @@
         <!-- Left sidebar content -->
       </div>
       <div class="content">
+        <h1 class="section-title">Forecast</h1>
         <!-- Main content -->
         <div class="forecast">
-          <h1>Forecast Home</h1>
           <form @submit.prevent="submitNumbers" class="input-form">
-            <label for="numberInput">Enter 5 Numbers:</label>
-            <div class="input-container">
-              <input
-                id="numberInput"
-                type="number"
-                v-for="(number, index) in numbers"
-                :key="index"
-                v-model="numbers[index]"
-                required
-                class="number-input"
-              />
-            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>AQI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(number, index) in numbers" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <input
+                      type="number"
+                      v-model="numbers[index]"
+                      required
+                      class="number-input"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <button type="submit" class="submit-button">Submit</button>
           </form>
 
           <div class="response-section">
-            <h2>Response from Flask:</h2>
-            <p v-if="forecast !== null">{{ forecast }}</p>
-            <p v-else>No prediction yet.</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Next Date AQI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <p v-if="forecast !== null">{{ forecast }}</p>
+                    <p v-else>No prediction yet.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -94,14 +115,6 @@ export default {
   background-color: #71ffe5;
 }
 
-.content {
-  width: 50%;
-  background-color: #eafffc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .forecast {
   width: 80%;
   max-width: 400px;
@@ -120,7 +133,9 @@ export default {
   gap: 10px;
   margin-top: 10px;
 }
-
+.content {
+  width: 50%;
+}
 .number-input {
   padding: 8px;
   border: 1px solid #ccc;
