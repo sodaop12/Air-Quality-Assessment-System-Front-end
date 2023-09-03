@@ -6,7 +6,7 @@
       </div>
       <div class="content">
         <!-- Main content -->
-        <h1>Feedback</h1>
+        <h1 class="section-title">Feedback</h1>
         <div v-for="(feedbackItem, index) in feedback" :key="index">
           <div
             class="out-box"
@@ -17,14 +17,17 @@
               padding: 10px;
             "
           >
-            <div class="card-set" style="width: 500px; height: 200px">
+            <div
+              class="card-set"
+              style="width: 647px; height: auto; background-color: #c1fff7"
+            >
               <img
                 :src="getImagePath(feedbackItem.rating)"
                 alt="Rating Image"
                 style="width: 250px; height: 50px"
               />
 
-              <p>Rating: {{ feedbackItem.rating }}</p>
+              <!--<p>Rating: {{ feedbackItem.rating }}</p>-->
               <p>Comment: {{ feedbackItem.feedback }}</p>
             </div>
           </div>
@@ -75,11 +78,13 @@ export default {
 }
 
 .card-set {
-  background-color: #f0f0f0; /* Add your desired background color here */
+  background-color: #f0f0f0;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  overflow: hidden; /* Add this property */
+  word-wrap: break-word; /* Add this property */
 }
 
 .out-box {
