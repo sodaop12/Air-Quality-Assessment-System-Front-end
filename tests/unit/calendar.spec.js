@@ -2,8 +2,6 @@
 
 import { mount } from "@vue/test-utils";
 import CalendarComponent from "@/views/CalendarAssessmentView.vue";
-
-// Mock the fetch function
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () =>
@@ -26,11 +24,21 @@ describe("CalendarComponent", () => {
   });
 
   it("submits data and displays results", async () => {
-    // Simulate user interactions (e.g., selecting dates, entering data)
-    // ...
+    wrapper.setData({
+      startDate: 1,
+      endDate: 3,
+      averageHours: [1,2,3],
+      selectedLocations: [
+        "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
+        "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
+        "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
+      ],
+    });
 
     await wrapper.find(".submit-button").trigger("click");
 
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
 
     expect(wrapper.vm.calculateaverage).toBe(10);

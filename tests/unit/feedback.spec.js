@@ -14,11 +14,14 @@ describe("Footer.vue", () => {
     // Set the feedback textarea value
     const feedbackTextarea = wrapper.find("textarea");
     await feedbackTextarea.setValue("Testing feedback");
-
+    const radioInput = wrapper.find('#rating-5'); // Assuming the ID is 'rating-5'
+    await radioInput.setChecked(true);
     // Trigger the click event on the submit button
     await wrapper.find("button").trigger("click");
 
     // Wait for the Vue component to update
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
     await wrapper.vm.$nextTick();
 
     // Assertions
@@ -29,7 +32,7 @@ describe("Footer.vue", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ feedback: "Testing feedback (null)" }),
+        body: JSON.stringify({ feedback: "Testing feedback (5)" }),
       })
     );
 
@@ -50,7 +53,7 @@ describe("Footer.vue", () => {
 
     await wrapper.find("button").trigger("click");
     expect(mockAlert).toHaveBeenCalledWith(
-      "Please provide feedback before submitting."
+      "Please provide both feedback and a rating before submitting."
     );
     mockAlert.mockRestore();
   });

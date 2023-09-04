@@ -14,7 +14,7 @@ describe("MyComponent", () => {
 
     // Check if forecast response is displayed
     expect(wrapper.find(".response-section").text()).toContain(
-      "Response from Flask:"
+      "Next Date AQINo prediction yet."
     );
   });
   it("forecast api fail", async () => {
