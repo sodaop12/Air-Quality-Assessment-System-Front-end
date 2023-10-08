@@ -1,52 +1,51 @@
 <template>
   <nav>
-    <div class="navbar">
-      <div class="navbar-brand">
-        <p class="nav-title"><router-link to="/">AQAS |</router-link></p>
-        <!-- Add dropdown menu for Assessment topics -->
-        <div class="dropdown" @click="toggleAssessmentTopics">
-          <p class="nav-sub">Assessment ▼</p>
-          <div class="dropdown-menu" :class="{ show: showAssessmentTopics }">
-            <router-link to="/compact_as" class="mini_topic"
-              >Compact Assessment</router-link
-            >
-            <router-link to="/complete_as" class="mini_topic"
-              >Complete Assessment</router-link
-            >
-            <router-link to="/calendar_as" class="mini_topic"
-              >Calendar Assessment</router-link
-            >
-          </div>
-        </div>
-        <p class="nav-sub">
-          <router-link to="/forecast" class="links">Forecast</router-link>
-        </p>
-        <p class="nav-sub">
-          <router-link to="/feedback" class="links">Feedback</router-link>
-        </p>
-        <!-- Generate new nav-sub when loggedIn is true -->
-        <p v-if="loggedIn" class="nav-sub">
-          <router-link to="/allfeedback" class="links"
-            >All Feedback</router-link
+    <div>
+      <v-toolbar dark prominent>
+        <v-btn>
+          <v-toolbar-title>
+            <router-link to="/">AQAS |</router-link></v-toolbar-title
           >
-        </p>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <span v-if="loggedIn" class="navbar-item">Feedback Auditor |</span>
-          <router-link
-            v-if="loggedIn"
-            to="/"
-            class="navbar-item"
-            @click="logout"
+        </v-btn>
+        <v-btn>
+          <v-toolbar-title>
+            <router-link to="/compact_as"
+              >ASSESSMENT</router-link
+            ></v-toolbar-title
           >
-            Logout
-          </router-link>
-          <router-link v-else to="/login" class="navbar-item">
-            for auditor
-          </router-link>
-        </div>
-      </div>
+        </v-btn>
+        <v-btn>
+          <v-toolbar-title>
+            <router-link to="/forecast">FORECAST</router-link></v-toolbar-title
+          >
+        </v-btn>
+        <v-btn>
+          <v-toolbar-title>
+            <router-link to="/feedback">FEEDBACK</router-link></v-toolbar-title
+          >
+        </v-btn>
+        <v-btn>
+          <v-toolbar-title>
+            <p v-if="loggedIn" class="nav-sub">
+              <router-link to="/allfeedback" class="links"
+                >All Feedback</router-link
+              >
+            </p></v-toolbar-title
+          >
+        </v-btn>
+
+        <v-spacer></v-spacer>
+
+        <v-btn>
+          <template v-if="loggedIn">
+            <span>Feedback Auditor |</span>
+            <router-link to="/" @click="logout">Logout</router-link>
+          </template>
+          <template v-else>
+            <router-link to="/login">for auditor</router-link>
+          </template>
+        </v-btn>
+      </v-toolbar>
     </div>
   </nav>
   <router-view />
@@ -62,6 +61,8 @@ export default {
   data() {
     return {
       showAssessmentTopics: false,
+      value: 1,
+      assessmentMenuOpen: false, // Control the visibility of the dropdown menu
     };
   },
   computed: {
@@ -214,5 +215,9 @@ export default {
 
 .dropdown.active .nav-sub {
   color: #fff; /* Text color when dropdown is active */
+}
+
+.mat-bar {
+  background: #71ffe5;
 }
 </style>
