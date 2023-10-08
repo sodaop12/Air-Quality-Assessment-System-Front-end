@@ -10,24 +10,21 @@
         </p>
         <h1>Let's try some!</h1>
         <div class="column-container">
-          <div class="column">
-            <router-link to="/compact_as" class="column-link">
-              <h2>Compact Assessment</h2>
-              <p>Explore our compact assessment feature</p>
+          <v-btn rounded="sm" size="x-large" density="compact">
+            <router-link to="/compact_as" class="custom-font">
+              Compact Assessment
             </router-link>
-          </div>
-          <div class="column">
-            <router-link to="/complete_as" class="column-link">
-              <h2>Complete Assessment</h2>
-              <p>Discover our complete assessment option</p>
+          </v-btn>
+          <v-btn rounded="sm" size="x-large" density="compact">
+            <router-link to="/complete_as" class="custom-font">
+              Complete Assessment
             </router-link>
-          </div>
-          <div class="column">
-            <router-link to="/calendar_as" class="column-link">
-              <h2>Calendar Assessment</h2>
-              <p>Check out our assessment calendar</p>
+          </v-btn>
+          <v-btn rounded="sm" size="x-large" density="compact">
+            <router-link to="/calendar_as" class="custom-font">
+              Calendar Assessment
             </router-link>
-          </div>
+          </v-btn>
         </div>
       </div>
     </div>
@@ -102,18 +99,15 @@ export default {};
   background-color: #71ffe5;
   padding: 10px;
 }
-
-.column-link {
-  text-decoration: none;
-  color: #333;
-}
-
-.column-link:hover {
-  color: #007bff;
-}
-
 .column-description {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+/* In your CSS stylesheet */
+.custom-font {
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
 }
 </style>
