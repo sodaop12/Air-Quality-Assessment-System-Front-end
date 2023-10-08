@@ -27,7 +27,7 @@ describe("CalendarComponent", () => {
     wrapper.setData({
       startDate: 1,
       endDate: 3,
-      averageHours: [1,2,3],
+      averageHours: [1, 2, 3],
       selectedLocations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",

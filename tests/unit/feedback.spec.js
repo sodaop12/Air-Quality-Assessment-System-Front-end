@@ -14,7 +14,7 @@ describe("Footer.vue", () => {
     // Set the feedback textarea value
     const feedbackTextarea = wrapper.find("textarea");
     await feedbackTextarea.setValue("Testing feedback");
-    const radioInput = wrapper.find('#rating-5'); // Assuming the ID is 'rating-5'
+    const radioInput = wrapper.find("#rating-5"); // Assuming the ID is 'rating-5'
     await radioInput.setChecked(true);
     // Trigger the click event on the submit button
     await wrapper.find("button").trigger("click");
