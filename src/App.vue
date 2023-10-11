@@ -1,10 +1,12 @@
 <template>
   <nav>
     <div>
-      <v-toolbar dark prominent>
+      <v-toolbar color="#D1FFF7">
         <v-btn>
           <v-toolbar-title>
-            <router-link to="/">AQAS |</router-link></v-toolbar-title
+            <router-link to="/"
+              ><a class="title-home">AQAS | </a></router-link
+            ></v-toolbar-title
           >
         </v-btn>
         <v-btn>
@@ -121,7 +123,6 @@ export default {
   font-size: 20px;
   font-weight: 500;
   line-height: 100%;
-  text-decoration: none;
   margin-right: 20px;
   font-weight: bold;
 }
@@ -177,6 +178,9 @@ export default {
 }
 
 .router-link-exact-active {
+  color: #00ba00;
+}
+.router-link {
   color: #42b983;
 }
 
@@ -219,5 +223,16 @@ export default {
 
 .mat-bar {
   background: #71ffe5;
+}
+
+.nav-title-text-color {
+  color: #00926f;
+  font-weight: 800;
+}
+.title-home {
+  font-weight: 900;
+}
+a {
+  font-weight: 800;
 }
 </style>
