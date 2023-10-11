@@ -1,37 +1,40 @@
 <template>
-  <footer class="footer">
-    <div class="feedback">
-      <h3>Feedback</h3>
-      <textarea
-        v-model="feedback"
-        rows="4"
-        placeholder="Enter your feedback"
-      ></textarea>
-      <div class="rating">
-        <span>Rate your experience:</span>
-        <label v-for="score in 5" :key="score">
-          <input
-            type="radio"
-            :id="'rating-' + score"
-            :value="score"
-            v-model="selectedScore"
-          />
-          <label :for="'rating-' + score">{{ score }}</label>
-        </label>
-      </div>
-      <button @click="submitFeedback">Submit</button>
-      <p v-if="showValidationMessage" class="validation-message">
-        Please provide both feedback and a rating before submitting.
-      </p>
-    </div>
-    <div class="social-media">
-      <h3>Follow Us</h3>
-      <div class="social-icons">
-        <!-- Add social media icons here -->
-        <!-- Example: <a href="#"><i class="fab fa-facebook"></i></a> -->
-      </div>
-    </div>
-  </footer>
+  <v-expansion-panels>
+    <v-expansion-panel>
+      <v-expansion-panel-title
+        color="rgb(245, 245, 245)"
+        expand-icon="mdi-plus"
+        collapse-icon="mdi-minus"
+      >
+        <a> Feedback</a>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <div class="feedback">
+          <textarea
+            v-model="feedback"
+            rows="4"
+            placeholder="Enter your feedback"
+          ></textarea>
+          <div class="rating">
+            <span>Rate your experience:</span>
+            <label v-for="score in 5" :key="score">
+              <input
+                type="radio"
+                :id="'rating-' + score"
+                :value="score"
+                v-model="selectedScore"
+              />
+              <label :for="'rating-' + score">{{ score }}</label>
+            </label>
+          </div>
+          <button @click="submitFeedback">Submit</button>
+          <p v-if="showValidationMessage" class="validation-message">
+            Please provide both feedback and a rating before submitting.
+          </p>
+        </div>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <script>
@@ -40,6 +43,8 @@ export default {
     return {
       feedback: "",
       selectedScore: null,
+      panel: [0, 1],
+      disabled: false,
     };
   },
   methods: {
@@ -127,5 +132,8 @@ export default {
 .validation-message {
   color: red;
   margin-top: 10px;
+}
+.a {
+  font-weight: bold;
 }
 </style>

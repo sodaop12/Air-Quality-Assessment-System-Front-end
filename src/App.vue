@@ -233,6 +233,6 @@ export default {
   font-weight: 900;
 }
 a {
-  font-weight: 800;
+  font-weight: 700;
 }
 </style>

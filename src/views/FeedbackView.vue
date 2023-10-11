@@ -8,6 +8,7 @@
         <!-- Main content -->
         <div class="feedback">
           <h2 class="section-title">Feedback</h2>
+
           <div class="center-content">
             <div class="DH_Box"></div>
             <label class="title">Rating</label>
