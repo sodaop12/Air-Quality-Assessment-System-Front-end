@@ -106,16 +106,6 @@ export default {
   }
 }
 
-.container {
-  display: flex;
-  height: 100vh;
-}
-
-.left-sidebar {
-  width: 25%;
-  background-color: #71ffe5;
-}
-
 .forecast {
   width: 80%;
   max-width: 400px;

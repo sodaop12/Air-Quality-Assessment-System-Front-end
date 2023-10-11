@@ -106,20 +106,7 @@ export default {
   display: flex;
   height: 100vh;
 }
-.left-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for left sidebar */
-}
 
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
-}
-
-.right-sidebar {
-  width: 25%;
-  background-color: #71ffe5; /* Background color for right sidebar */
-}
 /* Center the button */
 button {
   display: block;

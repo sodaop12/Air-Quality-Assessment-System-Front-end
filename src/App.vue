@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div>
-      <v-toolbar color="#D1FFF7">
+      <v-toolbar color="#71ffe5">
         <v-btn>
           <v-toolbar-title>
             <router-link to="/"
@@ -94,7 +94,7 @@ export default {
 }
 .left-sidebar {
   width: 25%;
-  background-color: #71ffe5; /* Background color for left sidebar */
+  background-color: #befff3; /* Background color for left sidebar */
 }
 
 .content {
@@ -104,7 +104,7 @@ export default {
 
 .right-sidebar {
   width: 25%;
-  background-color: #71ffe5; /* Background color for right sidebar */
+  background-color: #befff3; /* Background color for right sidebar */
 }
 .navbar {
   background-color: #d1fff7;
