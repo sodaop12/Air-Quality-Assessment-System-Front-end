@@ -99,13 +99,14 @@
               >Are you having any health problems? (such as congenital disease,
               illness and others)</label
             >
-            <input
-              class="disease_des"
+            <v-textarea
+              label="-- Additional details --"
+              variant="outlined"
               :id="'textInput' + inputIndex"
               type="text"
               v-model="additionalText"
               maxlength="50"
-            />
+            ></v-textarea>
           </div>
           <h2 class="section-title">Summary 1</h2>
           <table>
@@ -260,13 +261,14 @@
               >Are you having any health problems? (such as congenital disease,
               illness and others):</label
             >
-            <input
-              class="disease_des"
+            <v-textarea
+              label="-- Additional details --"
+              variant="outlined"
               :id="'textInput' + inputIndex"
               type="text"
               v-model="additionalText"
               maxlength="50"
-            />
+            ></v-textarea>
           </div>
           <h2 class="section-title">Summary 2</h2>
           <table>
@@ -388,13 +390,14 @@
               >Are you having any health problems? (such as congenital disease,
               illness and others):</label
             >
-            <input
-              class="disease_des"
+            <v-textarea
+              label="-- Additional details --"
+              variant="outlined"
               :id="'textInput' + inputIndex"
               type="text"
               v-model="additionalText"
               maxlength="50"
-            />
+            ></v-textarea>
           </div>
           <h2 class="section-title">Summary 3</h2>
           <table>
@@ -439,7 +442,9 @@
 
         <!-- Loading pop-up -->
         <div class="loading-popup" v-if="loading">
-          <div class="loading-text">Loading Result...</div>
+          <div class="loading-text" v-if="responseReceived">
+            Loading Result...
+          </div>
         </div>
 
         <!-- Other paragraphs of text -->

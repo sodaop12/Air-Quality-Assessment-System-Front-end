@@ -39,7 +39,7 @@
               :key="day"
               :class="['day-cell', { highlighted: isHighlighted(day) }]"
             >
-              <div v-if="day !== null">
+              <div v-if="day !== null" style="display: inline-block">
                 <a class="day-button">
                   {{ day }}
                 </a>
@@ -48,7 +48,14 @@
                   v-model="averageHours[day - 1]"
                   class="hours-input"
                   type="number"
-                  placeholder="Avg Hours"
+                  placeholder="Average hours"
+                  style="
+                    display: block;
+                    border: none;
+                    border-bottom: 1px solid black;
+                  "
+                  min="0"
+                  max="24"
                 />
               </div>
             </td>
@@ -60,7 +67,7 @@
       <!-- Add a container div to center align the date input boxes -->
       <table class="date-input-table">
         <tr>
-          <td style="background-color: #e2fefa">
+          <td style="background-color: #bcfff4">
             <label for="start-date">Start Date:</label>
           </td>
           <td style="background-color: #e2fefa">
@@ -71,9 +78,10 @@
               min="1"
               max="30"
               class="date-input"
+              style="border: none; border-bottom: 1px solid black"
             />
           </td>
-          <td style="background-color: #e2fefa">
+          <td style="background-color: #bcfff4">
             <label for="end-date">End Date:</label>
           </td>
           <td style="background-color: #e2fefa">
@@ -84,6 +92,7 @@
               min="1"
               max="30"
               class="date-input"
+              style="border: none; border-bottom: 1px solid black"
             />
           </td>
         </tr>
@@ -459,10 +468,10 @@ td p {
 
 .highlighted {
   background-color: rgba(
-    233,
-    255,
     66,
-    0.719
+    198,
+    255,
+    0.233
   ); /* You can choose your desired highlighting color */
 }
 
