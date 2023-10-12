@@ -77,7 +77,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #71ffe5;
+  background-color: #acfff0;
 }
 
 .content-box {

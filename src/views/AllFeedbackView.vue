@@ -7,28 +7,21 @@
       <div class="content">
         <!-- Main content -->
         <h1 class="section-title">Feedback</h1>
-        <div v-for="(feedbackItem, index) in feedback" :key="index">
+        <div class="feedback-cards">
           <div
-            class="out-box"
-            style="
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              padding: 10px;
-            "
+            v-for="(feedbackItem, index) in feedback"
+            :key="index"
+            class="feedback-card"
           >
-            <div
-              class="card-set"
-              style="width: 647px; height: auto; background-color: #c1fff7"
-            >
-              <img
-                :src="getImagePath(feedbackItem.rating)"
-                alt="Rating Image"
-                style="width: 250px; height: 45px"
-              />
-
-              <!--<p>Rating: {{ feedbackItem.rating }}</p>-->
-              <p>{{ feedbackItem.feedback }}</p>
+            <div class="card-set">
+              <div class="image-container">
+                <img
+                  :src="getImagePath(feedbackItem.rating)"
+                  alt="Rating Image"
+                  class="rating-image"
+                />
+              </div>
+              <p class="feedback-text">{{ feedbackItem.feedback }}</p>
             </div>
           </div>
         </div>
@@ -78,16 +71,54 @@ export default {
 }
 
 .card-set {
-  background-color: #f0f0f0;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px;
   overflow: hidden; /* Add this property */
   word-wrap: break-word; /* Add this property */
+  width: 647px;
+  height: auto;
+  background-color: #c1fff7;
 }
 
 .out-box {
   margin-bottom: 2%;
+}
+
+.feedback-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.feedback-card {
+  margin: 10px; /* Add some margin between cards */
+}
+
+.card-set {
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  word-wrap: break-word;
+  width: 647px;
+  height: auto;
+  background-color: #c1fff7;
+  text-align: center; /* Center card content */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.rating-image {
+  width: 250px; /* Set a fixed width for the image */
+  height: 45px;
+}
+
+.feedback-text {
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

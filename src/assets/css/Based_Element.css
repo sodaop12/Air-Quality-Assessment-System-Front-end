@@ -1,29 +1,35 @@
 .container {
   display: flex;
-  height: 100vh;
+  height: 100%;
   /* Ensure the layout takes the full viewport height */
 }
 
 .content-container {
   display: flex;
-  flex: 1; /* Ensure the content container expands to fill available space */
+
+  flex: 1;
+  /* Ensure the content container expands to fill available space */
 }
 
 .left-sidebar {
   width: 15%;
-  background-color: #71ffe5;
+  background-color: #ddfff9;
+  height: 100%;
   /* Background color for left sidebar */
 }
 
 .content {
-  flex: 1; /* Allow the content area to grow within the content container */
+  flex: 1;
+  /* Allow the content area to grow within the content container */
   background-color: #ffffff;
+  height: 100%;
   /* Background color for main content */
 }
 
 .right-sidebar {
   width: 15%;
-  background-color: #71ffe5;
+  background-color: #ddfff9;
+  height: 100%;
   /* Background color for right sidebar */
 }
 
@@ -105,4 +111,5 @@
 /* custom-font.css */
 body {
   font-family: "Inter", sans-serif;
+  background-color: #ddfff9;
 }

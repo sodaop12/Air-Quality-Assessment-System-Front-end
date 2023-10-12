@@ -94,8 +94,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import "../assets/css/Based_Element.css";
 @import "../assets/css/custom_main_font.css";
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;

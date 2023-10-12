@@ -96,20 +96,6 @@ export default {
   display: flex;
   height: calc(100vh - 50px);
 }
-.left-sidebar {
-  width: 25%;
-  background-color: #befff3; /* Background color for left sidebar */
-}
-
-.content {
-  width: 50%;
-  background-color: #eafffc; /* Background color for main content */
-}
-
-.right-sidebar {
-  width: 25%;
-  background-color: #befff3; /* Background color for right sidebar */
-}
 .navbar {
   background-color: #d1fff7;
   color: #00926f;
