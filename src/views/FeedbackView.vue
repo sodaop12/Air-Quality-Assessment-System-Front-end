@@ -149,15 +149,6 @@ label {
   display: block;
   font-size: 12px;
 }
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .content {
-    width: 100%;
-  }
-}
 label,
 input {
   margin-bottom: 10px;

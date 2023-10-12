@@ -54,8 +54,8 @@
       </v-toolbar>
     </nav>
     <router-view />
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script>
@@ -94,7 +94,6 @@ export default {
 .container {
   position: relative;
   display: flex;
-  height: calc(100vh - 50px);
 }
 .navbar {
   background-color: #d1fff7;
@@ -137,13 +136,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 5px;
-}
-.nav-title:hover,
-.navbar-item:hover,
-.nav-sub:hover {
-  transition: background-color 0.3s, color 0.3s;
-}
-.mini_topic:hover {
 }
 
 .navbar-menu {
@@ -199,10 +191,6 @@ export default {
   color: #333;
   text-decoration: none;
   margin-bottom: 5px;
-}
-
-.dropdown-menu a:hover {
-  color: #42b983;
 }
 
 .dropdown.active .nav-sub {

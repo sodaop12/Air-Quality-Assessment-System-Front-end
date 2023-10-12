@@ -36,12 +36,13 @@
 /* set content are for small size */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column;
+    flex: 1;
   }
-
   .content {
     width: 100%;
   }
+
+
 }
 
 /* for page link */
@@ -72,10 +73,6 @@
   border-radius: 20px;
   text-decoration: none;
   color: #000;
-}
-
-.page-link:hover {
-  background-color: #48d6b4;
 }
 
 /* for Section title */

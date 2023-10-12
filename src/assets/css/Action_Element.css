@@ -29,10 +29,6 @@
     background-color: #c1fff7;
   }
   
-  tr:hover {
-    background-color: rgba(0, 255, 255, 0.396);
-  }
-  
   /* for submit button */
   .submit-button {
     background-color: #71ffe5; /* Set your desired button color here */

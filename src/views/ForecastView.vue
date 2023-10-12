@@ -98,16 +98,6 @@ export default {
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/custom_main_font.css";
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-
-  .content {
-    width: 100%;
-  }
-}
-
 .forecast {
   width: 80%;
   max-width: 400px;
@@ -146,10 +136,6 @@ export default {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   margin-top: 10px;
-}
-
-.submit-button:hover {
-  background-color: #48e0c2;
 }
 
 .response-section {

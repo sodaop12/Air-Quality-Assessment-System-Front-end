@@ -125,10 +125,6 @@ export default {
   transition: color 0.3s;
 }
 
-.social-icons a:hover {
-  color: #007bff;
-}
-
 .validation-message {
   color: red;
   margin-top: 10px;
