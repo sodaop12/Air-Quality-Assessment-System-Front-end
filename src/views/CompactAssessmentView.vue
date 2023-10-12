@@ -319,7 +319,7 @@ td p {
   width: 60%;
   height: 55px;
   box-sizing: border-box;
-  background-color: #c1fff7;
+  background-color: #e2fefa;
   margin: 0 auto;
   display: block;
   text-align: center;

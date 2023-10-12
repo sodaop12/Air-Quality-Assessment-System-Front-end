@@ -21,25 +21,16 @@
             >
           </div>
           <div class="form-right">
-            <select
-              id="dropdown"
+            <v-autocomplete
+              label="-- How many days --"
               v-model="selectedDays"
-              @change="generateAdditionalInputs"
-              class="option_head"
-            >
-              <option value="">Select</option>
-              <option
-                v-for="day in days"
-                :value="day"
-                :key="day"
-                class="fixed-autocomplete"
-                variant="outlined"
-              >
-                {{ day }}
-              </option>
-            </select>
+              :items="days"
+              outlined
+              class="fixed-autocomplete"
+            ></v-autocomplete>
           </div>
         </div>
+        <div class="DH_Box"></div>
         <!-- START 1-7 DAY [1]------------------------------------------------------------>
         <div v-if="selectedDays >= 1 && selectedDays <= 7">
           <table>
@@ -65,6 +56,7 @@
                     min="1"
                     max="30"
                     @input="adjustAdditionalDate(inputIndex - 1)"
+                    style="border-bottom: 1px solid black"
                   />
                 </td>
                 <td>
@@ -78,6 +70,7 @@
                     min="1"
                     max="24"
                     @input="adjustAdditionalHours(inputIndex - 1)"
+                    style="border-bottom: 1px solid black"
                   />
                 </td>
                 <td>
@@ -87,12 +80,12 @@
                   <v-autocomplete
                     id="locationDropdown"
                     v-model="selectedLocations[inputIndex - 1]"
-                    label="-- Select Location --"
+                    label=""
                     :items="locations"
                     item-text="location"
                     item-value="location"
-                    class="fixed-autocomplete"
-                    variant="outlined"
+                    class="fixed-autocomplete_2"
+                    variant="underlined"
                     clearable
                   ></v-autocomplete>
                 </td>
@@ -881,7 +874,16 @@ select {
   width: 60%;
   height: 55px;
   box-sizing: border-box;
-  background-color: #c1fff7;
+  background-color: #e2fefa;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.fixed-autocomplete_2 {
+  width: 60%;
+  height: 55px;
+  box-sizing: border-box;
   margin: 0 auto;
   display: block;
   text-align: center;
