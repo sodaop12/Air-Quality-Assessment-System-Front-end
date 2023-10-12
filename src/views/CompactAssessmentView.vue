@@ -49,44 +49,48 @@
         <label class="select_Head_day" for="location1"
           >Select Location 1:</label
         >
-        <select id="location1" v-model="selectedLocations[0]">
-          <option value="">-- Select Location --</option>
-          <option
-            v-for="(location, index) in locations"
-            :key="index"
-            :value="location"
-          >
-            {{ location }}
-          </option>
-        </select>
+        <v-autocomplete
+          id="location1"
+          v-model="selectedLocations[0]"
+          label="-- Select Location 1 --"
+          :items="locations"
+          item-text="location"
+          item-value="location"
+          clearable
+          class="fixed-autocomplete"
+          variant="outlined"
+        ></v-autocomplete>
+
         <div class="DH_Box"></div>
         <label class="select_Head_day" for="location2"
           >Select Location 2:</label
         >
-        <select id="location2" v-model="selectedLocations[1]">
-          <option value="">-- Select Location --</option>
-          <option
-            v-for="(location, index) in locations"
-            :key="index"
-            :value="location"
-          >
-            {{ location }}
-          </option>
-        </select>
+        <v-autocomplete
+          id="location1"
+          v-model="selectedLocations[1]"
+          label="-- Select Location 2 --"
+          :items="locations"
+          item-text="location"
+          item-value="location"
+          clearable
+          class="fixed-autocomplete"
+          variant="outlined"
+        ></v-autocomplete>
         <div class="DH_Box"></div>
         <label class="select_Head_day" for="location3"
           >Select Location 3:</label
         >
-        <select id="location3" v-model="selectedLocations[2]">
-          <option value="">-- Select Location --</option>
-          <option
-            v-for="(location, index) in locations"
-            :key="index"
-            :value="location"
-          >
-            {{ location }}
-          </option>
-        </select>
+        <v-autocomplete
+          id="location1"
+          v-model="selectedLocations[2]"
+          label="-- Select Location 3 --"
+          :items="locations"
+          item-text="location"
+          item-value="location"
+          clearable
+          class="fixed-autocomplete"
+          variant="outlined"
+        ></v-autocomplete>
       </section>
 
       <section class="Report">
@@ -304,5 +308,15 @@ select {
 /* Add styles to target the <p> element within the <td> */
 td p {
   margin: 0; /* Remove default margin from <p> element */
+}
+
+.fixed-autocomplete {
+  width: 60%;
+  height: 55px;
+  box-sizing: border-box;
+  background-color: #c1fff7;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
 }
 </style>

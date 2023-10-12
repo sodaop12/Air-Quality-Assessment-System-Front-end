@@ -32,7 +32,8 @@
                 v-for="day in days"
                 :value="day"
                 :key="day"
-                class="option_day"
+                class="fixed-autocomplete"
+                variant="outlined"
               >
                 {{ day }}
               </option>
@@ -83,19 +84,17 @@
                   <label class="select_day" for="locationDropdown"
                     >Select Locations:</label
                   >
-                  <select
+                  <v-autocomplete
                     id="locationDropdown"
                     v-model="selectedLocations[inputIndex - 1]"
-                  >
-                    <option
-                      v-for="location in locations"
-                      :value="location"
-                      :key="location"
-                      class="option_day"
-                    >
-                      {{ location }}
-                    </option>
-                  </select>
+                    label="-- Select Location --"
+                    :items="locations"
+                    item-text="location"
+                    item-value="location"
+                    class="fixed-autocomplete"
+                    variant="outlined"
+                    clearable
+                  ></v-autocomplete>
                 </td>
               </tr>
             </tbody>
@@ -189,7 +188,8 @@
                     min="1"
                     max="30"
                     @input="adjustStartDate"
-                    class="option_day"
+                    class="fixed-autocomplete"
+                    variant="outlined"
                   />
                 </td>
                 <td>
@@ -203,7 +203,8 @@
                     min="1"
                     max="30"
                     @input="adjustEndDate"
-                    class="option_day"
+                    class="fixed-autocomplete"
+                    variant="outlined"
                   />
                 </td>
               </tr>
@@ -217,54 +218,49 @@
             type="number"
             v-model="Hours"
             @input="adjustAverageHours"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
           />
           <h3 class="section-title-mini">Location</h3>
           <label class="select_day" for="location1">Select Location 1:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[0]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 1 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+          ></v-autocomplete>
+
           <label class="select_day" for="location1">Select Location 2:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[1]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 2 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+          ></v-autocomplete>
+
           <label class="select_day" for="location1">Select Location 3:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[2]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 3 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+          ></v-autocomplete>
+
           <h2 class="section-title">Congenital Disease 2</h2>
           <div class="disease_ex">
             <label
@@ -345,56 +341,54 @@
                 type="number"
                 v-model="Hours"
                 @input="adjustAverageHours"
-                class="option_day"
+                class="fixed-autocomplete"
+                variant="outlined"
               />
             </div>
           </div>
           <h3 class="section-title-mini">Location</h3>
           <label class="select_day" for="location1">Select Location 1:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[0]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 1 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+            close-on-select
+          ></v-autocomplete>
+
           <label class="select_day" for="location1">Select Location 2:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[1]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 2 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+            close-on-select
+          ></v-autocomplete>
+
           <label class="select_day" for="location1">Select Location 3:</label>
-          <select
+          <v-autocomplete
             id="location1"
-            class="option_day"
+            class="fixed-autocomplete"
+            variant="outlined"
             v-model="selectedLocation30[2]"
-          >
-            <option value="">-- Select Location --</option>
-            <option
-              v-for="(location, index) in locations"
-              :key="index"
-              :value="location"
-            >
-              {{ location }}
-            </option>
-          </select>
+            label="-- Select Location 3 --"
+            :items="locations"
+            item-text="location"
+            item-value="location"
+            return-object
+            close-on-select
+          ></v-autocomplete>
+
           <h2 class="section-title">Congenital Disease 3</h2>
           <div class="disease_ex">
             <label
@@ -881,5 +875,15 @@ select {
 .option_head,
 .option_day {
   background-color: #e2fefa; /* Change the background color as desired */
+}
+
+.fixed-autocomplete {
+  width: 60%;
+  height: 55px;
+  box-sizing: border-box;
+  background-color: #c1fff7;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <nav>
-    <div>
+  <div>
+    <nav>
       <v-toolbar color="#71ffe5">
         <v-btn>
           <v-toolbar-title>
@@ -11,25 +11,29 @@
         </v-btn>
         <v-btn>
           <v-toolbar-title>
-            <router-link to="/compact_as"
+            <router-link to="/compact_as" class="sub-home"
               >ASSESSMENT</router-link
             ></v-toolbar-title
           >
         </v-btn>
         <v-btn>
           <v-toolbar-title>
-            <router-link to="/forecast">FORECAST</router-link></v-toolbar-title
+            <router-link to="/forecast" class="sub-home"
+              >FORECAST</router-link
+            ></v-toolbar-title
           >
         </v-btn>
         <v-btn>
           <v-toolbar-title>
-            <router-link to="/feedback">FEEDBACK</router-link></v-toolbar-title
+            <router-link to="/feedback" class="sub-home"
+              >FEEDBACK</router-link
+            ></v-toolbar-title
           >
         </v-btn>
         <v-btn>
           <v-toolbar-title>
             <p v-if="loggedIn" class="nav-sub">
-              <router-link to="/allfeedback" class="links"
+              <router-link to="/allfeedback" class="sub-home"
                 >All Feedback</router-link
               >
             </p></v-toolbar-title
@@ -48,10 +52,10 @@
           </template>
         </v-btn>
       </v-toolbar>
-    </div>
-  </nav>
-  <router-view />
-  <Footer />
+    </nav>
+    <router-view />
+    <Footer />
+  </div>
 </template>
 
 <script>
@@ -152,10 +156,8 @@ export default {
 .navbar-item:hover,
 .nav-sub:hover {
   transition: background-color 0.3s, color 0.3s;
-  background: white;
 }
 .mini_topic:hover {
-  background: white;
 }
 
 .navbar-menu {
@@ -234,5 +236,8 @@ export default {
 }
 a {
   font-weight: 700;
+}
+.sub-home {
+  font-size: 16px;
 }
 </style>
