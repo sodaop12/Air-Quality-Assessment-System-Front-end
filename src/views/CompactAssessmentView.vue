@@ -21,26 +21,26 @@
             outdoors?</label
           >
           <div class="DH_Box"></div>
-          <select id="dropdown" v-model="selectedDays">
-            <option value="">-- How much days --</option>
-            <option v-for="day in days" :value="day" :key="day">
-              {{ day }}
-            </option>
-          </select>
+          <v-autocomplete
+            label="-- How many days --"
+            v-model="selectedDays"
+            :items="days"
+            outlined
+            class="fixed-autocomplete"
+          ></v-autocomplete>
+
           <div class="DH_Box"></div>
-          <label class="select_Head_day" for="averageHours"
+          <label class="select_Head_day" for="dropdown"
             >How much average hours have you spent outdoors each day?</label
           >
-          <input
-            type="number"
-            id="averageHours"
+          <v-autocomplete
+            label="-- Average hours/day --"
             v-model="averageHours"
-            min="1"
-            max="24"
-            @input="adjustAverageHours"
-            required
-            placeholder="-- Average hours --"
-          />
+            :items="hoursOptions"
+            item-text="hour"
+            outlined
+            class="fixed-autocomplete"
+          ></v-autocomplete>
         </div>
       </section>
 
@@ -182,7 +182,6 @@ export default {
   data() {
     return {
       loading: false,
-      selectedDays: "",
       calculateaverage: null,
       totalhour: null,
       output_text: null,
@@ -192,7 +191,9 @@ export default {
       min: null,
       Cgrs: null,
       selectedLocations: ["", "", ""],
-      days: Array.from({ length: 30 }, (_, index) => index + 1),
+      selectedDays: null, // This will hold the selected value
+      days: Array.from({ length: 30 }, (_, i) => i + 1), // Creates an array from 1 to 30
+      //days: Array.from({ length: 30 }, (_, index) => index + 1),
       locations: [
         "Innovative Village ต.ป่าแดด อ.เมือง จ.เชียงใหม่",
         "คณะบริหารธุรกิจ มช. ต.สุเทพ อ.เมือง จ.เชียงใหม่",
@@ -223,7 +224,11 @@ export default {
       // Replace spaces with <br> to create new lines
       return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
     },
+    hoursOptions() {
+      return Array.from({ length: 24 }, (_, i) => i + 1);
+    },
   },
+
   methods: {
     //limit the average hours [from 1-24]
     adjustAverageHours() {

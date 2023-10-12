@@ -41,7 +41,7 @@ export default {};
 .part2,
 .part3,
 .part4 {
-  height: 500px;
+  height: 2em;
 }
 .part1 {
   height: 200px;
