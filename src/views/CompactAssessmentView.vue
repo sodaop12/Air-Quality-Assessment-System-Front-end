@@ -131,43 +131,65 @@
             </div>
           </div>
           <!-- Other paragraphs of text -->
-          <div class="button-container">
-            <button
-              @click="submitData"
-              class="submit-button"
-              v-if="selectedDays >= 1 && selectedDays <= 30"
-            >
-              Submit
-            </button>
-          </div>
-          <h2 class="section-title" v-if="responseReceived">Report</h2>
-          <table v-if="responseReceived">
-            <tr>
-              <td>Average AQI:</td>
-              <td>{{ calculateaverage.toFixed(2) }}</td>
-            </tr>
-            <tr>
-              <td>Total Hour:</td>
-              <td>{{ totalhour }}</td>
-            </tr>
-            <tr>
-              <td>Maximum AQI:</td>
-              <td>{{ max }}</td>
-            </tr>
-            <tr>
-              <td>Minimum AQI:</td>
-              <td>{{ min }}</td>
-            </tr>
-            <tr>
-              <td>Cigarettes according to AQI:</td>
-              <td>{{ Cgrs.toFixed(2) }}</td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <p v-html="formattedOutputText"></p>
-              </td>
-            </tr>
-          </table>
+
+          <v-dialog width="1000">
+            <template v-slot:activator="{ props }">
+              <div class="button-container">
+                <v-btn
+                  v-bind="props"
+                  text="Open Dialog"
+                  @click="submitData"
+                  class="submit-button"
+                  v-if="showOpenDialogButton"
+                >
+                </v-btn>
+              </div>
+            </template>
+
+            <template v-slot:default="{ isActive }" v-if="responseReceived">
+              <v-card title="Compact Assessment">
+                <v-card-text>
+                  <h2 class="section-title">Report</h2>
+                  <v-table>
+                    <tr>
+                      <td>Average AQI:</td>
+                      <td>{{ calculateaverage.toFixed(2) }}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Hour:</td>
+                      <td>{{ totalhour }}</td>
+                    </tr>
+                    <tr>
+                      <td>Maximum AQI:</td>
+                      <td>{{ max }}</td>
+                    </tr>
+                    <tr>
+                      <td>Minimum AQI:</td>
+                      <td>{{ min }}</td>
+                    </tr>
+                    <tr>
+                      <td>Cigarettes according to AQI:</td>
+                      <td>{{ Cgrs.toFixed(2) }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <p v-html="formattedOutputText"></p>
+                      </td>
+                    </tr>
+                  </v-table>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn
+                    text="Close Dialog"
+                    @click="isActive.value = false"
+                  ></v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-dialog>
         </div>
       </section>
     </div>
@@ -226,6 +248,16 @@ export default {
     },
     hoursOptions() {
       return Array.from({ length: 24 }, (_, i) => i + 1);
+    },
+    showOpenDialogButton() {
+      return (
+        this.selectedDays >= 1 &&
+        this.selectedDays <= 30 &&
+        this.averageHours != null &&
+        this.selectedLocations[0] != "" &&
+        this.selectedLocations[1] != "" &&
+        this.selectedLocations[2] != ""
+      );
     },
   },
 
