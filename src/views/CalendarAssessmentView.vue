@@ -185,43 +185,64 @@
         </table>
       </div>
 
-      <h2 class="section-title" v-if="responseReceived">Report</h2>
-      <table v-if="responseReceived">
-        <tr>
-          <td>Average AQI:</td>
-          <td>{{ calculateaverage.toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td>Total Hour:</td>
-          <td>{{ totalhour }}</td>
-        </tr>
-        <tr>
-          <td>Maximum AQI:</td>
-          <td>{{ max }}</td>
-        </tr>
-        <tr>
-          <td>Minimum AQI:</td>
-          <td>{{ min }}</td>
-        </tr>
-        <tr>
-          <td>Cigarettes according to AQI:</td>
-          <td>{{ Cgrs.toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <p
-              v-html="formattedOutputText"
-              style="font-size: 16px; line-height: 1.6"
-            ></p>
-          </td>
-        </tr>
-      </table>
-      <!-- Center-align the "Submit" button -->
-      <div class="submit-button-container">
-        <button @click="validateAndSubmitData" class="submit-button">
-          Submit
-        </button>
-      </div>
+      <v-dialog width="1000">
+        <template v-slot:activator="{ props }">
+          <div class="button-container">
+            <v-btn
+              v-bind="props"
+              text="Submit"
+              @click="validateAndSubmitData"
+              class="submit-button"
+              v-if="showOpenDialogButton"
+            >
+            </v-btn>
+          </div>
+        </template>
+
+        <template v-slot:default="{ isActive }" v-if="responseReceived">
+          <v-card title="Calendar Assessment">
+            <v-card-text>
+              <h2 class="section-title" v-if="responseReceived">Report</h2>
+              <v-table v-if="responseReceived">
+                <tr>
+                  <td>Average AQI:</td>
+                  <td>{{ calculateaverage.toFixed(2) }}</td>
+                </tr>
+                <tr>
+                  <td>Total Hour:</td>
+                  <td>{{ totalhour }}</td>
+                </tr>
+                <tr>
+                  <td>Maximum AQI:</td>
+                  <td>{{ max }}</td>
+                </tr>
+                <tr>
+                  <td>Minimum AQI:</td>
+                  <td>{{ min }}</td>
+                </tr>
+                <tr>
+                  <td>Cigarettes according to AQI:</td>
+                  <td>{{ Cgrs.toFixed(2) }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <p
+                      v-html="formattedOutputText"
+                      style="font-size: 16px; line-height: 1.6"
+                    ></p>
+                  </td>
+                </tr>
+              </v-table>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn text="Close" @click="isActive.value = false"></v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -280,6 +301,16 @@ export default {
     };
   },
   computed: {
+    showOpenDialogButton() {
+      return (
+        this.startDate >= 1 &&
+        this.endDate <= 30 &&
+        this.selectedLocations[0] != "" &&
+        this.selectedLocations[1] != "" &&
+        this.selectedLocations[2] != "" &&
+        this.averageHours != null
+      );
+    },
     hasInputData() {
       // Check if any input fields in the table have non-zero values
       const hasAverageHours = this.averageHours.some((hours) => hours !== 0);

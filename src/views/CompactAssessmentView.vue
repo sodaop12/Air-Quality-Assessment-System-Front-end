@@ -137,7 +137,7 @@
               <div class="button-container">
                 <v-btn
                   v-bind="props"
-                  text="Open Dialog"
+                  text="Submit"
                   @click="submitData"
                   class="submit-button"
                   v-if="showOpenDialogButton"
@@ -182,10 +182,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
 
-                  <v-btn
-                    text="Close Dialog"
-                    @click="isActive.value = false"
-                  ></v-btn>
+                  <v-btn text="Close" @click="isActive.value = false"></v-btn>
                 </v-card-actions>
               </v-card>
             </template>
