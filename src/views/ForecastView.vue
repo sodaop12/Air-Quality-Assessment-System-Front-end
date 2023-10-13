@@ -25,31 +25,65 @@
                       v-model="numbers[index]"
                       required
                       class="number-input"
+                      style="border: none; border-bottom: 1px solid black"
                     />
                   </td>
                 </tr>
               </tbody>
             </table>
-            <button type="submit" class="submit-button">Submit</button>
           </form>
 
-          <div class="response-section">
-            <table>
-              <thead>
-                <tr class="select_Head_day">
-                  <th>Next Date AQI</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <p v-if="forecast !== null">{{ forecast }}</p>
-                    <p v-else>No prediction yet.</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <v-dialog width="1000">
+            <template v-slot:activator="{ props }">
+              <div class="button-container">
+                <v-btn
+                  v-bind="props"
+                  text="submit"
+                  @click="submitNumbers"
+                  class="submit-button"
+                  v-if="showOpenDialogButton"
+                >
+                </v-btn>
+              </div>
+            </template>
+
+            <template v-slot:default="{ isActive }">
+              <v-card title="Forecast System">
+                <v-card-text>
+                  <div class="response-section">
+                    <v-table>
+                      <thead>
+                        <tr class="select_Head_day">
+                          <th>Next Date AQI</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <p
+                              v-if="forecast !== null"
+                              class="centered-bold-text"
+                            >
+                              {{ forecast }}
+                            </p>
+                            <p v-else class="centered-bold-text">
+                              No prediction yet.
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </v-table>
+                  </div>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn text="Close" @click="isActive.value = false"></v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-dialog>
         </div>
       </div>
       <div class="right-sidebar">
@@ -67,6 +101,11 @@ export default {
       forecast: null,
     };
   },
+  computed: {
+    showOpenDialogButton() {
+      return this.numbers.every((number) => number !== null);
+    },
+  },
   methods: {
     async submitNumbers() {
       console.log("Submitted numbers:", this.numbers);
@@ -83,6 +122,8 @@ export default {
 
           const data = await response.json();
           this.forecast = data.forecast;
+
+          console.log(this.forecast);
         } catch (error) {
           console.error("Error:", error);
         }
@@ -122,8 +163,7 @@ export default {
 .number-input {
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 40px;
+  border-radius: 2px;
   text-align: center;
 }
 
@@ -140,5 +180,11 @@ export default {
 
 .response-section {
   margin-top: 20px;
+}
+/* In your style section */
+.centered-bold-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
 }
 </style>
