@@ -327,7 +327,61 @@ export default {
     },
     formattedOutputText() {
       // Replace spaces with <br> to create new lines
-      return this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
+      let formattedText = this.output_text.replace(/(\d+\.)\s+/g, "<br>$1 ");
+      // Change font-weight for specific words
+      // Add HTML tags to make specific words bold
+      formattedText = formattedText.replace(/Diagnosis:/g, "<b>Diagnosis:</b>");
+      formattedText = formattedText.replace(/Diagnosis/g, "<b>Diagnosis</b>");
+      formattedText = formattedText.replace(
+        /Diagnosis and/g,
+        "<b>Diagnosis and</b>"
+      );
+      formattedText = formattedText.replace(
+        /Relate to Air Quality Index table:/g,
+        "<b>Relate to Air Quality Index table:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Relate to Air Quality Index Table:/g,
+        "<b>Relate to Air Quality Index Table:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Emphasizing Preventive Care:/g,
+        "<b>Emphasizing Preventive Care:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Explanation:/g,
+        "<b>Explanation:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Air Quality Index Table:/g,
+        "<b>Air Quality Index Table:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Preventive Care:/g,
+        "<b>Preventive Care:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Follow-up Plan:/g,
+        "<b>Follow-up Plan:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Personalized Recommendations:/g,
+        "<b>Personalized Recommendations</b>"
+      );
+      formattedText = formattedText.replace(
+        /Detailed Suggestions:/g,
+        "<b>Detailed Suggestions:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Detailed of Suggestions:/g,
+        "<b>Detailed of Suggestions:</b>"
+      );
+      formattedText = formattedText.replace(
+        /Give Details of suggestions as a doctor:/g,
+        "<b>Give Details of suggestions as a doctor:</b>"
+      );
+
+      return formattedText;
     },
     totalActiveHours() {
       return this.filteredLoggedData.reduce(
