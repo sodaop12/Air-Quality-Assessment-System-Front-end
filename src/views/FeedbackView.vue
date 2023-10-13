@@ -9,37 +9,32 @@
         <div class="feedback">
           <h2 class="section-title">Feedback</h2>
 
-          <div class="center-content">
+          <div class="center-content" style="width: 60%">
             <div class="DH_Box"></div>
             <label class="title">Rating</label>
-            <div class="rating">
-              <label class="rate-background" v-for="score in 5" :key="score">
-                <input
-                  type="radio"
-                  :id="'rating-' + score"
-                  :value="score"
-                  v-model="selectedScore"
-                  @click="updateSelectedScore(score)"
-                />
-                <label :for="'rating-' + score">
-                  <i
-                    class="fas fa-star"
-                    :class="{ selected: selectedScore >= score }"
-                  ></i>
-                  <span class="star-label">{{ score }}</span>
-                </label>
-              </label>
-            </div>
+
+            <!-- Use v-slider for rating with custom styles -->
+            <v-slider
+              v-model="rating"
+              :step="1"
+              min="1"
+              max="5"
+              thumb-color="#00926f"
+              tick-size="10"
+            />
+
+            <!-- Display the selected rating -->
+            <div class="selected-rating">Selected Rating: {{ rating }}</div>
 
             <label class="title">Comment</label>
             <div class="comment">
-              <textarea
+              <v-textarea
                 class="comment-background"
                 v-model="feedback"
                 rows="4"
                 placeholder="Enter your feedback"
-                style="outline: none"
-              ></textarea>
+                variant="solo-inverted"
+              ></v-textarea>
             </div>
           </div>
           <button class="submit-button" @click="submitFeedback">Submit</button>
@@ -56,24 +51,17 @@
 export default {
   data() {
     return {
+      rating: 3,
       feedback: "",
-      selectedScore: null,
     };
   },
   methods: {
-    updateSelectedScore(score) {
-      if (this.selectedScore === score) {
-        this.selectedScore = score - 1; // Deselect the star
-      } else {
-        this.selectedScore = score; // Select the star
-      }
-    },
     async submitFeedback() {
       if (!this.feedback.trim()) {
         alert("Please provide feedback before submitting.");
         return;
       }
-      const feedbackWithScore = `${this.feedback} (${this.selectedScore})`;
+      const feedbackWithScore = `${this.feedback} (${this.rating})`;
       console.log("Feedback with Score:", feedbackWithScore);
       try {
         const response = await fetch("http://127.0.0.1:5000/submit_feedback", {
@@ -170,11 +158,9 @@ input {
 .center-content {
   text-align: center;
   width: 100%;
-}
-
-.rate-background,
-.comment-background {
-  background: #c1fff7;
+  margin: 0 auto; /* Center the content horizontally */
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
