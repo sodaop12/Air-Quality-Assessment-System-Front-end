@@ -13,7 +13,7 @@
         <router-link to="/calendar_as" class="page-link">Calendar</router-link>
       </div>
       <div>
-        <h2 class="section-title">Data range (1/5/2023 - 30/5/2023)</h2>
+        <h3 class="section-title">Data range (1/5/2023 - 30/5/2023)</h3>
         <div class="form-wrapper">
           <div class="form-left">
             <label for="dropdown" class="select_Head_day"
@@ -93,7 +93,7 @@
             </tbody>
           </table>
 
-          <h2 class="section-title">Congenital Disease 1</h2>
+          <h3 class="section-title">Congenital Disease</h3>
           <div class="disease_ex">
             <label
               >Are you having any health problems? (such as congenital disease,
@@ -108,7 +108,7 @@
               maxlength="50"
             ></v-textarea>
           </div>
-          <h2 class="section-title">Summary 1</h2>
+          <h3 class="section-title">Summary</h3>
           <table>
             <!-- Table header -->
             <thead>
@@ -255,7 +255,7 @@
             return-object
           ></v-autocomplete>
 
-          <h2 class="section-title">Congenital Disease 2</h2>
+          <h3 class="section-title">Congenital Disease</h3>
           <div class="disease_ex">
             <label
               >Are you having any health problems? (such as congenital disease,
@@ -270,7 +270,7 @@
               maxlength="50"
             ></v-textarea>
           </div>
-          <h2 class="section-title">Summary 2</h2>
+          <h3 class="section-title">Summary</h3>
           <table>
             <!-- Table header -->
             <thead>
@@ -384,7 +384,7 @@
             close-on-select
           ></v-autocomplete>
 
-          <h2 class="section-title">Congenital Disease 3</h2>
+          <h3 class="section-title">Congenital Disease</h3>
           <div class="disease_ex">
             <label
               >Are you having any health problems? (such as congenital disease,
@@ -399,7 +399,7 @@
               maxlength="50"
             ></v-textarea>
           </div>
-          <h2 class="section-title">Summary 3</h2>
+          <h3 class="section-title">Summary</h3>
           <table>
             <thead>
               <tr>
@@ -446,44 +446,59 @@
             Loading Result...
           </div>
         </div>
-
-        <!-- Other paragraphs of text -->
-        <div class="button-container">
-          <button
-            @click="submitData"
-            class="submit-button"
-            v-if="selectedDays >= 1 && selectedDays <= 30"
-          >
-            Submit
-          </button>
-        </div>
-        <!-- Warning message
-        <div v-if="showWarning">alert("Please fill in all fields.");</div>-->
       </div>
-      <h2 class="section-title" v-if="responseReceived">Report</h2>
-      <table v-if="responseReceived">
-        <tr>
-          <td>Average AQI:</td>
-          <td>{{ calculateaverage.toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td>Maximum AQI:</td>
-          <td>{{ max }}</td>
-        </tr>
-        <tr>
-          <td>Minimum AQI:</td>
-          <td>{{ min }}</td>
-        </tr>
-        <tr>
-          <td>Cigarettes according to AQI:</td>
-          <td>{{ Cgrs.toFixed(2) }}</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <p v-html="formattedOutputText"></p>
-          </td>
-        </tr>
-      </table>
+      <!-- Other paragraphs of text -->
+      <v-dialog width="1000">
+        <template v-slot:activator="{ props }">
+          <div class="button-container">
+            <v-btn
+              v-bind="props"
+              text="Submit"
+              @click="submitData"
+              class="submit-button"
+              v-if="showOpenDialogButton"
+            >
+            </v-btn>
+          </div>
+        </template>
+
+        <template v-slot:default="{ isActive }" v-if="responseReceived">
+          <v-card title="Complete Assessment">
+            <v-card-text>
+              <h3 class="section-title" v-if="responseReceived">Report</h3>
+              <v-table v-if="responseReceived">
+                <tr>
+                  <td>Average AQI:</td>
+                  <td>{{ calculateaverage.toFixed(2) }}</td>
+                </tr>
+                <tr>
+                  <td>Maximum AQI:</td>
+                  <td>{{ max }}</td>
+                </tr>
+                <tr>
+                  <td>Minimum AQI:</td>
+                  <td>{{ min }}</td>
+                </tr>
+                <tr>
+                  <td>Cigarettes according to AQI:</td>
+                  <td>{{ Cgrs.toFixed(2) }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <p v-html="formattedOutputText"></p>
+                  </td>
+                </tr>
+              </v-table>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn text="Close" @click="isActive.value = false"></v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
     </div>
     <div class="right-sidebar">
       <!-- Right sidebar content -->
@@ -541,6 +556,42 @@ export default {
     };
   },
   computed: {
+    showOpenDialogButton() {
+      if (this.selectedDays >= 1 && this.selectedDays <= 7) {
+        if (
+          this.additionalDays != null &&
+          this.additionalHours != null &&
+          this.selectedLocations != "" &&
+          this.additionalText != null
+        ) {
+          return true;
+        }
+      } else if (this.selectedDays >= 8 && this.selectedDays <= 29) {
+        if (
+          this.additionalStartDate != null &&
+          this.additionalEndDate != null &&
+          this.Hours != null &&
+          this.selectedLocation30[0] != "" &&
+          this.selectedLocation30[1] != "" &&
+          this.selectedLocation30[2] != "" &&
+          this.additionalText != null
+        ) {
+          return true;
+        }
+      } else if (this.selectedDays === 30) {
+        if (
+          this.additionalDays != null &&
+          this.additionalHours != null &&
+          this.selectedLocation30[0] != "" &&
+          this.selectedLocation30[1] != "" &&
+          this.selectedLocation30[2] != "" &&
+          this.additionalText != null
+        ) {
+          return true;
+        }
+      }
+      return false; // Default case
+    },
     additionalInputsCount() {
       return this.selectedDays;
     },
@@ -678,6 +729,8 @@ export default {
             // Refresh the page
             window.location.reload();
             this.showWarning = true;
+
+            console.log(error);
             alert("Do not found API!!");
           });
       } else if (this.selectedDays >= 8 && this.selectedDays <= 29) {
@@ -733,6 +786,8 @@ export default {
             // Refresh the page
             window.location.reload();
             this.showWarning = true;
+
+            console.log(error);
             alert("Do not found API!!");
           });
       } else if (this.selectedDays == 30) {
@@ -786,6 +841,7 @@ export default {
           // Refresh the page
           window.location.reload();
           this.showWarning = true;
+          console.log(error);
           alert("Do not found API!!");
         });
     },
