@@ -113,12 +113,14 @@ export default {
 }
 
 .rating-image {
-  width: 250px; /* Set a fixed width for the image */
-  height: 45px;
+  width: 200px; /* Set a fixed width for the image */
+  height: 40px;
 }
 
 .feedback-text {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 20px; /* Adjust the font size as needed */
+  font-weight: 600; /* Add font-weight as needed, e.g., 'bold' or 'normal' */
 }
 </style>

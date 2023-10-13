@@ -919,6 +919,7 @@ export default {
 <style scoped>
 @import "../assets/css/Based_Element.css";
 @import "../assets/css/Action_Element.css";
+
 label,
 input {
   margin-bottom: 10px;
