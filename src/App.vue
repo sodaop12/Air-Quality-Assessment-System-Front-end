@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav>
+    <nav class="so">
       <v-toolbar color="#71ffe5">
         <v-btn>
           <v-toolbar-title>
@@ -213,5 +213,8 @@ a {
 }
 .sub-home {
   font-size: 16px;
+}
+.so {
+  display: flex;
 }
 </style>
