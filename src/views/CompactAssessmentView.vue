@@ -407,4 +407,8 @@ td p {
   display: block;
   text-align: center;
 }
+
+.select_Head_day {
+  padding: 30px;
+}
 </style>

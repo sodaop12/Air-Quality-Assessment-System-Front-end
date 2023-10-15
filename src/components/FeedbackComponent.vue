@@ -5,6 +5,7 @@
         color="rgb(245, 245, 245)"
         expand-icon="mdi-plus"
         collapse-icon="mdi-minus"
+        style="background-color: #00ffd0"
       >
         <a> Feedback</a>
       </v-expansion-panel-title>
@@ -16,7 +17,8 @@
             placeholder="Enter your feedback"
           ></textarea>
           <div class="rating">
-            <span>Rate your experience:</span>
+            <span>Experienced Rate:</span>
+            <div style="padding: 5px"></div>
             <label v-for="score in 5" :key="score">
               <input
                 type="radio"
@@ -24,7 +26,7 @@
                 :value="score"
                 v-model="selectedScore"
               />
-              <label :for="'rating-' + score">{{ score }}</label>
+              <label :for="'rating-' + score"> {{ score }} </label>
             </label>
           </div>
           <button @click="submitFeedback">Submit</button>
@@ -88,6 +90,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.rating label {
+  margin-right: 10px; /* Adjust the margin as needed to create spacing */
 }
 
 .feedback {

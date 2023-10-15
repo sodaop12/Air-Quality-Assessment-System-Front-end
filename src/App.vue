@@ -1,7 +1,13 @@
 <template>
   <div>
     <nav class="so">
-      <v-toolbar color="#71ffe5">
+      <v-toolbar color="#40e8c9">
+        <img
+          src="~@/assets/images/AQAS-LOGO.png"
+          class="image-class"
+          style="height: 70px; width: 70px"
+        />
+
         <v-btn>
           <v-toolbar-title>
             <router-link to="/"
@@ -117,7 +123,6 @@ export default {
 }
 
 .navbar-brand a {
-  text-decoration: none;
   margin-right: 20px;
   font-weight: bold;
 }
@@ -152,7 +157,6 @@ export default {
 }
 
 .navbar-item {
-  text-decoration: none;
   margin-left: 10px;
   font-weight: bold;
 }
@@ -189,7 +193,6 @@ export default {
 .dropdown-menu a {
   display: block;
   color: #333;
-  text-decoration: none;
   margin-bottom: 5px;
 }
 
@@ -206,13 +209,14 @@ export default {
   font-weight: 800;
 }
 .title-home {
+  font-size: 30px;
   font-weight: 900;
 }
 a {
   font-weight: 700;
 }
 .sub-home {
-  font-size: 16px;
+  font-size: 20px;
 }
 .so {
   display: flex;

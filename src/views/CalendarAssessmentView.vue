@@ -100,7 +100,7 @@
 
       <section class="Location">
         <h2 class="section-title">Location</h2>
-        <label class="select_Head_day" for="location1"
+        <label class="select_Head_day2" for="location1"
           >Select Location 1:</label
         >
         <v-autocomplete
@@ -116,7 +116,7 @@
         ></v-autocomplete>
 
         <div class="DH_Box"></div>
-        <label class="select_Head_day" for="location2"
+        <label class="select_Head_day2" for="location2"
           >Select Location 2:</label
         >
         <v-autocomplete
@@ -131,7 +131,7 @@
           variant="outlined"
         ></v-autocomplete>
         <div class="DH_Box"></div>
-        <label class="select_Head_day" for="location3"
+        <label class="select_Head_day2" for="location3"
           >Select Location 3:</label
         >
         <v-autocomplete
@@ -611,5 +611,13 @@ td p {
   margin: 0 auto;
   display: block;
   text-align: center;
+}
+
+.select_Head_day2 {
+  padding: 30px;
+  font-size: 20x;
+  /* Change the font-size as desired */
+  font-weight: 700;
+  color: #00926f;
 }
 </style>
