@@ -5,7 +5,7 @@
         color="rgb(245, 245, 245)"
         expand-icon="mdi-plus"
         collapse-icon="mdi-minus"
-        style="background-color: #00ffd0"
+        style="background-color: #00ffd0ad"
       >
         <a> Feedback</a>
       </v-expansion-panel-title>

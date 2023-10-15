@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="so">
-      <v-toolbar color="#40e8c9">
+      <v-toolbar color="#00ffd0">
         <img
           src="~@/assets/images/AQAS-LOGO.png"
           class="image-class"
@@ -103,7 +103,7 @@ export default {
 }
 .navbar {
   background-color: #d1fff7;
-  color: #00926f;
+  color: #00ffd0;
   padding-left: 10px;
   padding-right: 10px;
   display: flex;
